@@ -1,5 +1,6 @@
 package VEGA.Algorithms.Trees.BinarySearch;
 
+import VEGA.Graph.Tree;
 import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
 import java.util.Iterator;
 
@@ -9,7 +10,7 @@ import java.util.Iterator;
  * @author Edit by:  Weston Jossey-  April 21, 2008
  *  
  */
-public class BinarySearchTree {
+public class BinarySearchTree extends Tree{
 
     public static boolean RED = true;
     public static boolean BLACK = false;
@@ -489,6 +490,15 @@ public class BinarySearchTree {
     public int getNumEntries() {
         // TODO Auto-generated method stub
         return numElements;
+    }
+    
+    @Override
+    public BinaryTreeNode getRoot(){
+        return root;
+    }
+    
+    public void setRoot(BinaryTreeNode root){
+        this.root = root;
     }
 
     /**

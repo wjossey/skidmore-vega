@@ -2,22 +2,21 @@ package VEGA.Algorithms.Trees.RedBlack;
 
 import VEGA.Algorithms.Trees.BinarySearch.BinarySearchTree;
 import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
-import VEGA.Graph.Vertex.Tree.RedBlackNode;
 
 
 public class RBT extends BinarySearchTree {
 
 	
 	public void insert(Comparable key) { 
-		RedBlackNode newNode = new RedBlackNode(key, RED);
+		BinaryTreeNode newNode = new BinaryTreeNode(key, RED);
 		super.insertNode(newNode);
 		fixUpInsert(newNode);
 	} // end insert()
 	
-	private void fixUpInsert(RedBlackNode problemChild) {
+	private void fixUpInsert(BinaryTreeNode problemChild) {
 		while(problemChild.getParentNode() != null && problemChild.getParentNode().isColor(RED)) {
 			if (problemChild.getParentNode().isLeftChild()) { 
-				RedBlackNode uncle = (RedBlackNode) problemChild.getParentNode().getParentNode().getRightNode();
+				BinaryTreeNode uncle = problemChild.getParentNode().getParentNode().getRightNode();
 				
 				if (uncle != null && uncle.isColor(RED)) {
 					/*
@@ -26,7 +25,7 @@ public class RBT extends BinarySearchTree {
 					problemChild.getParentNode().setColor(BLACK);
 					uncle.setColor(BLACK);
 					problemChild.getParentNode().getParentNode().setColor(RED);
-					problemChild = (RedBlackNode) problemChild.getParentNode().getParentNode();
+					problemChild = problemChild.getParentNode().getParentNode();
 					
 				} else {
 					
@@ -34,7 +33,7 @@ public class RBT extends BinarySearchTree {
 						/*
 						 * Case 2
 						 */
-						problemChild = (RedBlackNode) problemChild.getParentNode();
+						problemChild = problemChild.getParentNode();
 						rotateWithRightChild(problemChild);
 					} // end if 
 					
@@ -52,7 +51,7 @@ public class RBT extends BinarySearchTree {
 				 */
 				System.out.println(this.toGraphViz("NullPointer"));
 				System.out.flush();
-				RedBlackNode uncle = (RedBlackNode) problemChild.getParentNode().getParentNode().getLeftNode();
+				BinaryTreeNode uncle = problemChild.getParentNode().getParentNode().getLeftNode();
 				
 				if (uncle != null && uncle.isColor(RED)) {
 					/*
@@ -61,7 +60,7 @@ public class RBT extends BinarySearchTree {
 					problemChild.getParentNode().setColor(BLACK);
 					uncle.setColor(BLACK);
 					problemChild.getParentNode().getParentNode().setColor(RED);
-					problemChild = (RedBlackNode) problemChild.getParentNode().getParentNode();
+					problemChild = problemChild.getParentNode().getParentNode();
 					
 				} else {
 					
@@ -69,7 +68,7 @@ public class RBT extends BinarySearchTree {
 						/*
 						 * Case 2
 						 */
-						problemChild = (RedBlackNode) problemChild.getParentNode();
+						problemChild = problemChild.getParentNode();
 						rotateWithLeftChild(problemChild);
 					} // end if 
 					

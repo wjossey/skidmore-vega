@@ -1,7 +1,7 @@
 package VEGA.Algorithms.Trees.RedBlack;
 
 import VEGA.Algorithms.Trees.BinarySearch.BinarySearchTree;
-import VEGA.Graph.Vertex.Tree.RedBlackNode;
+import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
 
 
 
@@ -14,7 +14,7 @@ import VEGA.Graph.Vertex.Tree.RedBlackNode;
  */
 public class RedBlackTreeInsideOutside extends BinarySearchTree {
 	
-    RedBlackNode root;
+    BinaryTreeNode root;
 	
     RedBlackTreeInsideOutside(){
         super();
@@ -23,8 +23,8 @@ public class RedBlackTreeInsideOutside extends BinarySearchTree {
     
     @Override
 	public void insert(Object x) {
-		RedBlackNode newNode = new RedBlackNode((Comparable) x, RED);
-		super.insertNode(newNode);
+                BinaryTreeNode newNode = new BinaryTreeNode((Comparable) x, RED);
+                super.insertNode(newNode);
 		fixupInsert(newNode);
 	} // end insert();
 	
@@ -39,12 +39,12 @@ public class RedBlackTreeInsideOutside extends BinarySearchTree {
 			System.out.println("This tree is broke");
 		} // end try-catch
 		
-		RedBlackNode node = (RedBlackNode) search(root, (Comparable) x);
+		BinaryTreeNode node = search(root, (Comparable) x);
 		if (node != null) {
 			
-			RedBlackNode nodeToSplice = (RedBlackNode) super.getNodeToDelete(node);
-			RedBlackNode parent = nodeToSplice.getParentNode(); 
-			RedBlackNode child = null; 
+			BinaryTreeNode nodeToSplice = super.getNodeToDelete(node);
+			BinaryTreeNode parent = nodeToSplice.getParentNode(); 
+			BinaryTreeNode child = null; 
 			
 			boolean leftChild = nodeToSplice.isLeftChild();
 			
@@ -86,7 +86,7 @@ public class RedBlackTreeInsideOutside extends BinarySearchTree {
 	} // end delete()
 		
 	
-	private boolean isColor(RedBlackNode node, boolean color) {
+	private boolean isColor(BinaryTreeNode node, boolean color) {
 		boolean result = false; 
 		if (node == null) { 
 			if (color == BLACK) {
@@ -98,7 +98,7 @@ public class RedBlackTreeInsideOutside extends BinarySearchTree {
 		return result; 
 	} // end isColor()
 	
-	private void fixupDelete(RedBlackNode parent, RedBlackNode child, boolean leftChild) {
+	private void fixupDelete(BinaryTreeNode parent, BinaryTreeNode child, boolean leftChild) {
 	
 		while(parent != null && ( child == null || child.isColor(BLACK))) { 
 			
@@ -106,7 +106,7 @@ public class RedBlackTreeInsideOutside extends BinarySearchTree {
 				/*
 				 * problem node is a left child 
 				 */
-				RedBlackNode sibling = parent.getRightNode();
+				BinaryTreeNode sibling = parent.getRightNode();
 				if (isColor(sibling, RED)) { 
 					/*
 					 * Case 1: child's sibling is red 
@@ -159,7 +159,7 @@ public class RedBlackTreeInsideOutside extends BinarySearchTree {
 				/*
 				 * problem node is a right child 
 				 */
-				RedBlackNode sibling = parent.getLeftNode();
+				BinaryTreeNode sibling = parent.getLeftNode();
 				//Debug.println("Right child: parent is " + parent + " sibling is" + sibling);
 				if (isColor(sibling, RED)) { 
 					/*
@@ -233,7 +233,7 @@ public class RedBlackTreeInsideOutside extends BinarySearchTree {
 	} // end fixupDelete()
 	
 	
-	private void fixupInsert(RedBlackNode z) {
+	private void fixupInsert(BinaryTreeNode z) {
 		
 		//Debug.println("fixUpinsert(): called with z = (" + z.getData() + "," + z.getColor() +")");
 		/*
@@ -243,7 +243,7 @@ public class RedBlackTreeInsideOutside extends BinarySearchTree {
 			
 			if (z.getParentNode().isLeftChild()) {
 				
-				RedBlackNode uncle = z.getParentNode().getParentNode().getRightNode();   
+				BinaryTreeNode uncle = z.getParentNode().getParentNode().getRightNode();   
 				if (uncle.isColor(RED)) {
 					/*
 					 * Case 1: z's uncle is red
@@ -275,7 +275,7 @@ public class RedBlackTreeInsideOutside extends BinarySearchTree {
 					System.out.println(this.toGraphViz("fixUpInsertFinishedCase3"));
 				} // end if 
 			} else { 
-				RedBlackNode uncle = z.getParentNode().getParentNode().getLeftNode();   
+				BinaryTreeNode uncle = z.getParentNode().getParentNode().getLeftNode();   
 				if (uncle != null && uncle.isColor(RED)) {
 					//Debug.println("fixup insert(): right side case 1");
 					z.getParentNode().setColor(BLACK);

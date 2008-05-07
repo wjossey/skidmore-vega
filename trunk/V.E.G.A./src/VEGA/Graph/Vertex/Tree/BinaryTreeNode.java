@@ -10,9 +10,9 @@ package VEGA.Graph.Vertex.Tree;
  */
 public class BinaryTreeNode extends TreeNode {
 
-    private BinaryTreeNode left;
-    private BinaryTreeNode right;
-    private BinaryTreeNode parent;
+    private BinaryTreeNode leftNode;
+    private BinaryTreeNode rightNode;
+    private BinaryTreeNode parentNode;
 
     /**
      * 
@@ -20,9 +20,16 @@ public class BinaryTreeNode extends TreeNode {
      */
     public BinaryTreeNode(Comparable c) {
         super(c);
-        this.left = null;
-        this.right = null;
+        leftNode = null;
+        rightNode = null;
 
+    }
+    
+    public BinaryTreeNode(Comparable c, boolean color){
+        super(c);
+        leftNode = null;
+        rightNode = null;
+        setColor(color);
     }
 
     /**
@@ -33,8 +40,8 @@ public class BinaryTreeNode extends TreeNode {
      */
     public BinaryTreeNode(Comparable c, BinaryTreeNode left, BinaryTreeNode right) {
         super(c);
-        this.left = left;
-        this.right = right;
+        leftNode = left;
+        rightNode = right;
 
     }
 
@@ -43,7 +50,7 @@ public class BinaryTreeNode extends TreeNode {
      * @return
      */
     public BinaryTreeNode getLeftNode() {
-        return left;
+        return leftNode;
     }
 
     /**
@@ -51,7 +58,7 @@ public class BinaryTreeNode extends TreeNode {
      * @return
      */
     public BinaryTreeNode getRightNode() {
-        return right;
+        return rightNode;
     }
 
     /**
@@ -59,7 +66,7 @@ public class BinaryTreeNode extends TreeNode {
      * @param left
      */
     public void setLeftNode(BinaryTreeNode left) {
-        this.left = left;
+       leftNode = left;
     }
 
     /**
@@ -67,7 +74,7 @@ public class BinaryTreeNode extends TreeNode {
      * @param right
      */
     public void setRightNode(BinaryTreeNode right) {
-        this.right = right;
+        rightNode = right;
     }
 
     /**
@@ -76,7 +83,7 @@ public class BinaryTreeNode extends TreeNode {
      */
     @Override
     public BinaryTreeNode getParentNode() {
-        return this.parent;
+        return parentNode;
     }
 
     /**
@@ -84,7 +91,7 @@ public class BinaryTreeNode extends TreeNode {
      * @param parent
      */
     public void setParentNode(BinaryTreeNode parent) {
-        this.parent = parent;
+        parentNode = parent;
     }
 
     /**
@@ -92,7 +99,7 @@ public class BinaryTreeNode extends TreeNode {
      * @return
      */
     public boolean isRightChild() {
-        if (parent != null && parent.right == this) {
+        if (parentNode != null && parentNode.getRightNode() == this) {
             return true;
         } else {
             return false;
@@ -106,7 +113,7 @@ public class BinaryTreeNode extends TreeNode {
      * @return
      */
     public boolean isLeftChild() {
-        if (parent != null && parent.left == this) {
+        if (parentNode != null && parentNode.getLeftNode() == this) {
             return true;
         } else {
             return false;

@@ -1,7 +1,7 @@
 package VEGA.Algorithms.Trees.RedBlack;
 
 import VEGA.Algorithms.Trees.BinarySearch.BinarySearchTree;
-import VEGA.Graph.Vertex.Tree.RedBlackNode;
+import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
 
 /**
  * @author oconnell
@@ -11,27 +11,25 @@ import VEGA.Graph.Vertex.Tree.RedBlackNode;
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
 public class RedBlackTree extends BinarySearchTree {
-    
-    RedBlackNode root;
-    
-    public RedBlackTree(){
+
+    public RedBlackTree() {
         super();
-        root = null;
+        super.root = null;
     }
-    
-    
+
     @Override
     public void insert(Object x) {
-        RedBlackNode newNode = new RedBlackNode((Comparable) x, RED);
-        super.insertNode(newNode);
+        BinaryTreeNode newNode = new BinaryTreeNode((Comparable) x, RED);
+        insertNode(newNode);
         fixupInsert(newNode);
     } // end insert();
 
 
-    public RedBlackNode search(RedBlackNode subTree, Comparable c){
-        return (RedBlackNode) super.search(subTree, c);
+    @Override
+    public BinaryTreeNode search(BinaryTreeNode subTree, Comparable c) {
+        return super.search(subTree, c);
     }
-    
+
     @Override
     public boolean delete(Object x) {
 
@@ -43,12 +41,12 @@ public class RedBlackTree extends BinarySearchTree {
             System.out.println("Cannot validate the tree.");
         } // end try-catch
 
-        RedBlackNode node = search(root, (Comparable) x);
+        BinaryTreeNode node = search(getRoot(), (Comparable) x);
         if (node != null) {
 
-            RedBlackNode nodeToSplice = (RedBlackNode) super.getNodeToDelete(node);
-            RedBlackNode parent = nodeToSplice.getParentNode();
-            RedBlackNode child = null;
+            BinaryTreeNode nodeToSplice = super.getNodeToDelete(node);
+            BinaryTreeNode parent = nodeToSplice.getParentNode();
+            BinaryTreeNode child = null;
 
             boolean leftChild = nodeToSplice.isLeftChild();
 
@@ -92,7 +90,7 @@ public class RedBlackTree extends BinarySearchTree {
     } // end delete()
 
 
-    private boolean isColor(RedBlackNode node, boolean color) {
+    private boolean isColor(BinaryTreeNode node, boolean color) {
         boolean result = false;
         if (node == null) {
             if (color == BLACK) {
@@ -107,7 +105,7 @@ public class RedBlackTree extends BinarySearchTree {
     } // end isColor()
 
 
-        private void fixupDelete(RedBlackNode parent, RedBlackNode child, boolean leftChild) {
+    private void fixupDelete(BinaryTreeNode parent, BinaryTreeNode child, boolean leftChild) {
 
         while (parent != null && (child == null || child.isColor(BLACK))) {
 
@@ -115,7 +113,7 @@ public class RedBlackTree extends BinarySearchTree {
                 /*
                  * problem node is a left child 
                  */
-                RedBlackNode sibling = parent.getRightNode();
+                BinaryTreeNode sibling = parent.getRightNode();
                 if (isColor(sibling, RED)) {
                     /*
                      * Case 1: child's sibling is red 
@@ -129,7 +127,7 @@ public class RedBlackTree extends BinarySearchTree {
                     sibling = parent.getRightNode();
                 } // end if 
 
-                if (sibling == null || (isColor(sibling.getLeftNode(), BLACK) && 
+                if (sibling == null || (isColor(sibling.getLeftNode(), BLACK) &&
                         isColor(sibling.getRightNode(), BLACK))) {
                     /*
                      * Case 2: sibling's color is black and has two black children 
@@ -161,7 +159,7 @@ public class RedBlackTree extends BinarySearchTree {
                     parent.setColor(BLACK);
                     sibling.getRightNode().setColor(BLACK);
                     rotateWithRightChild(parent);
-                    child = (RedBlackNode) root;
+                    child =  getRoot();
                 } // end if 
 
             } else {
@@ -171,7 +169,7 @@ public class RedBlackTree extends BinarySearchTree {
                 /*
                  * problem node is a right child 
                  */
-                RedBlackNode sibling = parent.getLeftNode();
+                BinaryTreeNode sibling = parent.getLeftNode();
                 //Debug.println("Right child: parent is " + parent + " sibling is" + sibling);
                 if (isColor(sibling, RED)) {
                     /*
@@ -185,7 +183,7 @@ public class RedBlackTree extends BinarySearchTree {
                     sibling = parent.getLeftNode();
                 } // end if 
 
-                if (sibling == null || (isColor(sibling.getLeftNode(), BLACK) && 
+                if (sibling == null || (isColor(sibling.getLeftNode(), BLACK) &&
                         isColor(sibling.getRightNode(), BLACK))) {
 
                     /*
@@ -222,7 +220,7 @@ public class RedBlackTree extends BinarySearchTree {
                     parent.setColor(BLACK);
                     sibling.getLeftNode().setColor(BLACK);
                     rotateWithLeftChild(parent);
-                    child = (RedBlackNode) root;
+                    child = getRoot();
                 } // end if 
 
             } // end if
@@ -250,7 +248,37 @@ public class RedBlackTree extends BinarySearchTree {
     } // end fixupDelete()
 
 
-    private void fixupInsert(RedBlackNode z) {
+    protected void insertNode(BinaryTreeNode newNode) {
+        Comparable k = (Comparable) newNode.getData();
+        BinaryTreeNode prev = null;
+        BinaryTreeNode curr = getRoot();
+        while (curr != null) {
+            prev = curr;
+            if (k.compareTo(curr.getData()) < 0) {
+                curr = curr.getLeftNode();
+            } else {
+                curr = curr.getRightNode();
+            } // end if
+
+        } // end while
+
+        newNode.setParentNode(prev);
+        if (prev == null) {
+            setRoot(newNode);
+        } else {
+            if (k.compareTo(prev.getData()) < 0) {
+                prev.setLeftNode(newNode);
+            } else {
+                prev.setRightNode(newNode);
+            } // end if
+
+        } // end if
+
+        numElements++;
+    } // end insertNode();
+
+
+    private void fixupInsert(BinaryTreeNode z) {
 
         //Debug.println("fixUpinsert(): called with z = (" + z.data + "," + z.color +")");
 		/*
@@ -260,7 +288,7 @@ public class RedBlackTree extends BinarySearchTree {
 
             if (z.getParentNode().isLeftChild()) {
 
-                RedBlackNode uncle = z.getParentNode().getParentNode().getRightNode();
+                BinaryTreeNode uncle = z.getParentNode().getParentNode().getRightNode();
                 if (uncle.isColor(RED)) {
                     /*
                      * Case 1: z's uncle is red
@@ -293,7 +321,7 @@ public class RedBlackTree extends BinarySearchTree {
                 } // end if 
 
             } else {
-                RedBlackNode uncle = z.getParentNode().getParentNode().getLeftNode();
+                BinaryTreeNode uncle = z.getParentNode().getParentNode().getLeftNode();
                 if (uncle != null && uncle.isColor(RED)) {
                     //Debug.println("fixup insert(): right side case 1");
                     z.getParentNode().setColor(BLACK);
@@ -320,7 +348,7 @@ public class RedBlackTree extends BinarySearchTree {
 
         } // end while() 
 
-        root.setColor(BLACK);
+        getRoot().setColor(BLACK);
     } // end fixupInsert()
 
 

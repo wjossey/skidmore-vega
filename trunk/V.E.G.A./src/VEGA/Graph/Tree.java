@@ -3,9 +3,8 @@
  * and open the template in the editor.
  */
 
-package VEGA.Graph.Tree;
+package VEGA.Graph;
 
-import VEGA.Graph.*;
 import VEGA.Graph.Edge.Tree.TreeEdge;
 import VEGA.Graph.Vertex.Tree.TreeNode;
 
