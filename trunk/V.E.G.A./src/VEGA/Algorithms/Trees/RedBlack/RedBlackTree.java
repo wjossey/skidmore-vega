@@ -1,531 +1,409 @@
 package VEGA.Algorithms.Trees.RedBlack;
 
-// RedBlackTree class
+import VEGA.Algorithms.Trees.BinarySearch.BinarySearchTree;
+import VEGA.Graph.Vertex.Tree.RedBlackNode;
 
-import VEGA.Controller;
-import VEGA.Exceptions.DuplicateItemException;
-import VEGA.PseudoCode.Procedure;
-import VEGA.PseudoCode.PseudoCode;
-import VEGA.Algorithms.GraphAlgorithm;
-import VEGA.Graph.Graph;
-import VEGA.Graph.Vertex.Vertex;
-
-//
-// CONSTRUCTION: with a negative infinity sentinel
-//
-// ******************PUBLIC OPERATIONS*********************
-// void insert( x )       --> Insert x
-// void remove( x )       --> Remove x (unimplemented)
-// Comparable find( x )   --> Return item that matches x
-// Comparable findMin( )  --> Return smallest item
-// Comparable findMax( )  --> Return largest item
-// boolean isEmpty( )     --> Return true if empty; else false
-// void makeEmpty( )      --> Remove all items
-// void printTree( )      --> Print all items
-// ******************ERRORS********************************
-// Exceptions are thrown by insert if warranted and remove.
 /**
- * Implements a red-black tree.
- * Note that all "matching" is based on the compareTo method.
- * @author Mark Allen Weiss
+ * @author oconnell
+ * @author Edit by:  Weston Jossey-  April 21, 2008
+ *
+ * TODO To change the template for this generated type comment go to
+ * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class RedBlackTree implements GraphAlgorithm {
-
-    /**
-     * Construct the tree.
-     */
-    private Controller controller;
-    private String FILENAME = "nearestNeighbor";
-    private PseudoCode pseudoCode;
-    private Procedure insert;
-    private static int instanceCounter = 0;
-    private int instanceID = 0;
-    private boolean running = false;
-
-    public RedBlackTree() {
-        pseudoCode = new PseudoCode("Red Black Tree");
-
-        insert = new Procedure("Insert(Vertex n):");
-        insert.appendLine("");
-
-        header = new RedBlackNode(null);
-        header.left = header.right = nullNode;
+public class RedBlackTree extends BinarySearchTree {
+    
+    RedBlackNode root;
+    
+    public RedBlackTree(){
+        super();
+        root = null;
     }
-
-    /**
-     * Compare item and t.element, using compareTo, with
-     * caveat that if t is header, then item is always larger.
-     * This routine is called if is possible that t is header.
-     * If it is not possible for t to be header, use compareTo directly.
-     */
-    private final int compare(Comparable item, RedBlackNode t) {
-        if (t == header) {
-            return 1;
-        } else {
-            return item.compareTo(t.element);
-        }
-    }
-
-    /**
-     * Insert into the tree.
-     * @param item the item to insert.
-     * @throws DuplicateItemException if item is already present.
-     */
-    public void insert(Comparable item) {
-        current = parent = grand = header;
-        nullNode.element = item;
-
-        while (compare(item, current) != 0) {
-            great = grand;
-            grand = parent;
-            parent = current;
-            current = compare(item, current) < 0 ? current.left : current.right;
-
-            // Check if two red children; fix if so
-            if (current.left.color == RED && current.right.color == RED) {
-                handleReorient(item);
-            }
-        }
-
-        // Insertion fails if already present
-        if (current != nullNode) {
-            throw new DuplicateItemException(item.toString());
-        }
-        current = new RedBlackNode(item, nullNode, nullNode);
-
-        // Attach to parent
-        if (compare(item, parent) < 0) {
-            parent.left = current;
-        } else {
-            parent.right = current;
-        }
-        handleReorient(item);
-    }
-
-    /**
-     * Remove from the tree.
-     * @param x the item to remove.
-     * @throws UnsupportedOperationException if called.
-     */
-    public void remove(Comparable x) {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * Find the smallest item  the tree.
-     * @return the smallest item or null if empty.
-     */
-    public Comparable findMin() {
-        if (isEmpty()) {
-            return null;
-        }
-        RedBlackNode itr = header.right;
-
-        while (itr.left != nullNode) {
-            itr = itr.left;
-        }
-        return itr.element;
-    }
-
-    /**
-     * Find the largest item in the tree.
-     * @return the largest item or null if empty.
-     */
-    public Comparable findMax() {
-        if (isEmpty()) {
-            return null;
-        }
-        RedBlackNode itr = header.right;
-
-        while (itr.right != nullNode) {
-            itr = itr.right;
-        }
-        return itr.element;
-    }
-
-    /**
-     * Find an item in the tree.
-     * @param x the item to search for.
-     * @return the matching item or null if not found.
-     */
-    public Comparable find(Comparable x) {
-        nullNode.element = x;
-        current = header.right;
-
-        for (;;) {
-            if (x.compareTo(current.element) < 0) {
-                current = current.left;
-            } else if (x.compareTo(current.element) > 0) {
-                current = current.right;
-            } else if (current != nullNode) {
-                return current.element;
-            } else {
-                return null;
-            }
-        }
-    }
-
-    /**
-     * Make the tree logically empty.
-     */
-    public void makeEmpty() {
-        header.right = nullNode;
-    }
-
-    /**
-     * Internal method to print a subtree in sorted order.
-     * @param t the node that roots the tree.
-     */
-    /**
-     * Test if the tree is logically empty.
-     * @return true if empty, false otherwise.
-     */
-    public boolean isEmpty() {
-        return header.right == nullNode;
-    }
-
-    /**
-     * Internal routine that is called during an insertion
-     * if a node has two red children. Performs flip and rotations.
-     * @param item the item being inserted.
-     */
-    private void handleReorient(Comparable item) {
-        // Do the color flip
-        current.color = RED;
-        current.left.color = BLACK;
-        current.right.color = BLACK;
-
-        if (parent.color == RED) // Have to rotate
-        {
-            grand.color = RED;
-            if ((compare(item, grand) < 0) !=
-                    (compare(item, parent) < 0)) {
-                parent = rotate(item, grand);  // Start dbl rotate
-
-            }
-            current = rotate(item, great);
-            current.color = BLACK;
-        }
-        header.right.color = BLACK; // Make root black
-
-    }
-
-    /**
-     * Internal routine that performs a single or double rotation.
-     * Because the result is attached to the parent, there are four cases.
-     * Called by handleReorient.
-     * @param item the item in handleReorient.
-     * @param parent the parent of the root of the rotated subtree.
-     * @return the root of the rotated subtree.
-     */
-    private RedBlackNode rotate(Comparable item, RedBlackNode parent) {
-        if (compare(item, parent) < 0) {
-            return parent.left = compare(item, parent.left) < 0 ? rotateWithLeftChild(parent.left) : // LL
-                    rotateWithRightChild(parent.left);  // LR
-
-        } else {
-            return parent.right = compare(item, parent.right) < 0 ? rotateWithLeftChild(parent.right) : // RL
-                    rotateWithRightChild(parent.right);  // RR
-
-        }
-    }
-
-    /**
-     * Rotate binary tree node with left child.
-     */
-    private static RedBlackNode rotateWithLeftChild(RedBlackNode k2) {
-        RedBlackNode k1 = k2.left;
-        k2.left = k1.right;
-        k1.right = k2;
-        return k1;
-    }
-
-    /**
-     * Rotate binary tree node with right child.
-     */
-    private static RedBlackNode rotateWithRightChild(RedBlackNode k1) {
-        RedBlackNode k2 = k1.right;
-        k1.right = k2.left;
-        k2.left = k1;
-        return k2;
-    }
-
+    
+    
     @Override
-    public String toString() {
-        String returnString = "";
-        returnString += "Graph g{\n";
-
-        if (header != nullNode) {
-            //returnString += printTreeNodes(header.right);
-            //returnString += printTreeEdges(header.right);
-            returnString += printTree();
-        }
-
-        returnString += "}\n";
-        return returnString;
-    }
-
-    private String printTreeNodes(RedBlackNode t) {
-        String returnString = "";
-        if (t != nullNode) {
-            returnString += t.toString() + "\n";
-            returnString += printTreeNodes(t.left);
-            returnString += printTreeNodes(t.right);
-        }
-
-        return returnString;
-
-    }
-
-    private String printEdge(RedBlackNode parent, RedBlackNode child) {
-        if (child != null) {
-            String returnString = "";
-            returnString += parent.getName(); //a -- b [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled]; 
-
-            returnString += " -- ";
-
-            returnString += child.getName() + ";\n";
-
-            return returnString;
-        } else {
-            return null;
-        }
-
-    }
-
-    private String printTreeEdges(RedBlackNode t) {
-        String returnString = "";
-        if (t != nullNode) {
-            if (t.left != null) {
-                returnString += printEdge(t, t.left);
-                returnString += printTreeEdges(t.left);
-            }
-
-            if (t.right != nullNode) {
-                returnString += printEdge(t, t.right);
-                returnString += printTreeEdges(t.right);
-            }
-
-        }
+    public void insert(Object x) {
+        RedBlackNode newNode = new RedBlackNode((Comparable) x, RED);
+        super.insertNode(newNode);
+        fixupInsert(newNode);
+    } // end insert();
 
 
-        return returnString;
-
-    }
-
-    public String printTree() {
-        return printTree(header.right);
-    }
-
-    /**
-     * Internal method to print a subtree in sorted order.
-     * @param t the node that roots the tree.
-     */
-    private String printTree(RedBlackNode t) {
-        /*if (t != nullNode) {
-        printTree(t.left);
-        System.out.println(t.element);
-        printTree(t.right);
-        }*/
-
-        String returnString = "";
-        if (t != nullNode) {
-            returnString += printTree(t.left);
-            returnString += t.toString() + "\n";
-            returnString += printTree(t.right);
-
-            if (t.left != nullNode) {
-                returnString += printEdge(t, t.left);
-            } else {
-                returnString += printLeftNull(t)  + "\n";
-            }
-            if (t.right != nullNode) {
-                returnString += printEdge(t, t.right);
-            } else {
-                returnString += printRightNull(t) + "\n";
-            }
-        }
-
-        return returnString;
-
-    }
-
-    private String printLeftNull(RedBlackNode t) {
-        String returnString = "";
-        returnString += "NilLeft" + t.getName();
-        returnString += " [fillcolor=Black, style=filled, fontcolor=White, shape=box, label=\"Nil\"];\n";
-        returnString += t.getName() + " -- " + "NilLeft" + t.getName() +";";
-
-        return returnString;
+    public RedBlackNode search(RedBlackNode subTree, Comparable c){
+        return (RedBlackNode) super.search(subTree, c);
     }
     
-    private String printRightNull(RedBlackNode t) {
-        String returnString = "";
-        returnString += "NilRight" + t.getName();
-        returnString += " [fillcolor=Black, style=filled, fontcolor=White, shape=box, label=\"Nil\"];\n";
-        returnString += t.getName() + " -- " + "NilRight" + t.getName() +";";
+    @Override
+    public boolean delete(Object x) {
 
-        return returnString;
-    }
+        boolean result = false;
 
-    private static class RedBlackNode extends Vertex {
-        // Constructors
+        try {
+            validateTree();
+        } catch (InvalidTreeException e) {
+            System.out.println("Cannot validate the tree.");
+        } // end try-catch
 
-        RedBlackNode(Comparable theElement) {
-            this(theElement, null, null);
-        }
+        RedBlackNode node = search(root, (Comparable) x);
+        if (node != null) {
 
-        RedBlackNode(Comparable theElement, RedBlackNode lt, RedBlackNode rt) {
-            super();
-            element = theElement;
-            left = lt;
-            right = rt;
-            color = RedBlackTree.BLACK;
-        }
+            RedBlackNode nodeToSplice = (RedBlackNode) super.getNodeToDelete(node);
+            RedBlackNode parent = nodeToSplice.getParentNode();
+            RedBlackNode child = null;
 
-        @Override
-        public String getColor() {
-            String returnString = "";
+            boolean leftChild = nodeToSplice.isLeftChild();
 
+            /*
+             * At least one of the children of the node to splice out 
+             * is null. 
+             * 
+             * If the right is null then the node moved up the tree is
+             * the left (even if it is null). 
+             * 
+             * If the left is null but the right is not null 
+             * then the node moved up was the right child.
+             * 
+             */
+            if (nodeToSplice.getRightNode() == null) {
+                child = nodeToSplice.getLeftNode();
+
+            } else {
+                child = nodeToSplice.getRightNode();
+
+            } // end if
+
+            //Debug.println("splicing out " + nodeToSplice.data);
+            //Debug.println("nodetosplice parent =  " + nodeToSplice.parent.data);
+            //Debug.println("nodetosplice recorded parent =  " + parent);
+            super.spliceOutNode(nodeToSplice);
+            //Debug.println("after splicing nodetosplice is ( " 
+            //						+ nodeToSplice.data + "," + nodeToSplice.color+ ")");
+            if (isColor(nodeToSplice, BLACK)) {
+                //Debug.println("calling fixupdelete with " + parent + " "
+                //						+child + " " + leftChild);
+                fixupDelete(parent, child, leftChild);
+            } // end if 
+
+            numElements--;
+            result = true;
+
+        } // end if 
+
+        return result;
+    } // end delete()
+
+
+    private boolean isColor(RedBlackNode node, boolean color) {
+        boolean result = false;
+        if (node == null) {
             if (color == BLACK) {
-                returnString = "Black";
+                result = true;
+            } // end if 
+
+        } else {
+            result = node.isColor(color);
+        } // end if 
+
+        return result;
+    } // end isColor()
+
+
+        private void fixupDelete(RedBlackNode parent, RedBlackNode child, boolean leftChild) {
+
+        while (parent != null && (child == null || child.isColor(BLACK))) {
+
+            if (leftChild) {
+                /*
+                 * problem node is a left child 
+                 */
+                RedBlackNode sibling = parent.getRightNode();
+                if (isColor(sibling, RED)) {
+                    /*
+                     * Case 1: child's sibling is red 
+                     *    recolor the sibling and the parent. 
+                     */
+                    //Debug.println("left case 1: child is " + child + " sibling is " + sibling);
+                    sibling.setColor(BLACK);
+                    parent.setColor(RED);
+                    rotateWithRightChild(parent);
+                    parent = child.getParentNode();
+                    sibling = parent.getRightNode();
+                } // end if 
+
+                if (sibling == null || (isColor(sibling.getLeftNode(), BLACK) && 
+                        isColor(sibling.getRightNode(), BLACK))) {
+                    /*
+                     * Case 2: sibling's color is black and has two black children 
+                     * 
+                     */
+                    //Debug.println("left case 2: child is " + child + " sibling is " + sibling);					
+                    if (sibling != null) {
+                        sibling.setColor(RED);
+                    }
+                    child = parent;
+                } else {
+                    if (isColor(sibling.getRightNode(), BLACK)) {
+                        /*
+                         * Case 3: sibling is black, sibling's left child is red
+                         *    and the right one is black 
+                         */
+                        //Debug.println("left case 3: child is " + child + " sibling is " + sibling);						
+                        sibling.getLeftNode().setColor(BLACK);
+                        sibling.setColor(RED);
+                        rotateWithLeftChild(sibling);
+                        sibling = parent.getRightNode();
+                    } // endif 
+
+                    /*
+                     * Case 4: sibling is black, sibling's right child is red
+                     */
+                    //Debug.println("left case 4: child is " + child + " sibling is " + sibling);
+                    sibling.setColor(parent.getColor());
+                    parent.setColor(BLACK);
+                    sibling.getRightNode().setColor(BLACK);
+                    rotateWithRightChild(parent);
+                    child = (RedBlackNode) root;
+                } // end if 
+
             } else {
-                returnString = "Red";
-            }
-            return returnString;
+                /*
+                 * Symmetric case for when problem is rightChild
+                 */
+                /*
+                 * problem node is a right child 
+                 */
+                RedBlackNode sibling = parent.getLeftNode();
+                //Debug.println("Right child: parent is " + parent + " sibling is" + sibling);
+                if (isColor(sibling, RED)) {
+                    /*
+                     * Case 1: child's sibling is red 
+                     *    recolor the sibling and the parent. 
+                     */
+                    //Debug.println("right case 1: child is " + child + " sibling is " + sibling);
+                    sibling.setColor(BLACK);
+                    parent.setColor(RED);
+                    rotateWithLeftChild(parent);
+                    sibling = parent.getLeftNode();
+                } // end if 
 
-        }
+                if (sibling == null || (isColor(sibling.getLeftNode(), BLACK) && 
+                        isColor(sibling.getRightNode(), BLACK))) {
 
-        public String getFontColor() {
-            String returnString = "";
-            returnString = "White";
-            
-            return returnString;
-        }
+                    /*
+                     * Case 2: sibling's color is black and has two black children 
+                     * 
+                     */
+                    //Debug.println("right case 2: child is " + child + " sibling is " + sibling);
+					/*
+                     * we need to set the sibling color to red 
+                     */
+                    if (sibling != null) {
+                        sibling.setColor(RED);
+                    }
+                    child = parent;
+                } else {
+                    if (isColor(sibling.getLeftNode(), BLACK)) {
+                        /*
+                         * Case 3: sibling is black, sibling's right child is red
+                         *    and the left one is black 
+                         */
 
-        @Override
-        public String toString() {
-            String returnString = "";
-            if (element != null) {
-                returnString += element.toString();
-                returnString += " [fillcolor=" + getColor() + ", style=" + getStyle() +
-                        ", shape=" + getShape() + ", fontcolor=" + getFontColor() + ", label=\"" + 
-                        element.toString() + "\"];";
-            }
+                        //Debug.println("right case 3: child is " + child + " sibling is " + sibling);
+                        sibling.getRightNode().setColor(BLACK);
+                        sibling.setColor(RED);
+                        rotateWithRightChild(sibling);
+                        sibling = parent.getLeftNode();
+                    } // endif 
 
-            return returnString;
+                    /*
+                     * Case 4: sibling is black, sibling's left child is red
+                     */
+                    //Debug.println("right case 4: child is " + child + " sibling is " + sibling);
+                    sibling.setColor(parent.getColor());
+                    parent.setColor(BLACK);
+                    sibling.getLeftNode().setColor(BLACK);
+                    rotateWithLeftChild(parent);
+                    child = (RedBlackNode) root;
+                } // end if 
 
-        }
+            } // end if
 
-        @Override
-        public String getName() {
-            if (element != null) {
-                return element.toString();
+            /*
+             * Update the parent, child, and leftChild variables for next iteration
+             */
+            if (child != null) {
+                parent = child.getParentNode();
             } else {
-                return "Error";
-            }
+                parent = null;
+            } // end if
 
-        }
-        Comparable element;    // The data in the node
+            leftChild = false;
+            if (child != null) {
+                leftChild = child.isLeftChild();
+            } // end if 
 
-        RedBlackNode left;       // Left child
+        } // end while
 
-        RedBlackNode right;      // Right child
+        if (child != null) {
+            child.setColor(BLACK);
+        } // end if
 
-        int color;      // Color
+    } // end fixupDelete()
 
-    }
-    private RedBlackNode header;
-    private static RedBlackNode nullNode;
-    
 
-    static // Static initializer for nullNode
-    {
-        nullNode = new RedBlackNode(null);
-        nullNode.left = nullNode.right = nullNode;
-    }
-    private static final int BLACK = 1;    // Black must be 1
+    private void fixupInsert(RedBlackNode z) {
 
-    private static final int RED = 0;
-    // Used in insert routine and its helpers
-    private static RedBlackNode current;
-    private static RedBlackNode parent;
-    private static RedBlackNode grand;
-    private static RedBlackNode great;
+        //Debug.println("fixUpinsert(): called with z = (" + z.data + "," + z.color +")");
+		/*
+         * 
+         */
+        while (z.getParentNode() != null && z.getParentNode().isColor(RED)) {
 
-    // Test program
-    public static void main(String[] args) {
+            if (z.getParentNode().isLeftChild()) {
+
+                RedBlackNode uncle = z.getParentNode().getParentNode().getRightNode();
+                if (uncle.isColor(RED)) {
+                    /*
+                     * Case 1: z's uncle is red
+                     */
+                    //Debug.println("fixup insert(): left side case 1");
+                    z.getParentNode().setColor(BLACK);
+                    uncle.setColor(BLACK);
+                    z.getParentNode().getParentNode().setColor(RED);
+                    z = z.getParentNode().getParentNode();
+
+                //System.out.println(this.toGraphViz("fixUpInsertFinishedCase1"));
+                } else {
+                    if (z.isRightChild()) {
+                        /*
+                         * Case 2: z's uncle has color = black and z is right child 
+                         */
+                        //Debug.println("fixup insert(): left side case 2");
+                        z = z.getParentNode();
+                        this.rotate(z, z.getRightNode());
+                    //System.out.println(this.toGraphViz("fixUpInsertFinishedCase2"));
+                    } // end if
+					/*
+                     * Case 3: z's uncle has color = black and z is right child 
+                     */
+                    //Debug.println("fixup insert(): left side case 3");
+                    z.getParentNode().setColor(BLACK);
+                    z.getParentNode().getParentNode().setColor(RED);
+                    this.rotate(z.getParentNode().getParentNode(), z.getParentNode());
+                //System.out.println(this.toGraphViz("fixUpInsertFinishedCase3"));
+                } // end if 
+
+            } else {
+                RedBlackNode uncle = z.getParentNode().getParentNode().getLeftNode();
+                if (uncle != null && uncle.isColor(RED)) {
+                    //Debug.println("fixup insert(): right side case 1");
+                    z.getParentNode().setColor(BLACK);
+                    uncle.setColor(BLACK);
+                    z.getParentNode().getParentNode().setColor(RED);
+                    z = z.getParentNode().getParentNode();
+                //System.out.println(this.toGraphViz("fixUpInsertFinishedCase1Else"));					
+                } else {
+                    if (z.isLeftChild()) {
+                        //Debug.println("fixup insert(): right side case 2");
+                        z = z.getParentNode();
+                        this.rotate(z, z.getLeftNode());
+                    //System.out.println(this.toGraphViz("fixUpInsertFinishedCase2Else"));
+                    } // end if
+                    //Debug.println("fixup insert(): right side case 3");
+
+                    z.getParentNode().setColor(BLACK);
+                    z.getParentNode().getParentNode().setColor(RED);
+                    this.rotate(z.getParentNode().getParentNode(), z.getParentNode());
+                //System.out.println(this.toGraphViz("fixUpInsertFinishedCase3Else"));
+                } // end if 
+
+            } // end if 
+
+        } // end while() 
+
+        root.setColor(BLACK);
+    } // end fixupInsert()
+
+
+    public static void main(String[] args) throws InvalidTreeException {
+        System.out.println("Testing RedBlack tree");
         RedBlackTree t = new RedBlackTree();
+        t.insert(new Double(1));
+        t.validateTree();
 
-        System.out.println("Checking... (no more output means success)");
+        t.insert(new Double(2));
+        t.validateTree();
 
-        //for (int i = GAP; i != 0; i = (i + GAP) % NUMS) {
+        t.insert(new Double(3));
+        t.validateTree();
 
-        t.insert(new Integer(13));
-        t.insert(new Integer(8));
-        t.insert(new Integer(17));
-        t.insert(new Integer(1));
-        t.insert(new Integer(11));
-        t.insert(new Integer(15));
-        t.insert(new Integer(25));
-        t.insert(new Integer(6));
-        t.insert(new Integer(22));
-        t.insert(new Integer(27));
-        
+        t.insert(new Double(4));
+        t.validateTree();
+
+//		System.out.println("tree before 5 is \n" + t.toGraphViz("Before5"));
+        t.insert(new Double(5));
+//		System.out.println("tree after 5 is \n" + t.toGraphViz("After5"));
+        t.validateTree();
+
+        t.insert(new Double(6));
+        t.validateTree();
+
+        t.insert(new Double(7));
+        t.validateTree();
+
+        System.out.println("=======================================");
+        System.out.println(t.toGraphViz("RedBlackTreeBefore8"));
+        t.insert(new Double(8));
+        System.out.println(t.toGraphViz("RedBlackTreeAfter8"));
+        System.out.println("=======================================");
+
+        t.validateTree();
+//		t.insert("i");
+//		t.insert("j");
+//		t.insert("k");
+
+        System.out.println(t.toGraphViz("RedBlackTree"));
 
 
-        //}
-        System.out.println(t.toString());
-    //if (((Integer) (t.findMin())).intValue() != 1 ||
-    //        ((Integer) (t.findMax())).intValue() != NUMS - 1) {
-    //    System.out.println("FindMin or FindMax error!");
-    //}
-    //for (int i = 1; i < NUMS; i++) {
-    //    if (((Integer) (t.find(new Integer(i)))).intValue() != i) {
-    //        System.out.println("Find error1!");
-    //    }
-    //} 
-    }
+        System.out.println("tree is ");
+        System.out.println(t);
+        Double s;
 
-    public void run(Graph g) {
-        running = true;
-        controller = new Controller(g, pseudoCode, this);
-        RedBlackTree t = new RedBlackTree();
-        final int NUMS = 400000;
-        final int GAP = 35461;
+        s = new Double(4);
+        System.out.println("deleting " + s);
+        t.delete(s);
 
-        System.out.println("Checking... (no more output means success)");
+        System.out.println("new tree is ");
+        System.out.flush();
+        System.out.println(t.toGraphViz("RedBlackTree"));
+        System.out.println(t);
 
-        for (int i = GAP; i != 0; i = (i + GAP) % NUMS) {
-            t.insert(new Integer(i));
-        }
-        if (((Integer) (t.findMin())).intValue() != 1 ||
-                ((Integer) (t.findMax())).intValue() != NUMS - 1) {
-            System.out.println("FindMin or FindMax error!");
-        }
-        for (int i = 1; i < NUMS; i++) {
-            if (((Integer) (t.find(new Integer(i)))).intValue() != i) {
-                System.out.println("Find error1!");
-            }
-        }
-        running = false;
-    }
+//		s= "c";
+//		System.out.println("deleting " + s);
+//		t.delete(s);
+//		
+//		System.out.println("new tree is ");
+//		System.out.flush();
+//		System.out.println(t.toGraphViz("RedBlackTree"));
+//		System.out.println(t);
+//		
+//		s= "e";
+//		System.out.println("deleting " + s);
+//		t.delete(s);
+//		
+//		System.out.println("new tree is ");
+//		System.out.flush();
+//		System.out.println(t.toGraphViz("RedBlackTree"));
+//		System.out.println(t);
+//		
+//		
+//		s= "b";
+//		System.out.println("deleting " + s);
+//		t.delete(s);
+//		
+//		System.out.println("new tree is ");
+//		System.out.flush();
+//		System.out.println(t.toGraphViz("RedBlackTree"));
+//		System.out.println(t);
+    } // end main()
 
-    public String getFileName() {
-        return FILENAME;
-    }
-
-    public Controller getController() {
-        return controller;
-    }
-
-    public int getInstanceID() {
-        return instanceID;
-    }
-
-    public boolean isRunning() {
-        return running;
-    }
 }
-
-

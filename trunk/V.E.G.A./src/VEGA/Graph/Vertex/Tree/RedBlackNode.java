@@ -14,7 +14,7 @@ public class RedBlackNode extends BinaryTreeNode{
     public RedBlackNode left;
     public RedBlackNode right;
     public RedBlackNode parent;
-    private Comparable data = super.data;
+    private Comparable data = super.getData();
 
     public boolean color; // for Red Black trees
     
@@ -46,15 +46,17 @@ public class RedBlackNode extends BinaryTreeNode{
         
     }
     
+    @Override
     public RedBlackNode getLeftNode(){
         return left;
     }
     
+    @Override
     public RedBlackNode getRightNode(){
         return right;
     }
-    
-    public RedBlackNode getParent(){
+
+    public RedBlackNode getParentNode(){
         return parent;
     }
     

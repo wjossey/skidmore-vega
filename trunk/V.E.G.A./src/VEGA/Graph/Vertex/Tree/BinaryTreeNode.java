@@ -2,54 +2,118 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package VEGA.Graph.Vertex.Tree;
 
 /**
  *
  * @author w_jossey
  */
-public class BinaryTreeNode extends TreeNode{
+public class BinaryTreeNode extends TreeNode {
+
     private BinaryTreeNode left;
     private BinaryTreeNode right;
     private BinaryTreeNode parent;
-    
-    public BinaryTreeNode(Comparable c){
+
+    /**
+     * 
+     * @param c
+     */
+    public BinaryTreeNode(Comparable c) {
         super(c);
         this.left = null;
         this.right = null;
-        
+
     }
-    
-    public BinaryTreeNode(Comparable c, BinaryTreeNode left, BinaryTreeNode right){
+
+    /**
+     * 
+     * @param c
+     * @param left
+     * @param right
+     */
+    public BinaryTreeNode(Comparable c, BinaryTreeNode left, BinaryTreeNode right) {
         super(c);
         this.left = left;
         this.right = right;
-        
+
     }
-    
-    public BinaryTreeNode getLeftChild(){
+
+    /**
+     * 
+     * @return
+     */
+    public BinaryTreeNode getLeftNode() {
         return left;
     }
-    
-    public BinaryTreeNode getRightChild(){
+
+    /**
+     * 
+     * @return
+     */
+    public BinaryTreeNode getRightNode() {
         return right;
     }
-    
-    public void setLeftChild(BinaryTreeNode left){
+
+    /**
+     * 
+     * @param left
+     */
+    public void setLeftNode(BinaryTreeNode left) {
         this.left = left;
     }
-    
-    public void setRightChild(BinaryTreeNode right){
+
+    /**
+     * 
+     * @param right
+     */
+    public void setRightNode(BinaryTreeNode right) {
         this.right = right;
     }
-    
+
+    /**
+     * 
+     * @return
+     */
     @Override
-    public BinaryTreeNode getParent(){
+    public BinaryTreeNode getParentNode() {
         return this.parent;
     }
-    
-    public void setParent(BinaryTreeNode parent){
+
+    /**
+     * 
+     * @param parent
+     */
+    public void setParentNode(BinaryTreeNode parent) {
         this.parent = parent;
     }
+
+    /**
+     * 
+     * @return
+     */
+    public boolean isRightChild() {
+        if (parent != null && parent.right == this) {
+            return true;
+        } else {
+            return false;
+        } // end if
+
+    } // end isRightChild()
+
+
+    /**
+     * 
+     * @return
+     */
+    public boolean isLeftChild() {
+        if (parent != null && parent.left == this) {
+            return true;
+        } else {
+            return false;
+        } // end if 
+
+    } // end isLeftChild()
+    
+    
+
 }

@@ -1,337 +1,713 @@
 package VEGA.Algorithms.Trees.BinarySearch;
 
-import VEGA.Algorithms.GraphAlgorithm;
-import VEGA.Controller;
-import VEGA.Graph.Graph;
-import VEGA.Graph.Tree.Tree;
-import VEGA.Graph.Vertex.Tree.*;
+import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
+import java.util.Iterator;
 
-/*
- * Created on Feb 15, 2005
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
-import VEGA.PseudoCode.PseudoCode;
 /**
- * @author oconnell
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
+ * Binary search tree class.  Contains the InvaliTreeException subclass.
+ * @author Tom O'Connell
+ * @author Edit by:  Weston Jossey-  April 21, 2008
+ *  
  */
-public class BinarySearchTree extends Tree implements GraphAlgorithm {
+public class BinarySearchTree {
 
-    public int bstSize = 0;
-    public static final boolean RED = true;
-    public static final boolean BLACK = false;
-    BinaryTreeNode root;
-    public static int time = 0;
-    private static int counter = 0;
-    private Controller c;
-    private PseudoCode pseudoCode;
+    public static boolean RED = true;
+    public static boolean BLACK = false;
+    private static int idCounter = 0; // unique identifier for the node;
 
-    /**
-     * 
-     * @param treeNodes
-     */
-    public BinarySearchTree(BinaryTreeNode[] treeNodes) {
-        super(treeNodes);
-        root = null;
-    }
 
-    /**
-     * 
-     */
+    public class InvalidTreeException extends Exception {
+
+        public InvalidTreeException(String s) {
+            super(s);
+        } // end constructor
+
+    } // end class InvalidTreeException 
+
+
+    private class BSTIterator implements Iterator {
+
+        private BinaryTreeNode curr;
+        private BinaryTreeNode prev;
+
+        public BSTIterator() {
+            curr = minimum(root);
+            prev = null;
+        }
+
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.util.Iterator#hasNext()
+         */
+        public boolean hasNext() {
+            // TODO Auto-generated method stub
+            return curr != null;
+        }
+
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.util.Iterator#next()
+         */
+        public Object next() {
+            Object result = curr.getData();
+            prev = curr;
+            curr = successor(curr);
+            return result;
+        }
+
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.util.Iterator#remove()
+         */
+        public void remove() {
+            delete(prev);
+        }
+    } // end inner class BSTIterator
+
+
+    public Iterator getIterator() {
+        return new BSTIterator();
+    } // end getIterator()
+
+    protected BinaryTreeNode root;
+    protected int numElements;
+
     public BinarySearchTree() {
-        super();
         root = null;
+        numElements = 0;
     }
 
-    /**
-     * 
-     * @return
-     */
-    @Override
-    public BinaryTreeNode getRoot() {
-        return (BinaryTreeNode) super.getRoot();
+    public boolean isEmpty() {
+        return root == null;
     }
 
-    /**
-     * 
-     * @param key
-     * @param t
-     */
-    public void add(Comparable key, BinaryTreeNode t) {
+    public void insert(Object arg) {
+        Comparable c = (Comparable) arg;
+        BinaryTreeNode newNode = new BinaryTreeNode(c);
+        insertNode(newNode);
+    } // end insert();
 
-        BinaryTreeNode newNode = new BinaryTreeNode(key);
-        if (t == null) {
+
+    protected void insertNode(BinaryTreeNode newNode) {
+        Comparable k = (Comparable) newNode.getData();
+        BinaryTreeNode prev = null;
+        BinaryTreeNode curr = root;
+        while (curr != null) {
+            prev = curr;
+            if (k.compareTo(curr.getData()) < 0) {
+                curr = curr.getLeftNode();
+            } else {
+                curr = curr.getRightNode();
+            } // end if
+
+        } // end while
+
+        newNode.setParentNode(prev);
+        if (prev == null) {
             root = newNode;
         } else {
-            if (newNode.getData().compareTo(t.getData()) > 0) {
-                if (t.getRightChild() == null) {
-                    t.setRightChild(newNode);
-                    newNode.setParent(t);
-                } else {
-                    add(key, t.getRightChild());
-                }
-            } else if (t.getLeftChild() == null) {
-                t.setLeftChild(newNode);
-                newNode.setParent(t);
+            if (k.compareTo(prev.getData()) < 0) {
+                prev.setLeftNode(newNode);
             } else {
-                add(key, t.getLeftChild());
-            }
-        }
-    }
+                prev.setRightNode(newNode);
+            } // end if
 
-    /**
-     * 
-     * @param key
-     */
-    public void add(Comparable key) {
-        add(key, root);
-        bstSize++;
+        } // end if
 
-    }
-
-    /**
-     * 
-     * @param key
-     * @return
-     */
-    public Comparable search(Comparable key) {
-        if (!searchBoolean(key, root)) {
-            return null;
-        }
-        return (search(key, root)).getData();
-
-    }
-
-    /**
-     * 
-     * @param key
-     * @param t
-     * @return
-     */
-    private boolean searchBoolean(Comparable key, BinaryTreeNode t) {
-        boolean found = false;
-
-        if (t == null) {
-            found = false;
-        } else if (key.compareTo(t.getData()) == 0) {
-            found = true;
-        } else if (key.compareTo(t.getData()) > 0) {
-            found = searchBoolean(key, t.getRightChild());
-        } else {
-            found = searchBoolean(key, t.getLeftChild());
-        }
-        return found;
-    }
-
-    /**
-     * 
-     * @param key
-     * @param t
-     * @return
-     */
-    private BinaryTreeNode search(Comparable key, BinaryTreeNode t) {
-
-        BinaryTreeNode returnNode = null;
-
-        if (root == null) {
-            return null;
-        }
-        if (key.compareTo(t.getData()) == 0) {
-            returnNode = t;
-        } else if (key.compareTo(t.getData()) > 0) {
-            returnNode = search(key, t.getRightChild());
-        } else {
-            returnNode = search(key, t.getLeftChild());
-        }
-        return returnNode;
-
-    }
-
-    /**
-     * 
-     * @return
-     */
-    public Comparable min() {
-        Comparable result = min(root);
-        return result;
-    }
-
-    /**
-     * 
-     * @param t
-     * @return
-     */
-    private Comparable min(BinaryTreeNode t) {
-        Comparable result = null;
-        if (t != null) {
-            if (t.getLeftChild() != null) {
-                result = min(t.getLeftChild());
-            }
-        }
-        return result;
-    }
-
-    /**
-     * 
-     * @param t
-     * @return
-     */
-    private BinaryTreeNode minNode(BinaryTreeNode t) {
-        BinaryTreeNode returnNode = null;
-        if (t != null) {
-            if (t.getLeftChild() != null) {
-                returnNode = (BinaryTreeNode) minNode(t.getLeftChild());
-            }
-        }
-        return returnNode;
-    }
-
-    /**
-     * 
-     * @param key
-     */
-    public void delete(Comparable key) {
-        bstSize--;
-        BinaryTreeNode deletedNode, successor;
-        deletedNode = search(key, root);
-        if (deletedNode.getLeftChild() != null && deletedNode.getRightChild() != null) {
-            successor = successor(deletedNode);
-            if (successor.getRightChild() == null) {
-                if (successor.getParent().getRightChild() == successor) {
-                    successor.getParent().setRightChild(null);
-                } else {
-                    successor.getParent().setLeftChild(null);
-                }
-                deletedNode.setData(successor.getData());
-
-            } else {
-
-                if (successor.getParent().getRightChild() == successor) {
-                    successor.getParent().setRightChild(successor.getRightChild());
-                } else {
-                    successor.getParent().setLeftChild(null);
-                }
-                deletedNode.setData(successor.getData());
-
-            }
+        numElements++;
+    } // end insertNode();
 
 
-        } else if (deletedNode.getLeftChild() != null || deletedNode.getRightChild() != null) {
-            if (deletedNode.getParent().getLeftChild() == deletedNode) {
-                if (deletedNode.getLeftChild() != null) {
-                    deletedNode.getParent().setLeftChild(deletedNode.getLeftChild());
-                    deletedNode.getLeftChild().setParent(deletedNode.getParent());
-                } else {
-                    deletedNode.getParent().setLeftChild(deletedNode.getRightChild());
-                    deletedNode.getRightChild().setParent(deletedNode.getParent());
-                }
-
-            } else {
-                if (deletedNode.getLeftChild() != null) {
-                    deletedNode.getParent().setRightChild(deletedNode.getLeftChild());
-                    deletedNode.getLeftChild().setParent(deletedNode.getParent());
-                } else {
-                    deletedNode.getParent().setRightChild(deletedNode.getRightChild());
-                    deletedNode.getRightChild().setParent(deletedNode.getParent());
-                }
-
-            }
-
-        } else {
-            if (deletedNode.getParent().getRightChild() == deletedNode) {
-                deletedNode.getParent().setRightChild(null);
-            } else {
-                deletedNode.getParent().setLeftChild(null);
-            }
-        }
-    }
-
-    /**
-     * 
-     * @param t
-     * @return
-     */
-    private BinaryTreeNode successor(BinaryTreeNode t) {
-        return minNode(t.getRightChild());
-    }
-
-    /**
-     * 
-     * @return
-     */
-    public Object[] treeToHeap() {
-        counter = 0;
-        Object[] heap = new Object[bstSize];
-        inOrderWalkVertex(root, heap);
-        return heap;
-    }
-
-    /**
-     * 
-     * @param t
-     * @param v
-     */
-    private void inOrderWalkVertex(BinaryTreeNode t, Object[] v) {
-        if (t != null) {
-            inOrderWalkVertex(t.getLeftChild(), v);
-            v[counter] = t.getData();
-            counter++;
-            inOrderWalkVertex(t.getRightChild(), v);
-
-        }
-    }
-
-    /**
-     * 
-     * @param t
-     * @return
-     */
-    private String inOrderWalk(BinaryTreeNode t) {
+    public String inOrderWalk(BinaryTreeNode curr) {
         String result = "";
-        if (t != null) {
-            result = inOrderWalk(t.getLeftChild());
-            result += t.getData() + " ";
-            result += inOrderWalk(t.getRightChild());
+        if (curr != null) {
+            result = inOrderWalk(curr.getLeftNode());
+            result += " " + curr.getData() + " color = " + curr.getColor();
+            result += inOrderWalk(curr.getRightNode());
         }
         return result;
-    } // end inOrderWalk()
+    }
+
+    private BinaryTreeNode minimum(BinaryTreeNode subtree) {
+        BinaryTreeNode minimum = null;
+        while (subtree != null) {
+            minimum = subtree;
+            subtree = subtree.getLeftNode();
+        }
+        return minimum;
+    }
+
+    /**
+     * Returns the successor node of a subtree
+     * @param subtree
+     * @return
+     */
+    private BinaryTreeNode successor(BinaryTreeNode subtree) {
+        if (subtree.getRightNode() != null) {
+            return minimum(subtree.getRightNode());
+        }
+        BinaryTreeNode prev = subtree.getParentNode();
+        while (prev != null && subtree == prev.getRightNode()) {
+            subtree = prev;
+            prev = subtree.getParentNode();
+        } // end while
+
+        return prev;
+    }
+
+    protected BinaryTreeNode search(BinaryTreeNode subtree, Comparable key) {
+        if (subtree == null || key.compareTo(subtree.getData()) == 0) {
+            return subtree;
+        }
+        if (key.compareTo(subtree.getData()) < 0) {
+            return search(subtree.getLeftNode(), key);
+        } else {
+            return search(subtree.getRightNode(), key);
+        } // end if
+
+    } // end search()
+
+
+    public Object search(Object arg) {
+        Comparable key = (Comparable) arg;
+        BinaryTreeNode node = search(root, key);
+        if (node != null) {
+            return node.getData();
+        } else {
+            return null;
+        }
+    } // end search()
+
+
+    public Comparable searchLoop(Comparable key) {
+        BinaryTreeNode subtree = root;
+        boolean found = false;
+        while (subtree != null && !found) {
+            if (key.compareTo(subtree.getData()) == 0) {
+                found = true;
+            } else if (key.compareTo(subtree.getData()) < 0) {
+                subtree = subtree.getLeftNode();
+            } else {
+                subtree = subtree.getRightNode();
+            }
+        } // end while
+
+        if (subtree != null) {
+            return subtree.getData();
+        } else {
+            return null;
+        }
+    } // end search()
 
 
     /**
      * 
+     * @param key
      * @return
      */
-    @Override
+    public Comparable successor(Comparable key) {
+        BinaryTreeNode node = search(root, key);
+        if (node != null) {
+            BinaryTreeNode succ = successor(node);
+            if (succ != null) {
+                return succ.getData();
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    } // end search()
+
+
+    /**
+     * Deletes a value from the tree without having to have the specific value.
+     * @param arg  Object to delete
+     * @return Returns true if found and deleted, false if it fails.
+     */
+    public boolean delete(Object arg) {
+        boolean result = false;
+        Comparable key = (Comparable) arg;
+        BinaryTreeNode node = search(root, key);
+        if (node != null) {
+            delete(node);
+            numElements--;
+            result = true;
+        }
+        return result;
+    }
+
+    /**
+     * Deletes the data associated with the node specified
+     * <p>We have three cases:
+     * <ul>1. Node has no children (remove it)</ul>
+     * <ul>2. Node has 1 child (splice it out)</ul>
+     * <ul>3. Node has two childre (splice out its successor which has only 1 child)</ul>
+     * </p>
+     * @param node the node whose data should be deleted from the tree
+     * @return returns the parent of the actual node that was 
+     * spliced out of the tree. 
+     */
+    protected BinaryTreeNode delete(BinaryTreeNode node) {
+        /*
+         * 3 cases
+         * 
+         * 1) node has no children (remove it) 2) node has 1 child (splice it
+         * out) 3) node has 2 children (splice out its successor which has only
+         * 1 child)
+         *  
+         */
+        BinaryTreeNode nodeToDelete;
+
+        if (node.getLeftNode() == null || node.getRightNode() == null) {
+            nodeToDelete = node;
+        } else {
+            nodeToDelete = successor(node);
+            node.setData(nodeToDelete.getData());
+        } // end if
+
+        BinaryTreeNode nodeToUpdate;
+
+        if (nodeToDelete.getLeftNode() != null) {
+            nodeToUpdate = nodeToDelete.getLeftNode();
+        } else {
+            nodeToUpdate = nodeToDelete.getRightNode();
+        } // end if
+
+        if (nodeToUpdate != null) {
+            nodeToUpdate.setParentNode(nodeToDelete.getParentNode());
+        } // end if 
+
+        BinaryTreeNode par = null;
+        if (nodeToDelete.getParentNode() == null) {
+            root = nodeToUpdate;
+        } else {
+
+            par = nodeToDelete.getParentNode();
+            if (nodeToDelete == par.getLeftNode()) {
+                par.setLeftNode(nodeToUpdate);
+            } else {
+                par.setRightNode(nodeToUpdate);
+            }
+        } // end if 
+
+        return par;
+    } // end delete(TreeNode)
+
+
+    protected BinaryTreeNode getNodeToDelete(BinaryTreeNode node) {
+        /*
+         * 3 cases
+         * 
+         * 1) node has no children (remove it) 2) node has 1 child (splice it
+         * out) 3) node has 2 children (splice out its successor which has only
+         * 1 child)
+         *  
+         */
+        BinaryTreeNode nodeToDelete;
+
+        //Debug.println("getNodeToDelete(): node passed in is " + node);
+        //Debug.println("getNodeToDelete(): node's parent is " + node.getParentNode());
+        if (node.getLeftNode() == null || node.getRightNode() == null) {
+
+            nodeToDelete = node;
+            //Debug.println("getNodeToDelete(): left and right are null");
+        } else {
+            nodeToDelete = successor(node);
+            //Debug.println("getNodeToDelete(): successor is " + node);
+            node.setData(nodeToDelete.getData());
+        } // end if
+
+        return nodeToDelete;
+    } // end getNodeToDelete();
+
+
+    protected BinaryTreeNode spliceOutNode(BinaryTreeNode nodeToDelete) {
+        BinaryTreeNode nodeToUpdate;
+
+        if (nodeToDelete.getLeftNode() != null) {
+            nodeToUpdate = nodeToDelete.getLeftNode();
+        } else {
+            nodeToUpdate = nodeToDelete.getRightNode();
+        } // end if
+
+        if (nodeToUpdate != null) {
+            nodeToUpdate.setParentNode(nodeToDelete.getParentNode());
+        } // end if 
+
+        BinaryTreeNode par = null;
+        if (nodeToDelete.getParentNode() == null) {
+            root = nodeToUpdate;
+        } else {
+
+            par = nodeToDelete.getParentNode();
+            if (nodeToDelete == par.getLeftNode()) {
+                par.setLeftNode(nodeToUpdate);
+            } else {
+                par.setRightNode(nodeToUpdate);
+            }
+        } // end if 
+
+        return par;
+    } // end delete(TreeNode)
+
+
+    /**
+     * Left, root, right
+     * @param curr Root of the tree (or sub tree) to walk through.
+     * @return Returns graphviz formatted node information.
+     */
+    public String preOrderGraphViz(BinaryTreeNode curr) {
+        String result = "";
+        if (curr != null) {
+            result += "node[color = " + (curr.isColor(RED) ? "red" : "black") + "]\n";
+            result += curr.graphVizName() + "\n";
+
+            //Try to go to the left
+            if (curr.getLeftNode() != null) {
+                result += curr.graphVizName() + " -> ";
+                result += curr.getLeftNode().graphVizName() + "\n";
+                result += preOrderGraphViz(curr.getLeftNode());
+            } else {
+                //No node to the left
+                result += "node[color = black]\n";
+                result += curr.graphVizName() + " -> \" null" + numNull + "\"\n";
+                numNull++;
+            } // end if
+
+            //Try to go to the right
+            if (curr.getRightNode() != null) {
+                // result += "node[color = " + (curr.isColor(RED)? "red":"black") + "]\n";
+                result += curr.graphVizName() + " -> ";
+                result += curr.getRightNode().graphVizName() + "\n";
+                result += preOrderGraphViz(curr.getRightNode());
+            } else {
+                //No node to the right
+                result += "node[color = black]\n";
+                result += curr.graphVizName() + " -> \"null" + numNull + "\"\n";
+                numNull++;
+            } // end if
+
+        } // end if
+
+        return result;
+    } // end preOrderGraphViz()
+
+
+    //Left, right, root
+    public String postOrderGraphViz(BinaryTreeNode curr) {
+        String result = "";
+        String redColor = "red";
+        String blackString = "black";
+
+        if (curr != null) {
+
+            /*
+             * First output the color and name of the current node to make
+             * sure the color is set correctly in graphViz.
+             */
+            result += "node[style=filled, fontcolor=White, color = " + (curr.isColor(RED) ? "red" : blackString) + "]\n";
+            result += curr.graphVizName() + "\n";
+
+            /*
+             * Now check the left, outputing the whole left subtree before 
+             * outputing the edge between the current node and its left child 
+             */
+            if (curr.getLeftNode() != null) {
+                // result += "node[color = " + (curr.isColor(RED)? "red":"black") + "]\n";
+                result += postOrderGraphViz(curr.getLeftNode());
+
+                result += curr.graphVizName() + " -> ";
+                result += curr.getLeftNode().graphVizName() + "\n";
+
+            } else {
+                result += "node[color = " + blackString + ", style=filled]\n";
+                result += curr.graphVizName() + " -> \" null" + numNull + "\"\n";
+                numNull++;
+            } // end if
+
+            /*
+             * Now output the right subtree
+             */
+            if (curr.getRightNode() != null) {
+                // result += "node[color = " + (curr.isColor(RED)? "red":"black") + "]\n";
+                result += postOrderGraphViz(curr.getRightNode());
+                result += curr.graphVizName() + " -> ";
+                result += curr.getRightNode().graphVizName() + "\n";
+
+            } else {
+                result += "node[color = " + blackString + ", style=filled]\n";
+                result += curr.graphVizName() + " -> \"null" + numNull + "\"\n";
+                numNull++;
+            } // end if
+
+        } // end if
+
+        return result;
+    } // end preOrderGraphViz()
+
+    private static int numNull = 0;
+
+    /**
+     * create a graphViz() representation of the tree
+     * 
+     * @return a String representing the graphViz tree.
+     */
+    public String toGraphViz(String title) {
+        String result = "digraph " + title + "  {\n";
+        numNull = 0;
+        result += postOrderGraphViz(root);
+        result += "}";
+        return result;
+    } // end toGraphViz()
+
+
     public String toString() {
         String result = inOrderWalk(root);
         return result;
     }
 
-    public void run(BinarySearchTree t) {
-        c = new Controller(t, pseudoCode, t);
+    /**
+     * @return Returns the numElements.
+     */
+    public int getNumElements() {
+        return numElements;
     }
 
-    public String getFileName() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see HashTables.Dictionary#getNumEntries()
+     */
+    public int getNumEntries() {
+        // TODO Auto-generated method stub
+        return numElements;
     }
 
-    public Controller getController() {
-        return c;
-    }
+    /**
+     * Generic rotate takes the parent and child
+     * @param 
+     */
+    protected void rotate(BinaryTreeNode parent, BinaryTreeNode child) {
+        BinaryTreeNode transferredChild = null;
+        BinaryTreeNode grandParent = parent.getParentNode();
+        boolean parentWasLeftChild = parent.isLeftChild();
 
-    public int getInstanceID() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+        //Debug.println("rotate(): called with parent = " + parent + " child = " + child);
+        if (child.isLeftChild()) {
+            //Debug.println("rotate(): child is a left child");
+            transferredChild = child.getRightNode();
+            //Debug.println("rotate(): transferred child is " + transferredChild);
+            parent.setLeftNode(transferredChild);
+            child.setRightNode(parent);
+        } else {
+            //Debug.println("rotate(): child is a right child");
+            transferredChild = child.getLeftNode();
+            parent.setRightNode(transferredChild);
+            //Debug.println("rotate(): transferred child is " + transferredChild);
+            child.setLeftNode(parent);
+        } // end if 
 
-    public boolean isRunning() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+        /*
+         * Update the parent pointers and root if necessary
+         */
+        child.setParentNode(parent.getParentNode());
+        parent.setParentNode(child);
+        if (transferredChild != null) {
+            transferredChild.setParentNode(parent);
+            //Debug.println("rotate(): transferredchild " + transferredChild + "'s new parent is " + transferredChild.getParentNode());
+        } // end if 
 
-    public void run(Graph g) {
-        run((BinarySearchTree) g);
-    }
+        //Debug.println("rotate(): child " + child + "'s new parent is " + child.getParentNode());
+        //Debug.println("rotate(): parent " + parent + "'s new parent is " + parent.getParentNode());
+
+        if (grandParent == null) {
+            root = child;
+        } else {
+            if (parentWasLeftChild) {
+                grandParent.setLeftNode(child);
+            } else {
+                grandParent.setRightNode(child);
+            } // end if 
+
+        } // end if 
+
+
+    /*
+     * update the heights -- must be in this order
+     */
+//		updateHeight(transferredChild);
+//		updateHeight(child);
+//		updateHeight(parent);
+
+
+    } // end rotate()
+
+
+    /*
+     * CLRS calls this Left-Rotate
+     */
+    protected void rotateWithRightChild(BinaryTreeNode problemNode) {
+        BinaryTreeNode oldRight = problemNode.getRightNode();
+        BinaryTreeNode newRight = oldRight.getLeftNode();
+        BinaryTreeNode parentOfProblem = problemNode.getParentNode();
+
+
+        oldRight.setLeftNode(problemNode);
+        oldRight.setParentNode(problemNode.getParentNode());
+        problemNode.setRightNode(newRight);
+        problemNode.setParentNode(oldRight);
+        /*
+         * update the heights -- must be in this order
+         */
+        updateHeight(problemNode);
+        updateHeight(oldRight);
+
+        if (parentOfProblem == null) {
+            root = oldRight;
+            //Debug.println("rotateWithRight(): root set to " + oldRight.graphVizName());
+        } else {
+            if (parentOfProblem.getLeftNode() == problemNode) {
+                parentOfProblem.setLeftNode(oldRight);
+            } else {
+                parentOfProblem.setRightNode(oldRight);
+            } // end if 
+
+            updateHeight(parentOfProblem);
+
+        } // end if 
+
+    } // end rotateWithRight()
+
+
+    /**
+     * CLRS calls this method "RightRotate". *Note from Tom*
+     * @param problemNode
+     */
+    protected void rotateWithLeftChild(BinaryTreeNode problemNode) {
+        BinaryTreeNode oldLeft = problemNode.getLeftNode();
+        BinaryTreeNode newLeft = oldLeft.getRightNode();
+        BinaryTreeNode parentOfProblem = problemNode.getParentNode();
+
+
+        oldLeft.setRightNode(problemNode);
+        oldLeft.setParentNode(problemNode.getParentNode());
+        problemNode.setLeftNode(newLeft);
+        problemNode.setParentNode(oldLeft);
+        /*
+         * update the heights -- must be in this order
+         */
+        updateHeight(problemNode);
+        updateHeight(oldLeft);
+
+        if (parentOfProblem == null) {
+            root = oldLeft;
+            System.out.println("rotateWithLeft(): root set to " + oldLeft.graphVizName());
+        } else {
+            if (parentOfProblem.getLeftNode() == problemNode) {
+                parentOfProblem.setLeftNode(oldLeft);
+            } else {
+                parentOfProblem.setRightNode(oldLeft);
+            } // end if 
+
+            updateHeight(parentOfProblem);
+
+        } // end if 
+
+    } // end rotateWithLeft()
+
+
+    /**
+     * Updates the height of a node
+     * @param parent Node to update height on
+     * @return Returns true if balanced
+     */
+    protected boolean updateHeight(BinaryTreeNode parent) {
+        int heightLeft = -1;
+        int heightRight = -1;
+        boolean balanced = false;
+
+        if (parent.getLeftNode() != null) {
+            heightLeft = parent.getLeftNode().getHeight();
+        }
+
+        if (parent.getRightNode() != null) {
+            heightRight = parent.getRightNode().getHeight();
+        } // end if
+
+        /* Update the height of the node*/
+        parent.setHeight(Math.max(heightLeft, heightRight) + 1);
+
+
+        /* Determine if this node is balanced.*/
+        if (Math.abs(heightLeft - heightRight) <= 1) {
+            balanced = true;
+        } // end if
+
+        return balanced;
+    } // end updateHeight()
+
+
+    /**
+     * Validates tree from the root nood as to whether or not it is a valid binary search
+     * tree.
+     * @return
+     * @throws RedBlackTree.BinarySearchTree.InvalidTreeException
+     */
+    public boolean validateTree() throws InvalidTreeException {
+        boolean result = true;
+        result = validateTree(root);
+        return result;
+    } // end validateTree()
+
+
+    /**
+     * Validates to make sure the tree (or sub tree) is a valid binary tree
+     * @param sub
+     * @return Returns true if a valid binary tree, false if invalid.
+     * @throws RedBlackTree.BinarySearchTree.InvalidTreeException
+     */
+    public boolean validateTree(BinaryTreeNode sub) throws InvalidTreeException {
+        boolean valid = true;
+        if (sub == null) {
+            return true;
+        } else {
+            if (sub.getLeftNode() != null) {
+                valid = validateTree(sub.getLeftNode());
+
+                if (sub.getLeftNode().getParentNode() != sub) {
+                    valid = false;
+                    //Debug.println("validate(): exception on tree " + this.toGraphViz("BadTree"));
+                    throw new InvalidTreeException("bad parent pointer at " + sub.getLeftNode());
+
+                } // end if 
+
+            } // end if 
+
+            if (sub.getRightNode() != null) {
+                valid = validateTree(sub.getRightNode());
+
+                if (sub.getRightNode().getParentNode() != sub) {
+                    valid = false;
+                    //Debug.println("validate(): exception on tree " + this.toGraphViz("BadTree"));
+                    throw new InvalidTreeException("bad parent pointer at " + sub.getRightNode());
+
+                } // end if 
+
+            } // end if 
+
+        } // end if 
+
+        return valid;
+    } // end validateTree()
+
 }
+	
+	
