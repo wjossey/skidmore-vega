@@ -17,7 +17,9 @@ public class RedBlackTreeDataStructure extends BinarySearchTree{
         super();
     }
     
-    public void insert(BinaryTreeNode node){
+    public void insert(Comparable c){
+        BinaryTreeNode node = new BinaryTreeNode(c);
+        insertNode(node);
         insert_case1(node);
     }
     
@@ -105,13 +107,12 @@ public class RedBlackTreeDataStructure extends BinarySearchTree{
         
         if((node == node.getParentNode().getRightNode()) && 
                 (node.getParentNode() == grandparent.getLeftNode())){
-            rotateWithLeftChild(node.getParentNode());
-            node = node.getLeftNode();
-            
+            rotateWithRightChild(node.getParentNode());
+            node = node.getLeftNode();            
         }else{
             if((node == node.getParentNode().getLeftNode()) && 
-                    (node.getParentNode() == node.getRightNode())){
-                rotateWithRightChild(node.getParentNode());
+                    (node.getParentNode() == node.getRightNode())){   
+                rotateWithLeftChild(node.getParentNode());
                 node = node.getRightNode();
             }
         }
@@ -251,6 +252,25 @@ public class RedBlackTreeDataStructure extends BinarySearchTree{
             sibling.getLeftNode().setColor(BLACK);
             rotateWithRightChild(node.getParentNode());
         }
+    }
+    
+    public static void main(String[] args){
+        RedBlackTreeDataStructure rbt = new RedBlackTreeDataStructure();
+        rbt.insert(new Double(5));
+        System.out.println(rbt.toGraphViz("After insert 5"));
+        rbt.insert(new Double(8));
+        System.out.println(rbt.toGraphViz("After insert 8"));
+        rbt.insert(new Double(1));
+        System.out.println(rbt.toGraphViz("After insert 1"));
+        rbt.insert(new Double(83));
+        System.out.println(rbt.toGraphViz("After insert 83"));
+        rbt.insert(new Double(12));
+        System.out.println(rbt.toGraphViz("After insert 12"));
+        rbt.insert(new Double(33));
+        System.out.println(rbt.toGraphViz("After insert 33"));
+        rbt.insert(new Double(22));
+        System.out.println(rbt.toGraphViz("After insert 22"));
+        
     }
     
 }
