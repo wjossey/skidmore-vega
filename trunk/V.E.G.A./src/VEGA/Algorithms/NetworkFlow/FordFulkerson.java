@@ -5,7 +5,7 @@
 
 package VEGA.Algorithms.NetworkFlow;
 
-import VEGA.HelperClasses.DataStructures.Queue;
+import VEGA.DataStructures.Queue.Queue;
 import VEGA.Graph.Edge.Network.NetworkEdge;
 import VEGA.Graph.Vertex.Vertex;
 

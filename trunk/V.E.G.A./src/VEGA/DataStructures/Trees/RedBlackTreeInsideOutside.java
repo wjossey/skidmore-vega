@@ -1,6 +1,6 @@
-package VEGA.Algorithms.Trees.RedBlack;
+package VEGA.DataStructures.Trees;
 
-import VEGA.Algorithms.Trees.BinarySearch.BinarySearchTree;
+import VEGA.DataStructures.Trees.BinarySearchTree;
 import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
 
 
@@ -14,11 +14,10 @@ import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
  */
 public class RedBlackTreeInsideOutside extends BinarySearchTree {
 	
-    BinaryTreeNode root;
 	
     RedBlackTreeInsideOutside(){
         super();
-        root = null;
+        setRoot(null);
     }
     
     @Override
@@ -39,7 +38,7 @@ public class RedBlackTreeInsideOutside extends BinarySearchTree {
 			System.out.println("This tree is broke");
 		} // end try-catch
 		
-		BinaryTreeNode node = search(root, (Comparable) x);
+		BinaryTreeNode node = search(getRoot(), (Comparable) x);
 		if (node != null) {
 			
 			BinaryTreeNode nodeToSplice = super.getNodeToDelete(node);
@@ -149,7 +148,7 @@ public class RedBlackTreeInsideOutside extends BinarySearchTree {
 					parent.setColor(BLACK);
 					sibling.getRightNode().setColor(BLACK);
 					rotateWithRightChild(parent);
-					child = this.root; 
+					child = getRoot(); 
 				} // end if 
 				
 			} else { 
@@ -208,7 +207,7 @@ public class RedBlackTreeInsideOutside extends BinarySearchTree {
 					parent.setColor(BLACK);
 					sibling.getLeftNode().setColor(BLACK);
 					rotateWithLeftChild(parent);
-					child = root; 
+					child = getRoot(); 
 				} // end if 
 			} // end if
 			
@@ -298,7 +297,7 @@ public class RedBlackTreeInsideOutside extends BinarySearchTree {
 				} // end if 
 			} // end if 
 		} // end while() 
-		root.setColor(BLACK);
+		getRoot().setColor(BLACK);
 	} // end fixupInsert()
 	
 	

@@ -1,4 +1,4 @@
-package VEGA.Algorithms.Trees.BinarySearch;
+package VEGA.DataStructures.Trees;
 
 import VEGA.Graph.Tree;
 import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
@@ -255,7 +255,7 @@ public class BinarySearchTree extends Tree{
      * @return returns the parent of the actual node that was 
      * spliced out of the tree. 
      */
-    protected BinaryTreeNode delete(BinaryTreeNode node) {
+    private BinaryTreeNode delete(BinaryTreeNode node) {
         /*
          * 3 cases
          * 

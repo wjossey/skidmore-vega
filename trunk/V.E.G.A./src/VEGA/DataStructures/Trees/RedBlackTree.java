@@ -1,6 +1,6 @@
-package VEGA.Algorithms.Trees.RedBlack;
+package VEGA.DataStructures.Trees;
 
-import VEGA.Algorithms.Trees.BinarySearch.BinarySearchTree;
+import VEGA.DataStructures.Trees.BinarySearchTree;
 import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
 
 /**
@@ -278,69 +278,65 @@ public class RedBlackTree extends BinarySearchTree {
     } // end insertNode();
 
 
-    private void fixupInsert(BinaryTreeNode z) {
+    private void fixupInsert(BinaryTreeNode node) {
 
-        //Debug.println("fixUpinsert(): called with z = (" + z.data + "," + z.color +")");
-		/*
-         * 
-         */
-        while (z.getParentNode() != null && z.getParentNode().isColor(RED)) {
+        while (node.getParentNode() != null && node.getParentNode().isColor(RED)) {
 
-            if (z.getParentNode().isLeftChild()) {
+            if (node.getParentNode().isLeftChild()) {
 
-                BinaryTreeNode uncle = z.getParentNode().getParentNode().getRightNode();
+                BinaryTreeNode uncle = node.getParentNode().getParentNode().getRightNode();
                 if (uncle.isColor(RED)) {
                     /*
                      * Case 1: z's uncle is red
                      */
                     //Debug.println("fixup insert(): left side case 1");
-                    z.getParentNode().setColor(BLACK);
+                    node.getParentNode().setColor(BLACK);
                     uncle.setColor(BLACK);
-                    z.getParentNode().getParentNode().setColor(RED);
-                    z = z.getParentNode().getParentNode();
+                    node.getParentNode().getParentNode().setColor(RED);
+                    node = node.getParentNode().getParentNode();
 
                 //System.out.println(this.toGraphViz("fixUpInsertFinishedCase1"));
                 } else {
-                    if (z.isRightChild()) {
+                    if (node.isRightChild()) {
                         /*
                          * Case 2: z's uncle has color = black and z is right child 
                          */
                         //Debug.println("fixup insert(): left side case 2");
-                        z = z.getParentNode();
-                        this.rotate(z, z.getRightNode());
+                        node = node.getParentNode();
+                        this.rotate(node, node.getRightNode());
                     //System.out.println(this.toGraphViz("fixUpInsertFinishedCase2"));
                     } // end if
 					/*
                      * Case 3: z's uncle has color = black and z is right child 
                      */
                     //Debug.println("fixup insert(): left side case 3");
-                    z.getParentNode().setColor(BLACK);
-                    z.getParentNode().getParentNode().setColor(RED);
-                    this.rotate(z.getParentNode().getParentNode(), z.getParentNode());
+                    node.getParentNode().setColor(BLACK);
+                    node.getParentNode().getParentNode().setColor(RED);
+                    this.rotate(node.getParentNode().getParentNode(), node.getParentNode());
                 //System.out.println(this.toGraphViz("fixUpInsertFinishedCase3"));
                 } // end if 
 
             } else {
-                BinaryTreeNode uncle = z.getParentNode().getParentNode().getLeftNode();
+                BinaryTreeNode uncle = node.getParentNode().getParentNode().getLeftNode();
                 if (uncle != null && uncle.isColor(RED)) {
                     //Debug.println("fixup insert(): right side case 1");
-                    z.getParentNode().setColor(BLACK);
+                    node.getParentNode().setColor(BLACK);
                     uncle.setColor(BLACK);
-                    z.getParentNode().getParentNode().setColor(RED);
-                    z = z.getParentNode().getParentNode();
+                    node.getParentNode().getParentNode().setColor(RED);
+                    node = node.getParentNode().getParentNode();
                 //System.out.println(this.toGraphViz("fixUpInsertFinishedCase1Else"));					
                 } else {
-                    if (z.isLeftChild()) {
+                    if (node.isLeftChild()) {
                         //Debug.println("fixup insert(): right side case 2");
-                        z = z.getParentNode();
-                        this.rotate(z, z.getLeftNode());
+                        node = node.getParentNode();
+                        this.rotate(node, node.getLeftNode());
                     //System.out.println(this.toGraphViz("fixUpInsertFinishedCase2Else"));
                     } // end if
                     //Debug.println("fixup insert(): right side case 3");
 
-                    z.getParentNode().setColor(BLACK);
-                    z.getParentNode().getParentNode().setColor(RED);
-                    this.rotate(z.getParentNode().getParentNode(), z.getParentNode());
+                    node.getParentNode().setColor(BLACK);
+                    node.getParentNode().getParentNode().setColor(RED);
+                    this.rotate(node.getParentNode().getParentNode(), node.getParentNode());
                 //System.out.println(this.toGraphViz("fixUpInsertFinishedCase3Else"));
                 } // end if 
 
@@ -363,10 +359,12 @@ public class RedBlackTree extends BinarySearchTree {
 
         t.insert(new Double(3));
         t.validateTree();
+        
+        t.insert(new Double(14));
+        t.validateTree();
 
         t.insert(new Double(4));
         t.validateTree();
-
 //		System.out.println("tree before 5 is \n" + t.toGraphViz("Before5"));
         t.insert(new Double(5));
 //		System.out.println("tree after 5 is \n" + t.toGraphViz("After5"));
@@ -376,6 +374,9 @@ public class RedBlackTree extends BinarySearchTree {
         t.validateTree();
 
         t.insert(new Double(7));
+        t.validateTree();
+        
+        t.insert(new Double(9));
         t.validateTree();
 
         System.out.println("=======================================");
@@ -394,11 +395,6 @@ public class RedBlackTree extends BinarySearchTree {
 
         System.out.println("tree is ");
         System.out.println(t);
-        Double s;
-
-        s = new Double(4);
-        System.out.println("deleting " + s);
-        t.delete(s);
 
         System.out.println("new tree is ");
         System.out.flush();

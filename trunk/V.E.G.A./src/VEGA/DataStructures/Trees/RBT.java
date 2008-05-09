@@ -1,6 +1,6 @@
-package VEGA.Algorithms.Trees.RedBlack;
+package VEGA.DataStructures.Trees;
 
-import VEGA.Algorithms.Trees.BinarySearch.BinarySearchTree;
+import VEGA.DataStructures.Trees.BinarySearchTree;
 import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
 
 
