@@ -1,7 +1,7 @@
 package VEGA.Graph.Vertex;
 
 import VEGA.Graph.Graph;
-import VEGA.Graph.Edge.Edge;
+import VEGA.Graph.Edge.EdgeImpl;
 import java.util.HashMap;
 
 //
@@ -22,17 +22,17 @@ public class Vertex {
 
     private int y = 0;    //If the vertex needs coordinates, this is the "y" value.
 
-    private Edge[] edgeList;  //Keeps track of all the edges for the vertex.
+    private EdgeImpl[] edgeList;  //Keeps track of all the edges for the vertex.
 
-    private HashMap<Integer, Edge> edgeHash;  //A hash of edges
+    private HashMap<Integer, EdgeImpl> edgeHash;  //A hash of edges
 
     private int edgeCounter = 0;  //Keeps track of how many edges this vertex has
 
     private boolean visited = false;  //Boolean as to whether or not the vertex has been visited
 
-    private Edge incomingEdge;  //We can use this to track a path if we so desire (Try to remove)
+    private EdgeImpl incomingEdge;  //We can use this to track a path if we so desire (Try to remove)
 
-    private Edge outgoingEdge;  //This is the outgoing edge in a path (Try to remove)
+    private EdgeImpl outgoingEdge;  //This is the outgoing edge in a path (Try to remove)
 
     private Graph g;  //This is the parent graph we're working with
 
@@ -64,8 +64,8 @@ public class Vertex {
         uid = vertexCounter++;
         setX(x);
         setY(y);
-        edgeList = new Edge[this.g.getSize() - 1];
-        edgeHash = new HashMap<Integer, Edge>();
+        edgeList = new EdgeImpl[this.g.getSize() - 1];
+        edgeHash = new HashMap<Integer, EdgeImpl>();
     }
 
     /**
@@ -76,8 +76,8 @@ public class Vertex {
         this.g = g;
         setX(0);
         setY(0);
-        edgeList = new Edge[this.g.getSize() - 1];
-        edgeHash = new HashMap<Integer, Edge>();
+        edgeList = new EdgeImpl[this.g.getSize() - 1];
+        edgeHash = new HashMap<Integer, EdgeImpl>();
 
     }
 
@@ -150,7 +150,7 @@ public class Vertex {
      * Assign an incoming edge to the vertex.
      * @param e
      */
-    public void setIncomingEdge(Edge e) {
+    public void setIncomingEdge(EdgeImpl e) {
         incomingEdge = e;
     }
 
@@ -190,7 +190,7 @@ public class Vertex {
      * Set the outgoing edge from the vertex.
      * @param e
      */
-    public void setOutgoingEdge(Edge e) {
+    public void setOutgoingEdge(EdgeImpl e) {
         outgoingEdge = e;
     }
 
@@ -198,7 +198,7 @@ public class Vertex {
      * Returns all of the edges that are adjacent to the vertex
      * @return
      */
-    public Edge[] getEdges() {
+    public EdgeImpl[] getEdges() {
         return edgeList;
     }
 
@@ -246,7 +246,7 @@ public class Vertex {
      * Returns the outgoing edge for the vertex.
      * @return
      */
-    public Edge getOutgoingEdge() {
+    public EdgeImpl getOutgoingEdge() {
         return outgoingEdge;
     }
 
@@ -254,7 +254,7 @@ public class Vertex {
      * Returns the incoming edge for the vertex.
      * @return
      */
-    public Edge getIncomingEdge() {
+    public EdgeImpl getIncomingEdge() {
         return incomingEdge;
     }
 
@@ -262,7 +262,7 @@ public class Vertex {
      * Add an aedge to the vertex's adjacency list.
      * @param e
      */
-    public void addEdge(Edge e) {
+    public void addEdge(EdgeImpl e) {
         /*Put it in an array for sortability (quicksorted)*/
         edgeList[edgeCounter++] = e;
 
@@ -279,7 +279,7 @@ public class Vertex {
      * @param b Destination or source vertex
      * @return Connecting edge from this vertex to Vertex b.
      */
-    public Edge getEdge(Vertex b) {
+    public EdgeImpl getEdge(Vertex b) {
         return edgeHash.get(b.getUID());
     }
 
@@ -315,7 +315,7 @@ public class Vertex {
     * Sorts the edges using quicksort.
     */
     public void sortEdges() {
-        Edge.sortEdgesByDistance(edgeList);
+        EdgeImpl.sortEdgesByDistance(edgeList);
     }
 
     /**
@@ -402,7 +402,7 @@ public class Vertex {
     public Vertex getNearestNeighbor() {
         boolean vertexFound = false;
         Vertex returnVertex = null;
-        Edge.sortEdgesByDistance(edgeList);
+        EdgeImpl.sortEdgesByDistance(edgeList);
         for (int i = 0; i < edgeList.length && !vertexFound; i++) {
             Vertex a = edgeList[i].getVertexA();
             Vertex b = edgeList[i].getVertexB();
@@ -430,10 +430,10 @@ public class Vertex {
      */
     public Vertex[] getKNearestNeighbors(int k) {
         if (k <= edgeList.length) {
-            Edge.sortEdgesByDistance(edgeList);
+            EdgeImpl.sortEdgesByDistance(edgeList);
             Vertex[] returnArray = new Vertex[k];
             for (int i = 0; i < returnArray.length; i++) {
-                Edge tempEdge = edgeList[i];
+                EdgeImpl tempEdge = edgeList[i];
                 if (tempEdge.getVertexA().getUID() == uid) {
                     returnArray[i] = tempEdge.getVertexB();
                 } else {

@@ -5,7 +5,7 @@ import VEGA.PseudoCode.Procedure;
 import VEGA.PseudoCode.PseudoCode;
 import VEGA.Algorithms.GraphAlgorithm;
 import VEGA.Graph.Graph;
-import VEGA.Graph.Edge.Edge;
+import VEGA.Graph.Edge.EdgeImpl;
 import VEGA.Graph.Vertex.Vertex;
 
 public class NearestNeighbor implements GraphAlgorithm {
@@ -60,7 +60,7 @@ public class NearestNeighbor implements GraphAlgorithm {
             while (curr != null) {
                 Vertex next = curr.getNearestNeighbor();
                 if (next != null) {
-                    Edge e = curr.getEdge(next);
+                    EdgeImpl e = curr.getEdge(next);
 
                     //Step Three
                     nearestNeighborArray[counter++] = NearestNeighborProcedureStepThree(curr, e, next);
@@ -103,7 +103,7 @@ public class NearestNeighbor implements GraphAlgorithm {
      * @param next
      * @return
      */
-    private Vertex NearestNeighborProcedureStepThree(Vertex curr, Edge e, Vertex next) {
+    private Vertex NearestNeighborProcedureStepThree(Vertex curr, EdgeImpl e, Vertex next) {
         curr.setInUse(true);
         curr.setActive(true);
         e.setInUse(true);
@@ -126,7 +126,7 @@ public class NearestNeighbor implements GraphAlgorithm {
      */
     private void NearestNeighborProcedureStepFive(Vertex curr, Vertex root) {
         root.setActive(true);
-        Edge e = root.getEdge(curr);
+        EdgeImpl e = root.getEdge(curr);
         if (e != null) {
             e.setActive(true);
             e.setInUse(true);

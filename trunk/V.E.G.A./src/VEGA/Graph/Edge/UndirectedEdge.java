@@ -13,7 +13,7 @@ import VEGA.Graph.Vertex.Vertex;
  * that developers can easily distinguish if an edge is directed or undirected.
  * @author w_jossey
  */
-public class UndirectedEdge extends Edge{
+public class UndirectedEdge extends EdgeImpl{
     
     /**
      * See Edge class for documentation.

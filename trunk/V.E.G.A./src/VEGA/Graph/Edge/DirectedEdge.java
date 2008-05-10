@@ -12,7 +12,7 @@ import VEGA.Graph.Vertex.Vertex;
  * This prevents bi-directional movement by an algorithm.  
  * @author w_jossey
  */
-public class DirectedEdge extends Edge{
+public class DirectedEdge extends EdgeImpl{
     Vertex from = null; Vertex to = null;
     double weight;
     

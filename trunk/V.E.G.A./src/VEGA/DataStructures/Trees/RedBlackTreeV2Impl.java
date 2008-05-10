@@ -11,9 +11,9 @@ import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
  *
  * @author w_jossey
  */
-public class RedBlackTreeDataStructure extends BinarySearchTree{
+public class RedBlackTreeV2Impl extends BinarySearchTreeImpl{
 
-    public RedBlackTreeDataStructure(){
+    public RedBlackTreeV2Impl(){
         super();
     }
     
@@ -255,7 +255,7 @@ public class RedBlackTreeDataStructure extends BinarySearchTree{
     }
     
     public static void main(String[] args){
-        RedBlackTreeDataStructure rbt = new RedBlackTreeDataStructure();
+        RedBlackTreeV2Impl rbt = new RedBlackTreeV2Impl();
         rbt.insert(new Double(5));
         System.out.println(rbt.toGraphViz("After insert 5"));
         rbt.insert(new Double(8));

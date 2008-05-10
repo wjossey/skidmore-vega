@@ -1,10 +1,10 @@
 package VEGA.DataStructures.Trees;
 
-import VEGA.DataStructures.Trees.BinarySearchTree;
+import VEGA.DataStructures.Trees.BinarySearchTreeImpl;
 import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
 
 
-public class RBT extends BinarySearchTree {
+public class RBT extends BinarySearchTreeImpl {
 
 	
 	public void insert(Comparable key) { 

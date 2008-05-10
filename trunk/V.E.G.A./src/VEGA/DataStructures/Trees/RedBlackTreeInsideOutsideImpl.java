@@ -1,6 +1,6 @@
 package VEGA.DataStructures.Trees;
 
-import VEGA.DataStructures.Trees.BinarySearchTree;
+import VEGA.DataStructures.Trees.BinarySearchTreeImpl;
 import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
 
 
@@ -12,10 +12,10 @@ import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class RedBlackTreeInsideOutside extends BinarySearchTree {
+public class RedBlackTreeInsideOutsideImpl extends BinarySearchTreeImpl {
 	
 	
-    RedBlackTreeInsideOutside(){
+    RedBlackTreeInsideOutsideImpl(){
         super();
         setRoot(null);
     }
@@ -304,7 +304,7 @@ public class RedBlackTreeInsideOutside extends BinarySearchTree {
 
 	public static void main(String[] args) throws InvalidTreeException {
 		System.out.println("Testing RedBlack tree");
-		RedBlackTreeInsideOutside t = new RedBlackTreeInsideOutside();
+		RedBlackTreeInsideOutsideImpl t = new RedBlackTreeInsideOutsideImpl();
 		t.insert(new Double(1));
 		t.validateTree();
 		

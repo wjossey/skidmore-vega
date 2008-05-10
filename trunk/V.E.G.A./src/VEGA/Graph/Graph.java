@@ -1,6 +1,6 @@
 package VEGA.Graph;
 
-import VEGA.Graph.Edge.Edge;
+import VEGA.Graph.Edge.EdgeImpl;
 import VEGA.Graph.Vertex.Vertex;
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,7 +24,7 @@ public class Graph {
     private int size = 0;
     private int positionInArray = 0;
     private ArrayList<Vertex> vertexList;
-    private ArrayList<Edge> edgeList;
+    private ArrayList<EdgeImpl> edgeList;
     private boolean digraph;
 
     /**
@@ -52,7 +52,7 @@ public class Graph {
         }
     }
     
-    public Graph(Vertex[] vertexArray, Edge[] edgeArray){
+    public Graph(Vertex[] vertexArray, EdgeImpl[] edgeArray){
         vertexList = new ArrayList(vertexArray.length);
         edgeList = new ArrayList(edgeArray.length);
         
@@ -64,7 +64,7 @@ public class Graph {
         }
     }
     
-    public Graph(ArrayList<Vertex> vertexList, ArrayList<Edge> edgeList){
+    public Graph(ArrayList<Vertex> vertexList, ArrayList<EdgeImpl> edgeList){
         this.vertexList = vertexList;
         this.edgeList = edgeList;
     }
@@ -104,8 +104,8 @@ public class Graph {
      * 
      * @return
      */
-    public Edge[] getEdgeArray(){
-        return edgeList.toArray(new Edge[0]);
+    public EdgeImpl[] getEdgeArray(){
+        return edgeList.toArray(new EdgeImpl[0]);
     }
 
     /**
@@ -157,8 +157,8 @@ public class Graph {
             } while (fromVertex != i && toVertex != i);
 
 
-            Edge toTempVertex = new Edge(vertexList.get(fromVertex), tempVertex, capacity1);
-            Edge fromTempVertex = new Edge(tempVertex, vertexList.get(toVertex), capacity2);
+            EdgeImpl toTempVertex = new EdgeImpl(vertexList.get(fromVertex), tempVertex, capacity1);
+            EdgeImpl fromTempVertex = new EdgeImpl(tempVertex, vertexList.get(toVertex), capacity2);
 
             tempVertex.addEdge(toTempVertex);
             tempVertex.addEdge(fromTempVertex);
@@ -215,7 +215,7 @@ public class Graph {
                 double dist = Math.sqrt(distanceSquared);
 
                 /*Create the edge and add it to both vertices*/
-                Edge e = new Edge(vertexList.get(i), vertexList.get(j), dist);
+                EdgeImpl e = new EdgeImpl(vertexList.get(i), vertexList.get(j), dist);
                 vertexList.get(i).addEdge(e);
                 vertexList.get(j).addEdge(e);
                 edgeList.add(e);
@@ -255,7 +255,7 @@ public class Graph {
     /**
      * Same as the method above except it gives you the edges instead of the vertices
      **/
-    public double computeDistanceOfTour(Edge[] edges) {
+    public double computeDistanceOfTour(EdgeImpl[] edges) {
         double distance = 0;
         for (int i = 0; i < edges.length; i++) {
             distance += edges[i].getWeight();
@@ -292,7 +292,7 @@ public class Graph {
         }
 
         returnString += Vertex.vertexListToString(vertexList.toArray(new Vertex[0])) + "\n";
-        returnString += Edge.allEdgesWithoutRepeats(vertexList.toArray(new Vertex[0])) + "\n";
+        returnString += EdgeImpl.allEdgesWithoutRepeats(vertexList.toArray(new Vertex[0])) + "\n";
 
         returnString += "}\n";
 

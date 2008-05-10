@@ -1,8 +1,9 @@
 package VEGA.Graph.Edge;
 
 import VEGA.Graph.Vertex.Vertex;
+import Interfaces.Graph.Edge.Edge;
 
-public class Edge {
+public class EdgeImpl{
 
     /*Variable declaration*/
     private Vertex a;
@@ -21,7 +22,7 @@ public class Edge {
      * @param b Vertex b
      * @param weight Edge weight
      */
-    public Edge(Vertex a, Vertex b, double weight) {
+    public EdgeImpl(Vertex a, Vertex b, double weight) {
 
         //Arrange cities relative to their UID so we always know which city to expect first
         //The city with the greater UID will always be City A.
@@ -40,7 +41,7 @@ public class Edge {
      * @param a Vertex a
      * @param b Vertex b
      */
-    public Edge(Vertex a, Vertex b) {
+    public EdgeImpl(Vertex a, Vertex b) {
         //Arrange cities relative to their UID so we always know which city to expect first
         //The city with the greater UID will always be City A.
         if (a.getUID() > b.getUID()) {
@@ -182,7 +183,7 @@ public class Edge {
      *
      * @param edgeList
      */
-    public static void sortEdgesByDistance(Edge[] edgeList) {
+    public static void sortEdgesByDistance(EdgeImpl[] edgeList) {
         quicksort(edgeList, 0, edgeList.length - 1);
     }
 
@@ -192,7 +193,7 @@ public class Edge {
      * @param left
      * @param right
      */
-    private static void quicksort(Edge[] edgeList, int left, int right) {
+    private static void quicksort(EdgeImpl[] edgeList, int left, int right) {
         if (right <= left) {
             return;
         //Else
@@ -204,7 +205,7 @@ public class Edge {
     }
 
     @SuppressWarnings("empty-statement")
-    private static int partition(Edge[] edgeList, int left, int right) {
+    private static int partition(EdgeImpl[] edgeList, int left, int right) {
         int i = left - 1;
         int j = right;
 
@@ -241,9 +242,9 @@ public class Edge {
      * @param i
      * @param j
      */
-    private static void swap(Edge[] edgeList, int i, int j) {
+    private static void swap(EdgeImpl[] edgeList, int i, int j) {
         //swaps++;  //We can keep track of our swaps for proof purposes.
-        Edge temp = edgeList[i];
+        EdgeImpl temp = edgeList[i];
         edgeList[i] = edgeList[j];
         edgeList[j] = temp;
     }
@@ -253,7 +254,7 @@ public class Edge {
      * @param edgeList
      * @return
      */
-    private static String edgeListToString(Edge[] edgeList) {
+    private static String edgeListToString(EdgeImpl[] edgeList) {
         String returnString = "";
         for (int i = 0; i < edgeList.length; i++) {
             returnString += edgeList[i].toString() + "\n";
@@ -268,7 +269,7 @@ public class Edge {
      * @param index
      * @return
      */
-    private static String edgeListToString(Edge[] edgeList, int index) {
+    private static String edgeListToString(EdgeImpl[] edgeList, int index) {
         String returnString = "";
         for (int i = index; i < edgeList.length; i++) {
             returnString += edgeList[i].toString() + "\n";
@@ -285,7 +286,7 @@ public class Edge {
     public static String allEdgesToString(Vertex[] vertexList) {
         String returnString = "";
         for (int i = 0; i < vertexList.length; i++) {
-            Edge[] edgeList = vertexList[i].getEdges();
+            EdgeImpl[] edgeList = vertexList[i].getEdges();
             returnString += edgeListToString(edgeList);
         }
 
@@ -302,7 +303,7 @@ public class Edge {
         String returnString = "";
         for (int i = 0; i < vertexList.length; i++) {
             for (int j = i + 1; j < vertexList.length; j++) {
-                Edge e = vertexList[i].getEdge(vertexList[j]);
+                EdgeImpl e = vertexList[i].getEdge(vertexList[j]);
                 if (e != null) {
                     returnString += e.toString() + "\n";
                 }
