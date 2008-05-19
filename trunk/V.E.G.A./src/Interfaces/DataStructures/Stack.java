@@ -9,6 +9,12 @@ package Interfaces.DataStructures;
  *
  * @author w_jossey
  */
-public interface Stack {
-
+public interface Stack<Comparable> {
+    
+    void push(Comparable a);
+    
+    Comparable pop();
+    
+    Comparable peek();
+    
 }

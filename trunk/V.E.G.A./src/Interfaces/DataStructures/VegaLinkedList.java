@@ -5,10 +5,11 @@
 
 package Interfaces.DataStructures;
 
+
 /**
  *
  * @author w_jossey
  */
-public interface LinkedList {
-
+public interface VegaLinkedList<E>{
+    
 }
