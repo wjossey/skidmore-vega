@@ -1,11 +1,11 @@
-package VEGA.Algorithms.TSP;
+package vega.Algorithms.TSP;
 
-import VEGA.Controller;
-import VEGA.PseudoCode.Procedure;
-import VEGA.PseudoCode.PseudoCode;
-import VEGA.Algorithms.GraphAlgorithm;
-import VEGA.Graph.Graph;
-import VEGA.Graph.Vertex.Vertex;
+import vega.Controller;
+import vega.PseudoCode.Procedure;
+import vega.PseudoCode.PseudoCode;
+import vega.Algorithms.GraphAlgorithm;
+import vega.Graph.Graph;
+import vega.Graph.Vertex.Vertex;
 import java.util.LinkedList;
 
 public class TwoOpt implements GraphAlgorithm {

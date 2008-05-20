@@ -1,4 +1,4 @@
-package VEGA.HelperClasses;
+package vega.HelperClasses;
 
 // GraphViz.java - a simple API to call dot from Java programs
 

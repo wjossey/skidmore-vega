@@ -1,4 +1,4 @@
-package VEGA.Exceptions;
+package vega.Exceptions;
 
 /**
  * Exception class for duplicate item errors

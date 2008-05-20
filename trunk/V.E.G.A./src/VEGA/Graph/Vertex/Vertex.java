@@ -1,7 +1,7 @@
-package VEGA.Graph.Vertex;
+package vega.Graph.Vertex;
 
-import VEGA.Graph.Graph;
-import VEGA.Graph.Edge.EdgeImpl;
+import vega.Graph.Graph;
+import vega.Graph.Edge.EdgeImpl;
 import java.util.HashMap;
 
 //

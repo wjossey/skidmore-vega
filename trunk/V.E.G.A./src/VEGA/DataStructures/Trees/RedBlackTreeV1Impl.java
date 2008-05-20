@@ -1,7 +1,7 @@
-package VEGA.DataStructures.Trees;
+package vega.DataStructures.Trees;
 
 import Interfaces.DataStructures.RedBlackTreeV1;
-import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
+import vega.Graph.Vertex.Tree.BinaryTreeNode;
 import Interfaces.DataStructures.BinarySearchTree;
 
 /**

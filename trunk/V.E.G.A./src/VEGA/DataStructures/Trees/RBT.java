@@ -1,7 +1,7 @@
-package VEGA.DataStructures.Trees;
+package vega.DataStructures.Trees;
 
-import VEGA.DataStructures.Trees.BinarySearchTreeImpl;
-import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
+import vega.DataStructures.Trees.BinarySearchTreeImpl;
+import vega.Graph.Vertex.Tree.BinaryTreeNode;
 
 
 public class RBT extends BinarySearchTreeImpl {
