@@ -3,10 +3,10 @@
  * and open the template in the editor.
  */
 
-package vega.Graph.Edge.Tree;
+package VEGA.Graph.Edge.Tree;
 
-import vega.Graph.Edge.UndirectedEdge;
-import vega.Graph.Vertex.Vertex;
+import VEGA.Graph.Edge.UndirectedEdge;
+import VEGA.Graph.Vertex.Vertex;
 
 /**
  *

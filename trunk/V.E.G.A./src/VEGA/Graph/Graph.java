@@ -1,7 +1,7 @@
-package vega.Graph;
+package VEGA.Graph;
 
-import vega.Graph.Edge.EdgeImpl;
-import vega.Graph.Vertex.Vertex;
+import VEGA.Graph.Edge.EdgeImpl;
+import VEGA.Graph.Vertex.Vertex;
 import java.util.ArrayList;
 import java.util.Random;
 

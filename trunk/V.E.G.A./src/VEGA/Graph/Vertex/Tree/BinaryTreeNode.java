@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package vega.Graph.Vertex.Tree;
+package VEGA.Graph.Vertex.Tree;
 
 /**
  *

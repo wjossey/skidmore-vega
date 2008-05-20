@@ -3,9 +3,9 @@
  * and open the template in the editor.
  */
 
-package vega.Graph.Edge;
+package VEGA.Graph.Edge;
 
-import vega.Graph.Vertex.Vertex;
+import VEGA.Graph.Vertex.Vertex;
 
 /**
  * The UndirectedEdge class is actually just a repeat of the Edge class.  By default

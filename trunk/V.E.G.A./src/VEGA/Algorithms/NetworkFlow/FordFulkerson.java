@@ -3,11 +3,11 @@
  * and open the template in the editor.
  */
 
-package vega.Algorithms.NetworkFlow;
+package VEGA.Algorithms.NetworkFlow;
 
-import vega.DataStructures.Queue.Queue;
-import vega.Graph.Edge.Network.NetworkEdge;
-import vega.Graph.Vertex.Vertex;
+import VEGA.DataStructures.Queue.Queue;
+import VEGA.Graph.Edge.Network.NetworkEdge;
+import VEGA.Graph.Vertex.Vertex;
 
 /**
  *

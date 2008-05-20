@@ -5,11 +5,11 @@
  */
 package graphalgorithmgui;
 
-import vega.Graph.Graph;
-import vega.Algorithms.GraphAlgorithm;
-import vega.Algorithms.GraphAlgorithms;
-import vega.Algorithms.TSP.NearestNeighbor;
-import vega.Algorithms.TSP.TwoOpt;
+import VEGA.Graph.Graph;
+import VEGA.Algorithms.GraphAlgorithm;
+import VEGA.Algorithms.GraphAlgorithms;
+import VEGA.Algorithms.TSP.NearestNeighbor;
+import VEGA.Algorithms.TSP.TwoOpt;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.logging.Level;

@@ -1,7 +1,7 @@
-package vega.Algorithms;
+package VEGA.Algorithms;
 
-import vega.Controller;
-import vega.Graph.Graph;
+import VEGA.Controller;
+import VEGA.Graph.Graph;
 
 public interface GraphAlgorithm {
 	

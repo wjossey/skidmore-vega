@@ -1,6 +1,6 @@
-package vega.Graph.Edge;
+package VEGA.Graph.Edge;
 
-import vega.Graph.Vertex.Vertex;
+import VEGA.Graph.Vertex.Vertex;
 import Interfaces.Graph.Edge.Edge;
 
 public class EdgeImpl{

@@ -3,9 +3,9 @@
  * and open the template in the editor.
  */
 
-package vega.Graph.Edge;
+package VEGA.Graph.Edge;
 
-import vega.Graph.Vertex.Vertex;
+import VEGA.Graph.Vertex.Vertex;
 
 /**
  * A directed edge is an edge that has a source vertex and a destination vertex.

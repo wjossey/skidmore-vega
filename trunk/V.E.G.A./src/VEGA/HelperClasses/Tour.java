@@ -1,6 +1,6 @@
-package vega.HelperClasses;
+package VEGA.HelperClasses;
 
-import vega.Graph.Vertex.Vertex;
+import VEGA.Graph.Vertex.Vertex;
 import java.util.Iterator;
 import java.util.LinkedList;
 
