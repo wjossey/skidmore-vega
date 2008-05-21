@@ -1,9 +1,9 @@
-package VEGA;
+package vega;
 
-import VEGA.HelperClasses.GraphViz;
-import VEGA.PseudoCode.PseudoCode;
-import VEGA.Algorithms.GraphAlgorithm;
-import VEGA.Graph.Graph;
+import vega.helperClasses.GraphViz;
+import vega.pseudoCode.PseudoCode;
+import vega.algorithms.GraphAlgorithm;
+import vega.graph.Graph;
 import java.io.*;
 import java.util.ArrayList;
 

@@ -1,8 +1,8 @@
-package VEGA.DataStructures.Trees;
+package vega.dataStructures.trees;
 
-import Interfaces.DataStructures.BinarySearchTree;
-import VEGA.Graph.Tree;
-import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
+import interfaces.dataStructures.BinarySearchTree;
+import vega.graph.Tree;
+import vega.graph.vertex.tree.BinaryTreeNode;
 import java.util.Iterator;
 
 /**

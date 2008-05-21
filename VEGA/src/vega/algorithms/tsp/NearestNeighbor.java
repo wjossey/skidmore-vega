@@ -1,12 +1,12 @@
-package VEGA.Algorithms.TSP;
+package vega.algorithms.tsp;
 
-import VEGA.Controller;
-import VEGA.PseudoCode.Procedure;
-import VEGA.PseudoCode.PseudoCode;
-import VEGA.Algorithms.GraphAlgorithm;
-import VEGA.Graph.Graph;
-import VEGA.Graph.Edge.EdgeImpl;
-import VEGA.Graph.Vertex.Vertex;
+import vega.Controller;
+import vega.pseudoCode.Procedure;
+import vega.pseudoCode.PseudoCode;
+import vega.algorithms.GraphAlgorithm;
+import vega.graph.Graph;
+import vega.graph.edge.EdgeImpl;
+import vega.graph.vertex.Vertex;
 
 public class NearestNeighbor implements GraphAlgorithm {
 

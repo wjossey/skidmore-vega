@@ -1,9 +1,9 @@
-package VEGA.Graph.Edge;
+package vega.graph.edge;
 
-import VEGA.Graph.Vertex.Vertex;
-import Interfaces.Graph.Edge.Edge;
+import interfaces.graph.vertex.Vertex;
+import interfaces.graph.edge.Edge;
 
-public class EdgeImpl{
+public class EdgeImpl implements Edge{
 
     /*Variable declaration*/
     private Vertex a;
@@ -336,4 +336,5 @@ public class EdgeImpl{
 
         return returnString;
     }
+
 }

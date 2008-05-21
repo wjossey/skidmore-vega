@@ -1,4 +1,4 @@
-package VEGA.DataStructures.Queue;
+package vega.dataStructures.queue;
 
 import java.util.LinkedList;
 

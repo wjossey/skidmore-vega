@@ -1,7 +1,7 @@
-package VEGA.DataStructures.Trees;
+package vega.dataStructures.trees;
 
-import VEGA.DataStructures.Trees.BinarySearchTreeImpl;
-import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
+import vega.dataStructures.trees.BinarySearchTreeImpl;
+import vega.graph.vertex.tree.BinaryTreeNode;
 
 
 

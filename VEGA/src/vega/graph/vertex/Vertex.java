@@ -1,7 +1,7 @@
-package VEGA.Graph.Vertex;
+package vega.graph.vertex;
 
-import VEGA.Graph.Graph;
-import VEGA.Graph.Edge.EdgeImpl;
+import vega.graph.Graph;
+import vega.graph.edge.EdgeImpl;
 import java.util.HashMap;
 
 //
@@ -265,7 +265,7 @@ public class Vertex {
     public void addEdge(EdgeImpl e) {
         /*Put it in an array for sortability (quicksorted)*/
         edgeList[edgeCounter++] = e;
-
+  
         /*Put it in a hash for rapid access*/
         if (e.getVertexA().getUID() == uid) {
             edgeHash.put(e.getVertexB().getUID(), e);

@@ -3,18 +3,15 @@
  * and open the template in the editor.
  */
 
-package Interfaces.Graph.Edge;
+package interfaces.graph.edge;
 
-import Interfaces.Graph.Vertex.Vertex;
+import interfaces.graph.vertex.Vertex;
 
 /**
  *
  * @author w_jossey
  */
 public interface Edge {
-    void Edge(Vertex a, Vertex b, double weight);
-    
-    void Edge(Vertex a, Vertex b);
     
     double getWeight();
     
@@ -38,7 +35,6 @@ public interface Edge {
     
     String getStyle();
     
-    @Override
     String toString();
     
 }

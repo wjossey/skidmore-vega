@@ -3,14 +3,14 @@
  * and open the template in the editor.
  */
 
-package Interfaces.DataStructures;
+package interfaces.dataStructures;
 
 /**
  *
  * @author w_jossey
  */
-public interface Stack<Comparable> {
-    
+public interface Stack<A> {
+	
     void push(Comparable a);
     
     Comparable pop();
