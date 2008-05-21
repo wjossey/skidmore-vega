@@ -184,7 +184,7 @@ public class EdgeImpl implements Edge{
      *
      * @param edgeList
      */
-    public static void sortEdgesByDistance(EdgeImpl[] edgeList) {
+    public static void sortEdgesByDistance(Edge[] edgeList) {
         quicksort(edgeList, 0, edgeList.length - 1);
     }
 
@@ -194,7 +194,7 @@ public class EdgeImpl implements Edge{
      * @param left
      * @param right
      */
-    private static void quicksort(EdgeImpl[] edgeList, int left, int right) {
+    private static void quicksort(Edge[] edgeList, int left, int right) {
         if (right <= left) {
             return;
         //Else
@@ -206,7 +206,7 @@ public class EdgeImpl implements Edge{
     }
 
     @SuppressWarnings("empty-statement")
-    private static int partition(EdgeImpl[] edgeList, int left, int right) {
+    private static int partition(Edge[] edgeList, int left, int right) {
         int i = left - 1;
         int j = right;
 
@@ -243,9 +243,9 @@ public class EdgeImpl implements Edge{
      * @param i
      * @param j
      */
-    private static void swap(EdgeImpl[] edgeList, int i, int j) {
+    private static void swap(Edge[] edgeList, int i, int j) {
         //swaps++;  //We can keep track of our swaps for proof purposes.
-        EdgeImpl temp = edgeList[i];
+        Edge temp = edgeList[i];
         edgeList[i] = edgeList[j];
         edgeList[j] = temp;
     }
@@ -255,7 +255,7 @@ public class EdgeImpl implements Edge{
      * @param edgeList
      * @return
      */
-    private static String edgeListToString(EdgeImpl[] edgeList) {
+    private static String edgeListToString(Edge[] edgeList) {
         String returnString = "";
         for (int i = 0; i < edgeList.length; i++) {
             returnString += edgeList[i].toString() + "\n";
@@ -270,7 +270,7 @@ public class EdgeImpl implements Edge{
      * @param index
      * @return
      */
-    private static String edgeListToString(EdgeImpl[] edgeList, int index) {
+    public static String edgeListToString(Edge[] edgeList, int index) {
         String returnString = "";
         for (int i = index; i < edgeList.length; i++) {
             returnString += edgeList[i].toString() + "\n";
@@ -287,7 +287,7 @@ public class EdgeImpl implements Edge{
     public static String allEdgesToString(Vertex[] vertexList) {
         String returnString = "";
         for (int i = 0; i < vertexList.length; i++) {
-            EdgeImpl[] edgeList = vertexList[i].getEdges();
+            Edge[] edgeList = vertexList[i].getEdges();
             returnString += edgeListToString(edgeList);
         }
 
@@ -304,7 +304,7 @@ public class EdgeImpl implements Edge{
         String returnString = "";
         for (int i = 0; i < vertexList.length; i++) {
             for (int j = i + 1; j < vertexList.length; j++) {
-                EdgeImpl e = vertexList[i].getEdge(vertexList[j]);
+                Edge e = vertexList[i].getEdge(vertexList[j]);
                 if (e != null) {
                     returnString += e.toString() + "\n";
                 }

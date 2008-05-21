@@ -5,7 +5,7 @@
 
 package vega.graph.edge;
 
-import vega.graph.vertex.Vertex;
+import interfaces.graph.vertex.Vertex;
 
 /**
  * The UndirectedEdge class is actually just a repeat of the Edge class.  By default
@@ -20,7 +20,7 @@ public class UndirectedEdgeImpl extends EdgeImpl{
      * @param a
      * @param b
      */
-    public UndirectedEdge(Vertex a, Vertex b){
+    public UndirectedEdgeImpl(Vertex a, Vertex b){
         super(a, b);
     }
     
@@ -30,7 +30,7 @@ public class UndirectedEdgeImpl extends EdgeImpl{
      * @param b
      * @param weight
      */
-    public UndirectedEdge(Vertex a, Vertex b, double weight){
+    public UndirectedEdgeImpl(Vertex a, Vertex b, double weight){
         super(a, b, weight);
     }
     
