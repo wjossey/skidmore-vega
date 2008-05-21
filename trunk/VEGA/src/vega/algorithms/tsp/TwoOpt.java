@@ -4,8 +4,8 @@ import vega.Controller;
 import vega.pseudoCode.Procedure;
 import vega.pseudoCode.PseudoCode;
 import vega.algorithms.GraphAlgorithm;
-import vega.graph.Graph;
-import vega.graph.vertex.Vertex;
+import interfaces.graph.Graph;
+import interfaces.graph.vertex.Vertex;
 import java.util.LinkedList;
 
 public class TwoOpt implements GraphAlgorithm {

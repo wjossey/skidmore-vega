@@ -1,7 +1,8 @@
 package vega.dataStructures.trees;
 
 import vega.dataStructures.trees.BinarySearchTreeImpl;
-import vega.graph.vertex.tree.BinaryTreeNode;
+import vega.graph.vertex.tree.BinaryTreeNodeImpl;
+import interfaces.graph.vertex.tree.BinaryTreeNode;
 
 
 
@@ -22,7 +23,7 @@ public class RedBlackTreeInsideOutsideImpl extends BinarySearchTreeImpl {
     
     @Override
 	public void insert(Object x) {
-                BinaryTreeNode newNode = new BinaryTreeNode((Comparable) x, RED);
+                BinaryTreeNodeImpl newNode = new BinaryTreeNodeImpl((Comparable) x, RED);
                 super.insertNode(newNode);
 		fixupInsert(newNode);
 	} // end insert();
@@ -42,7 +43,7 @@ public class RedBlackTreeInsideOutsideImpl extends BinarySearchTreeImpl {
 		if (node != null) {
 			
 			BinaryTreeNode nodeToSplice = super.getNodeToDelete(node);
-			BinaryTreeNode parent = nodeToSplice.getParentNode(); 
+			BinaryTreeNode parent = (BinaryTreeNode) nodeToSplice.getParentNode(); 
 			BinaryTreeNode child = null; 
 			
 			boolean leftChild = nodeToSplice.isLeftChild();
@@ -115,7 +116,7 @@ public class RedBlackTreeInsideOutsideImpl extends BinarySearchTreeImpl {
 					sibling.setColor(BLACK);
 					parent.setColor(RED);
 					rotateWithRightChild(parent);
-					parent = child.getParentNode(); 
+					parent = (BinaryTreeNode) child.getParentNode(); 
 					sibling = parent.getRightNode();
 				} // end if 
 				
@@ -215,7 +216,7 @@ public class RedBlackTreeInsideOutsideImpl extends BinarySearchTreeImpl {
 			 * Update the parent, child, and leftChild variables for next iteration
 			 */
 			if (child != null) { 
-				parent = child.getParentNode();
+				parent = (BinaryTreeNode) child.getParentNode();
 			} else { 
 				parent = null; 
 			} // end if

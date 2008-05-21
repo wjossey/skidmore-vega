@@ -2,10 +2,10 @@ package vega.dataStructures.queue;
 
 import java.util.LinkedList;
 
-public class Queue {
+public class QueueImpl {
 	LinkedList list;
 	
-	public Queue(){
+	public QueueImpl(){
 		list = new LinkedList();
 	}
 	

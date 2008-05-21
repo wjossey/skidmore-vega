@@ -5,7 +5,8 @@
 
 package vega.dataStructures.trees;
 
-import vega.graph.vertex.tree.BinaryTreeNode;
+import vega.graph.vertex.tree.BinaryTreeNodeImpl;
+import interfaces.graph.vertex.tree.BinaryTreeNode;
 
 /**
  *
@@ -18,7 +19,7 @@ public class RedBlackTreeV2Impl extends BinarySearchTreeImpl{
     }
     
     public void insert(Comparable c){
-        BinaryTreeNode node = new BinaryTreeNode(c);
+        BinaryTreeNodeImpl node = new BinaryTreeNodeImpl(c);
         insertNode(node);
         insert_case1(node);
     }

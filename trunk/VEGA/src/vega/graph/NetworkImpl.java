@@ -9,6 +9,6 @@ package vega.graph;
  *
  * @author w_jossey
  */
-public class Network {
+public class NetworkImpl {
 
 }

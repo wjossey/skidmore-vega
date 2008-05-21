@@ -5,11 +5,13 @@
  */
 package graphalgorithmgui;
 
-import vega.graph.Graph;
+import vega.graph.GraphImpl;
 import vega.algorithms.GraphAlgorithm;
 import vega.algorithms.GraphAlgorithms;
 import vega.algorithms.tsp.NearestNeighbor;
 import vega.algorithms.tsp.TwoOpt;
+import interfaces.graph.Graph;
+
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -737,7 +739,7 @@ public class VegaGUI extends javax.swing.JFrame {
                     int edgeNum = ((vertexInt * (vertexInt - 1)) / 2);
                     edgeTextField.setText("" + edgeNum);
                     if (vertexInt > 1) {
-                        Graph g = new Graph(vertexInt, false);
+                        Graph g = new GraphImpl(vertexInt, false);
 
                         if (algorithmString.equalsIgnoreCase("2-OPT")) {
 

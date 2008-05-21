@@ -4,66 +4,62 @@
  */
 package vega.graph.edge.network;
 
-import vega.graph.edge.DirectedEdge;
-import vega.graph.vertex.Vertex;
+import vega.graph.edge.DirectedEdgeImpl;
+import interfaces.graph.edge.network.NetworkEdge;
+import interfaces.graph.vertex.Vertex;
 
 /**
  *
  * @author w_jossey
  */
-public class NetworkEdge extends DirectedEdge {
+public class NetworkEdgeImpl extends DirectedEdgeImpl implements NetworkEdge {
 
     double capacity;
     double flow;
 
-    NetworkEdge(Vertex source, Vertex destination, double capacity) {
+    public NetworkEdgeImpl(Vertex source, Vertex destination, double capacity) {
         super(source, destination);
         this.capacity = capacity;
     }
     
-    NetworkEdge(Vertex source, Vertex destination, double capacity, double initialFlow){
+    public NetworkEdgeImpl(Vertex source, Vertex destination, double capacity, double initialFlow){
         super(source, destination);
         this.capacity = capacity;
         flow = initialFlow;
     }
     
    
-    /**
-     * Get capacity of the network edge
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see vega.graph.edge.network.NetworkEdge#getCapacity()
+	 */
     public double getCapacity() {
         return capacity;
     }
 
-    /**
-     * Gets the flow on the edge.  Set to 0 initially.
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see vega.graph.edge.network.NetworkEdge#getFlow()
+	 */
     public double getFlow() {
         return flow;
     }
 
-    /**
-     * Return the residual capacity of the edge.
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see vega.graph.edge.network.NetworkEdge#getResidual()
+	 */
     public double getResidual() {
         return capacity - flow;
     }
 
-    /**
-     * Augments the flow for the edge in a network.
-     * @param value
-     */
+    /* (non-Javadoc)
+	 * @see vega.graph.edge.network.NetworkEdge#augmentFlow(double)
+	 */
     public void augmentFlow(double augmentValue) {
         flow = augmentValue + flow;
     }
 
-    /**
-     * Sets the flow for the edge.
-     * @param flow
-     */
+    /* (non-Javadoc)
+	 * @see vega.graph.edge.network.NetworkEdge#setFlow(double)
+	 */
     public void setFlow(double flow) {
         this.flow = flow;
     }

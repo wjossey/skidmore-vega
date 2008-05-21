@@ -1,14 +1,70 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package interfaces.graph.vertex.tree;
 
-/**
- *
- * @author w_jossey
- */
+import interfaces.graph.vertex.tree.TreeNode;
+
 public interface TreeNode {
+
+	/**
+	 * @param c
+	 * @return
+	 */
+	public boolean isColor(boolean c);
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String graphVizName(); // end graphVizName()
+
+	/**
+	 * 
+	 * @return
+	 */
+	public TreeNode getParentNode();
+
+	/**
+	 * 
+	 * @param parent
+	 */
+	public void setParentNode(TreeNode parent);
+
+	public void addChild(TreeNode child);
+
+	public TreeNode[] getChildren();
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Comparable getData();
+
+	/**
+	 * 
+	 * @param c
+	 */
+	public void setData(Comparable c);
+
+	/**
+	 * 
+	 * @return
+	 */
+	public int getHeight();
+
+	/**
+	 * 
+	 * @param height
+	 */
+	public void setHeight(int height);
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean getColor();
+
+	/**
+	 * @param color The color to set.
+	 */
+	public void setColor(boolean color);
 
 }

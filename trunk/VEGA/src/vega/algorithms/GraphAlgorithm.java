@@ -1,7 +1,7 @@
 package vega.algorithms;
 
 import vega.Controller;
-import vega.graph.Graph;
+import interfaces.graph.Graph;
 
 public interface GraphAlgorithm {
 	

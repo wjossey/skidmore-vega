@@ -72,6 +72,9 @@ public class GraphImpl implements Graph{
         this.edgeList = edgeList;
     }
     
+    /* (non-Javadoc)
+	 * @see vega.graph.Graph#getSize()
+	 */
     public int getSize(){
         return vertexList.size();
     }
@@ -95,18 +98,16 @@ public class GraphImpl implements Graph{
     public GraphImpl(int vertexSize, int edgeSize, boolean digraph) {
     }
 
-    /**
-     * Returns the vertex array for the graph
-     * @return the vertex array for the graph
-     */
+    /* (non-Javadoc)
+	 * @see vega.graph.Graph#getVertexArray()
+	 */
     public Vertex[] getVertexArray() {
         return vertexList.toArray(new Vertex[0]);
     }
     
-    /**
-     * 
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see vega.graph.Graph#getEdgeArray()
+	 */
     public Edge[] getEdgeArray(){
         return edgeList.toArray(new EdgeImpl[0]);
     }
@@ -116,10 +117,9 @@ public class GraphImpl implements Graph{
      * @return returns the integer value for the number of vertices
      */
 
-    /**
-     * Returns whether we have a directed or undirected graph 
-     * @return return the boolean value of a directed (true) or undirected (false) graph
-     */
+    /* (non-Javadoc)
+	 * @see vega.graph.Graph#isDigraph()
+	 */
     public boolean isDigraph() {
         return digraph;
     }
@@ -268,9 +268,9 @@ public class GraphImpl implements Graph{
     }
 
 
-    /**
-     * Reset the boolean values for whether or not a city has been visited on a tour
-     **/
+    /* (non-Javadoc)
+	 * @see vega.graph.Graph#resetVerticiesVisited()
+	 */
     public void resetVerticiesVisited() {
         for (int i = 0; i < vertexList.size(); i++) {
             vertexList.get(i).setInUse(false);

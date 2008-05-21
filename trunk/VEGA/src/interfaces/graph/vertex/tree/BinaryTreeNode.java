@@ -1,14 +1,49 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package interfaces.graph.vertex.tree;
 
-/**
- *
- * @author w_jossey
- */
-public interface BinaryTreeNode {
+public interface BinaryTreeNode extends TreeNode{
+
+	/**
+	 * 
+	 * @return
+	 */
+	public BinaryTreeNode getLeftNode();
+
+	/**
+	 * 
+	 * @return
+	 */
+	public BinaryTreeNode getRightNode();
+
+	/**
+	 * 
+	 * @param left
+	 */
+	public void setLeftNode(BinaryTreeNode left);
+
+	/**
+	 * 
+	 * @param right
+	 */
+	public void setRightNode(BinaryTreeNode right);
+
+	/**
+	 * 
+	 * @param parent
+	 */
+	public void setParentNode(BinaryTreeNode parent);
 	
+	public BinaryTreeNode getParentNode();
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isRightChild(); // end isRightChild()
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isLeftChild(); // end isLeftChild()
+
 }
