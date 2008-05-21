@@ -9,12 +9,12 @@ package interfaces.dataStructures;
  *
  * @author w_jossey
  */
-public interface Stack<A> {
+public interface Stack<E> {
 	
-    void push(Comparable a);
+    void push(E obj);
     
-    Comparable pop();
+    E pop();
     
-    Comparable peek();
+    E peek();
     
 }

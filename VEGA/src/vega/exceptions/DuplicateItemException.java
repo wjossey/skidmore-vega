@@ -8,6 +8,10 @@ package vega.exceptions;
 public class DuplicateItemException extends RuntimeException
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1704060696095872028L;
+	/**
      * Construct this exception object.
      */
     public DuplicateItemException( )

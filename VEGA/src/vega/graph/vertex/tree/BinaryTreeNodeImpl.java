@@ -20,14 +20,14 @@ public class BinaryTreeNodeImpl extends TreeNodeImpl implements BinaryTreeNode{
      * 
      * @param c
      */
-    public BinaryTreeNodeImpl(Comparable c) {
+    public BinaryTreeNodeImpl(Comparable<?> c) {
         super(c);
         leftNode = null;
         rightNode = null;
 
     }
     
-    public BinaryTreeNodeImpl(Comparable c, boolean color){
+    public BinaryTreeNodeImpl(Comparable<?> c, boolean color){
         super(c);
         leftNode = null;
         rightNode = null;
@@ -40,7 +40,7 @@ public class BinaryTreeNodeImpl extends TreeNodeImpl implements BinaryTreeNode{
      * @param left
      * @param right
      */
-    public BinaryTreeNodeImpl(Comparable c, BinaryTreeNode left, BinaryTreeNode right) {
+    public BinaryTreeNodeImpl(Comparable<?> c, BinaryTreeNode left, BinaryTreeNode right) {
         super(c);
         leftNode = left;
         rightNode = right;

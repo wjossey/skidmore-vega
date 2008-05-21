@@ -12,7 +12,12 @@ package graphalgorithmgui;
  */
 public class AlgorithmLoader extends javax.swing.JFrame {
     
-    /** Creates new form AlgorithmLoader */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5700934996281955360L;
+
+	/** Creates new form AlgorithmLoader */
     public AlgorithmLoader() {
         initComponents();
     }

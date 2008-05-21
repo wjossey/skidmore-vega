@@ -205,7 +205,6 @@ public class EdgeImpl implements Edge{
 
     }
 
-    @SuppressWarnings("empty-statement")
     private static int partition(Edge[] edgeList, int left, int right) {
         int i = left - 1;
         int j = right;

@@ -22,7 +22,7 @@ public class TreeNodeImpl implements TreeNode{
      * Creates a tree node with the value of @param k
      * @param k
      */
-    public TreeNodeImpl(Comparable k) {
+    public TreeNodeImpl(Comparable<?> k) {
         data = k;
         parent = null;
         id = idCounter;
@@ -35,7 +35,7 @@ public class TreeNodeImpl implements TreeNode{
      * @param k
      * @param c
      */
-    public TreeNodeImpl(Comparable k, boolean c) {
+    public TreeNodeImpl(Comparable<?> k, boolean c) {
         data = k;
         parent = null;
         id = idCounter;
@@ -102,14 +102,14 @@ public class TreeNodeImpl implements TreeNode{
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.TreeNode#getData()
 	 */
-    public Comparable getData(){
+    public Comparable<?> getData(){
         return data;
     }
     
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.TreeNode#setData(java.lang.Comparable)
 	 */
-    public void setData(Comparable c){
+    public void setData(Comparable<?> c){
         data = c;
     }
     
@@ -136,7 +136,7 @@ public class TreeNodeImpl implements TreeNode{
     
     private int id; // unique identifier for the node for graphViz data
     private TreeNode parent;
-    private Comparable data;
+    private Comparable<?> data;
     private int height; // for AVL trees
     private ArrayList<TreeNode> childNodes = new ArrayList<TreeNode>();
 
@@ -147,6 +147,10 @@ public class TreeNodeImpl implements TreeNode{
 	 */
     public void setColor(boolean color) {
         this.color = color;
+    }
+    
+    public int getID(){
+    	return id;
     }
 
     @Override

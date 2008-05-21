@@ -23,12 +23,13 @@ public class RedBlackTreeInsideOutsideImpl extends BinarySearchTreeImpl {
     
     @Override
 	public void insert(Object x) {
-                BinaryTreeNodeImpl newNode = new BinaryTreeNodeImpl((Comparable) x, RED);
+                BinaryTreeNodeImpl newNode = new BinaryTreeNodeImpl((Comparable<?>) x, RED);
                 super.insertNode(newNode);
 		fixupInsert(newNode);
 	} // end insert();
 	
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
 	public boolean delete(Object x) {
 		
 		boolean result = false;

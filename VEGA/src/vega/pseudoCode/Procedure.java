@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 public class Procedure {
 
-    private ArrayList<String> pseudoCodeLineArray = new ArrayList();
+    private ArrayList<String> pseudoCodeLineArray = new ArrayList<String>();
     private String title;
 
     /**

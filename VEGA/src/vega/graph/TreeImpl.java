@@ -8,8 +8,6 @@ package vega.graph;
 import interfaces.graph.Tree;
 import interfaces.graph.edge.tree.TreeEdge;
 import interfaces.graph.vertex.tree.TreeNode;
-import vega.graph.edge.tree.TreeEdgeImpl;
-import vega.graph.vertex.tree.TreeNodeImpl;
 
 /**
  *

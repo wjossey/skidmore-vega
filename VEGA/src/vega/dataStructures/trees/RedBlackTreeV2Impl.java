@@ -18,7 +18,7 @@ public class RedBlackTreeV2Impl extends BinarySearchTreeImpl{
         super();
     }
     
-    public void insert(Comparable c){
+    public void insert(Comparable<?> c){
         BinaryTreeNodeImpl node = new BinaryTreeNodeImpl(c);
         insertNode(node);
         insert_case1(node);
@@ -132,7 +132,8 @@ public class RedBlackTreeV2Impl extends BinarySearchTreeImpl{
         }
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public boolean delete(Object arg) {
         boolean result = false;
         Comparable key = (Comparable) arg;

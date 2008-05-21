@@ -8,7 +8,7 @@ import interfaces.graph.vertex.tree.BinaryTreeNode;
 public class RBT extends BinarySearchTreeImpl {
 
 	
-	public void insert(Comparable key) { 
+	public void insert(Comparable<?> key) { 
 		BinaryTreeNodeImpl newNode = new BinaryTreeNodeImpl(key, RED);
 		super.insertNode(newNode);
 		fixUpInsert(newNode);

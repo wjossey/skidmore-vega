@@ -1,7 +1,6 @@
 package vega.dataStructures.trees;
 
 import interfaces.dataStructures.BinarySearchTree;
-import interfaces.graph.Tree;
 import interfaces.graph.vertex.tree.BinaryTreeNode;
 import java.util.Iterator;
 
@@ -14,23 +13,26 @@ import vega.graph.vertex.tree.BinaryTreeNodeImpl;
  * @author Edit by:  Weston Jossey-  April 21, 2008
  *  
  */
-public class BinarySearchTreeImpl extends TreeImpl implements BinarySearchTree{
+public class BinarySearchTreeImpl extends TreeImpl implements BinarySearchTree<Object>{
 
     public static boolean RED = true;
     public static boolean BLACK = false;
-    private static int idCounter = 0; // unique identifier for the node;
-
 
     public class InvalidTreeException extends Exception {
 
-        public InvalidTreeException(String s) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -7533735938974561488L;
+
+		public InvalidTreeException(String s) {
             super(s);
         } // end constructor
 
     } // end class InvalidTreeException 
 
 
-    private class BSTIterator implements Iterator {
+    private class BSTIterator implements Iterator<Object> {
 
         private BinaryTreeNode curr;
         private BinaryTreeNode prev;
@@ -76,7 +78,7 @@ public class BinarySearchTreeImpl extends TreeImpl implements BinarySearchTree{
     } // end inner class BSTIterator
 
 
-    public Iterator getIterator() {
+    public Iterator<?> getIterator() {
         return new BSTIterator();
     } // end getIterator()
 
@@ -93,14 +95,15 @@ public class BinarySearchTreeImpl extends TreeImpl implements BinarySearchTree{
     }
 
     public void insert(Object arg) {
-        Comparable c = (Comparable) arg;
+        Comparable<?> c = (Comparable<?>) arg;
         BinaryTreeNodeImpl newNode = new BinaryTreeNodeImpl(c);
         insertNode(newNode);
     } // end insert();
 
 
-    protected void insertNode(BinaryTreeNode newNode) {
-        Comparable k = (Comparable) newNode.getData();
+    @SuppressWarnings("unchecked")
+	protected void insertNode(BinaryTreeNode newNode) {
+        Comparable k = newNode.getData();
         BinaryTreeNode prev = null;
         BinaryTreeNode curr = root;
         while (curr != null) {
@@ -166,7 +169,8 @@ public class BinarySearchTreeImpl extends TreeImpl implements BinarySearchTree{
         return prev;
     }
 
-    protected BinaryTreeNode search(BinaryTreeNode subtree, Comparable key) {
+    @SuppressWarnings("unchecked")
+	protected BinaryTreeNode search(BinaryTreeNode subtree, Comparable<Comparable> key) {
         if (subtree == null || key.compareTo(subtree.getData()) == 0) {
             return subtree;
         }
@@ -179,7 +183,8 @@ public class BinarySearchTreeImpl extends TreeImpl implements BinarySearchTree{
     } // end search()
 
 
-    public Object search(Object arg) {
+    @SuppressWarnings("unchecked")
+	public Object search(Object arg) {
         Comparable key = (Comparable) arg;
         BinaryTreeNode node = search(root, key);
         if (node != null) {
@@ -190,7 +195,8 @@ public class BinarySearchTreeImpl extends TreeImpl implements BinarySearchTree{
     } // end search()
 
 
-    public Comparable searchLoop(Comparable key) {
+    @SuppressWarnings("unchecked")
+	public Comparable searchLoop(Comparable key) {
         BinaryTreeNode subtree = root;
         boolean found = false;
         while (subtree != null && !found) {
@@ -216,7 +222,8 @@ public class BinarySearchTreeImpl extends TreeImpl implements BinarySearchTree{
      * @param key
      * @return
      */
-    public Comparable successor(Comparable key) {
+    @SuppressWarnings("unchecked")
+	public Comparable successor(Comparable key) {
         BinaryTreeNode node = search(root, key);
         if (node != null) {
             BinaryTreeNode succ = successor(node);
@@ -236,7 +243,8 @@ public class BinarySearchTreeImpl extends TreeImpl implements BinarySearchTree{
      * @param arg  Object to delete
      * @return Returns true if found and deleted, false if it fails.
      */
-    public boolean delete(Object arg) {
+    @SuppressWarnings("unchecked")
+	public boolean delete(Object arg) {
         boolean result = false;
         Comparable key = (Comparable) arg;
         BinaryTreeNode node = search(root, key);
