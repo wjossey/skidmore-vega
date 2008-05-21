@@ -30,7 +30,7 @@ public class TwoOpt implements GraphAlgorithm {
         twoOptMove.appendLine("Code To Be Inserted)");
         pseudoCode.addProcedure(twoOptMove);
         controller = new Controller(this.g, pseudoCode, this);
-        TwoOpt(this.g.getVertexArray()); //Let's assume we don't assign a starting vertex
+        executeTwoOpt(this.g.getVertexArray()); //Let's assume we don't assign a starting vertex
 
         running = false;
     }
@@ -47,7 +47,7 @@ public class TwoOpt implements GraphAlgorithm {
      * The 2OPT algorithm.  
      * @return returns the tour in the form of a Vertex array
      */
-    public Vertex[] TwoOpt(Vertex[] tour) {
+    public Vertex[] executeTwoOpt(Vertex[] tour) {
         //Transform tour to a linked list
 
         /*Start of the twoOpt algorithm.  First, let's connect our tour*/

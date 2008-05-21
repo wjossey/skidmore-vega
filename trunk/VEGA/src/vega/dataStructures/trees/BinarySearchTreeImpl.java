@@ -416,7 +416,6 @@ public class BinarySearchTreeImpl extends TreeImpl implements BinarySearchTree<O
     //Left, right, root
     public String postOrderGraphViz(BinaryTreeNode curr) {
         String result = "";
-        String redColor = "red";
         String blackString = "black";
 
         if (curr != null) {
