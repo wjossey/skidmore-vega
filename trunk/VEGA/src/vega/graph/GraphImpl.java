@@ -40,7 +40,7 @@ public class GraphImpl implements Graph{
     public GraphImpl(int vertexSize, boolean isDigraph) {
         this.size = vertexSize;
         this.digraph = isDigraph;
-        vertexList = new ArrayList(vertexSize);
+        vertexList = new ArrayList<Vertex>(vertexSize);
         generateVertices();
         if (!digraph) {
             /*We don't have a digraph, so we go ahead and compute the edge weights between
@@ -56,8 +56,8 @@ public class GraphImpl implements Graph{
     }
     
     public GraphImpl(Vertex[] vertexArray, EdgeImpl[] edgeArray){
-        vertexList = new ArrayList(vertexArray.length);
-        edgeList = new ArrayList(edgeArray.length);
+        vertexList = new ArrayList<Vertex>(vertexArray.length);
+        edgeList = new ArrayList<EdgeImpl>(edgeArray.length);
         
         for(int i = 0; i < vertexArray.length; i++){
             vertexList.add(vertexArray[i]);
@@ -143,7 +143,6 @@ public class GraphImpl implements Graph{
      * vertex.  By guaranteeing that there is always a flow in and out of the vertex, we
      * are guaranteed a strongly connected graph.
      */
-    @SuppressWarnings("empty-statement")
     private void generateEdges() {
         for (int i = 0; i < vertexList.size(); i++) {
             Vertex tempVertex = vertexList.get(i);;

@@ -24,7 +24,11 @@ import javax.swing.AbstractAction;
  */
 public class VegaGUI extends javax.swing.JFrame {
 
-    GraphAlgorithm a = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2763808486006878706L;
+	GraphAlgorithm a = null;
 
     /** Creates new form VegaGUI */
     public VegaGUI() {
@@ -573,7 +577,12 @@ public class VegaGUI extends javax.swing.JFrame {
 
     private class LongRunningNextImageButtonAction extends AbstractAction {
 
-        public LongRunningNextImageButtonAction() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -3349336468849400316L;
+
+		public LongRunningNextImageButtonAction() {
             super();
         }
 

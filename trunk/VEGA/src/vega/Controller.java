@@ -17,7 +17,7 @@ public class Controller {
 
     int counter = 0;
     int imageCounter = 0;
-    ArrayList<AlgorithmStep> stepTracker = new ArrayList();
+    ArrayList<AlgorithmStep> stepTracker = new ArrayList<AlgorithmStep>();
     PseudoCode pseudoCode;
     Graph g;
     GraphAlgorithm a;
@@ -144,14 +144,6 @@ public class Controller {
 
         private String getProcedure() {
             return procedure;
-        }
-
-        private void setLine(int line) {
-            this.line = line;
-        }
-
-        private void setProcedure(String procedure) {
-            this.procedure = procedure;
         }
     }
 }

@@ -36,13 +36,13 @@ public interface TreeNode {
 	 * 
 	 * @return
 	 */
-	public Comparable getData();
+	public Comparable<?> getData();
 
 	/**
 	 * 
 	 * @param c
 	 */
-	public void setData(Comparable c);
+	public void setData(Comparable<?> c);
 
 	/**
 	 * 
@@ -66,5 +66,7 @@ public interface TreeNode {
 	 * @param color The color to set.
 	 */
 	public void setColor(boolean color);
+	
+	public int getID();
 
 }

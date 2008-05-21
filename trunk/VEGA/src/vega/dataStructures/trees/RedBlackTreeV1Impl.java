@@ -12,7 +12,7 @@ import interfaces.dataStructures.BinarySearchTree;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class RedBlackTreeV1Impl extends BinarySearchTreeImpl implements RedBlackTreeV1, BinarySearchTree {
+public class RedBlackTreeV1Impl extends BinarySearchTreeImpl implements RedBlackTreeV1, BinarySearchTree<Object> {
 
     public RedBlackTreeV1Impl() {
         super();
@@ -21,14 +21,14 @@ public class RedBlackTreeV1Impl extends BinarySearchTreeImpl implements RedBlack
 
     @Override
     public void insert(Object x) {
-        BinaryTreeNodeImpl newNode = new BinaryTreeNodeImpl((Comparable) x, RED);
+        BinaryTreeNodeImpl newNode = new BinaryTreeNodeImpl((Comparable<?>) x, RED);
         insertNode(newNode);
         fixupInsert(newNode);
     } // end insert();
 
 
-    @Override
-    public BinaryTreeNode search(BinaryTreeNode subTree, Comparable c) {
+    @SuppressWarnings("unchecked")
+	public BinaryTreeNode search(BinaryTreeNode subTree, Comparable c) {
         return super.search(subTree, c);
     }
 
@@ -43,7 +43,7 @@ public class RedBlackTreeV1Impl extends BinarySearchTreeImpl implements RedBlack
             System.out.println("Cannot validate the tree.");
         } // end try-catch
 
-        BinaryTreeNode node = search(getRoot(), (Comparable) x);
+        BinaryTreeNode node = search(getRoot(), (Comparable<?>) x);
         if (node != null) {
 
             BinaryTreeNode nodeToSplice = super.getNodeToDelete(node);
@@ -250,8 +250,9 @@ public class RedBlackTreeV1Impl extends BinarySearchTreeImpl implements RedBlack
     } // end fixupDelete()
 
 
-    protected void insertNode(BinaryTreeNode newNode) {
-        Comparable k = (Comparable) newNode.getData();
+    @SuppressWarnings("unchecked")
+	protected void insertNode(BinaryTreeNode newNode) {
+        Comparable k = newNode.getData();
         BinaryTreeNode prev = null;
         BinaryTreeNode curr = getRoot();
         while (curr != null) {

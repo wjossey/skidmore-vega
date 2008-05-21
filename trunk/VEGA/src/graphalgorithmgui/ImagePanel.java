@@ -29,7 +29,11 @@ import javax.imageio.*;
 
 public class ImagePanel extends JPanel {
 
-    private Image image;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5329381520437894511L;
+	private Image image;
     private Image scaledImage;
     private int imageWidth = 0;
     private int imageHeight = 0;

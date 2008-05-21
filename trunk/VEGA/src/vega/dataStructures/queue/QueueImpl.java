@@ -3,10 +3,10 @@ package vega.dataStructures.queue;
 import java.util.LinkedList;
 
 public class QueueImpl {
-	LinkedList list;
+	LinkedList<Object> list;
 	
 	public QueueImpl(){
-		list = new LinkedList();
+		list = new LinkedList<Object>();
 	}
 	
 	/*Returns true if the object did not already exist on the queue.  Returns false

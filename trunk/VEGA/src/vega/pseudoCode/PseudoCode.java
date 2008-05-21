@@ -14,10 +14,8 @@ import java.util.Iterator;
  * @author w_jossey
  */
 public class PseudoCode {
-    HashMap procedureHash = new HashMap();
+    HashMap<String, Procedure> procedureHash = new HashMap<String, Procedure>();
     private String title = "";
-    private int activeLine = 1;
-    private String activeTitle = "";
     
     public PseudoCode(String algorithmTitle){
         title = algorithmTitle;
@@ -34,18 +32,13 @@ public class PseudoCode {
     public Procedure[] getProcedures(){
         Procedure[] procedureArray = new Procedure[procedureHash.size()];
         
-        Collection procedureCollection = procedureHash.values();
+        Collection<Procedure> procedureCollection = procedureHash.values();
         int i = 0;
-        Iterator iterator = procedureCollection.iterator();
+        Iterator<Procedure> iterator = procedureCollection.iterator();
         while(iterator.hasNext()){
             procedureArray[i] = (Procedure) iterator.next();
         }
         return procedureArray;
-    }
-    
-    public void setActiveLine(int line, String procedureTitle){
-        activeLine = line;
-        activeTitle = procedureTitle;
     }
     
     public String getLine(int line, String procedureTitle){
