@@ -10,5 +10,5 @@ package interfaces.graph.vertex.tree;
  * @author w_jossey
  */
 public interface BinaryTreeNode {
-
+	
 }
