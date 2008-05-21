@@ -436,7 +436,7 @@ public class VertexImpl implements Vertex{
      */
     public Vertex[] getKNearestNeighbors(int k) {
         if (k <= edgeList.length) {
-            Edge.sortEdgesByDistance(edgeList);
+            EdgeImpl.sortEdgesByDistance(edgeList);
             Vertex[] returnArray = new VertexImpl[k];
             for (int i = 0; i < returnArray.length; i++) {
                 Edge tempEdge = edgeList[i];

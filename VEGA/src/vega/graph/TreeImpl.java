@@ -5,14 +5,17 @@
 
 package vega.graph;
 
-import vega.graph.edge.tree.TreeEdge;
-import vega.graph.vertex.tree.TreeNode;
+import interfaces.graph.Tree;
+import interfaces.graph.edge.tree.TreeEdge;
+import interfaces.graph.vertex.tree.TreeNode;
+import vega.graph.edge.tree.TreeEdgeImpl;
+import vega.graph.vertex.tree.TreeNodeImpl;
 
 /**
  *
  * @author w_jossey
  */
-public class Tree extends Graph{
+public class TreeImpl extends GraphImpl implements Tree{
     TreeNode root;
     TreeNode[] treeArray;
     TreeEdge[] edgeArray;
@@ -22,7 +25,7 @@ public class Tree extends Graph{
      * @param t
      * @param e
      */
-    public Tree(TreeNode[] t, TreeEdge[] e){
+    public TreeImpl(TreeNode[] t, TreeEdge[] e){
         treeArray = t;
         edgeArray = e;
     }
@@ -31,7 +34,7 @@ public class Tree extends Graph{
      * 
      * @param treeNodes
      */
-    public Tree(TreeNode[] treeNodes){
+    public TreeImpl(TreeNode[] treeNodes){
         treeArray = treeNodes;
     }
     
@@ -39,14 +42,14 @@ public class Tree extends Graph{
      * 
      * @param root
      */
-    public Tree(TreeNode root){
+    public TreeImpl(TreeNode root){
         this.root = root;
     }
     
     /**
      * Empty Constructor.  Sets the root to null;
      */
-    public Tree(){
+    public TreeImpl(){
         root = null;
     }
     

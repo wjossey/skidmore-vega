@@ -1,9 +1,12 @@
 package vega.dataStructures.trees;
 
 import interfaces.dataStructures.BinarySearchTree;
-import vega.graph.Tree;
-import vega.graph.vertex.tree.BinaryTreeNode;
+import interfaces.graph.Tree;
+import interfaces.graph.vertex.tree.BinaryTreeNode;
 import java.util.Iterator;
+
+import vega.graph.TreeImpl;
+import vega.graph.vertex.tree.BinaryTreeNodeImpl;
 
 /**
  * Binary search tree class.  Contains the InvaliTreeException subclass.
@@ -11,7 +14,7 @@ import java.util.Iterator;
  * @author Edit by:  Weston Jossey-  April 21, 2008
  *  
  */
-public class BinarySearchTreeImpl extends Tree implements BinarySearchTree{
+public class BinarySearchTreeImpl extends TreeImpl implements BinarySearchTree{
 
     public static boolean RED = true;
     public static boolean BLACK = false;
@@ -91,7 +94,7 @@ public class BinarySearchTreeImpl extends Tree implements BinarySearchTree{
 
     public void insert(Object arg) {
         Comparable c = (Comparable) arg;
-        BinaryTreeNode newNode = new BinaryTreeNode(c);
+        BinaryTreeNodeImpl newNode = new BinaryTreeNodeImpl(c);
         insertNode(newNode);
     } // end insert();
 

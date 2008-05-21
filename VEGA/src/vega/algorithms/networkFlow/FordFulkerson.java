@@ -5,9 +5,9 @@
 
 package vega.algorithms.networkFlow;
 
-import vega.dataStructures.queue.Queue;
-import vega.graph.edge.network.NetworkEdge;
-import vega.graph.vertex.Vertex;
+import vega.dataStructures.queue.QueueImpl;
+import interfaces.graph.edge.network.NetworkEdge;
+import interfaces.graph.vertex.Vertex;
 
 /**
  *
@@ -73,7 +73,7 @@ public class FordFulkerson {
         }
 
         boolean pathFound = false;
-        Queue queue = new Queue();
+        QueueImpl queue = new QueueImpl();
         if (s == t) {
             return false;
         } else {

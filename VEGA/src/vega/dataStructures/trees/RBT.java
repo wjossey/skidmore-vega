@@ -1,14 +1,15 @@
 package vega.dataStructures.trees;
 
 import vega.dataStructures.trees.BinarySearchTreeImpl;
-import vega.graph.vertex.tree.BinaryTreeNode;
+import vega.graph.vertex.tree.BinaryTreeNodeImpl;
+import interfaces.graph.vertex.tree.BinaryTreeNode;
 
 
 public class RBT extends BinarySearchTreeImpl {
 
 	
 	public void insert(Comparable key) { 
-		BinaryTreeNode newNode = new BinaryTreeNode(key, RED);
+		BinaryTreeNodeImpl newNode = new BinaryTreeNodeImpl(key, RED);
 		super.insertNode(newNode);
 		fixUpInsert(newNode);
 	} // end insert()

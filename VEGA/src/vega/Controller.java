@@ -3,14 +3,14 @@ package vega;
 import vega.helperClasses.GraphViz;
 import vega.pseudoCode.PseudoCode;
 import vega.algorithms.GraphAlgorithm;
-import vega.graph.Graph;
+import interfaces.graph.Graph;
 import java.io.*;
 import java.util.ArrayList;
 
 /**
  * The controller class is the plug-point that a developer uses to interface with
  * VEGA.  The controller class is used to generate the "snapshots" of the graph as
- * an algorithm manipulates the grpah.
+ * an algorithm manipulates the graph.
  * @author w_jossey
  */
 public class Controller {
