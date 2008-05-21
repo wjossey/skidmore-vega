@@ -2,7 +2,9 @@ package vega.graph;
 
 import vega.graph.edge.EdgeImpl;
 import vega.graph.vertex.VertexImpl;
+import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
+import interfaces.graph.Graph;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -20,7 +22,7 @@ import java.util.Random;
  * or edges)."
  * @author w_jossey
  */
-public class Graph implements Graph{
+public class GraphImpl implements Graph{
 
     private int size = 0;
     private int positionInArray = 0;
@@ -35,7 +37,7 @@ public class Graph implements Graph{
      * @param vertexSize the number of vertices in the graph
      * @param digraph a directed graph if true, undirected if false
      */
-    public Graph(int vertexSize, boolean isDigraph) {
+    public GraphImpl(int vertexSize, boolean isDigraph) {
         this.size = vertexSize;
         this.digraph = isDigraph;
         vertexList = new ArrayList(vertexSize);
@@ -53,7 +55,7 @@ public class Graph implements Graph{
         }
     }
     
-    public Graph(Vertex[] vertexArray, EdgeImpl[] edgeArray){
+    public GraphImpl(Vertex[] vertexArray, EdgeImpl[] edgeArray){
         vertexList = new ArrayList(vertexArray.length);
         edgeList = new ArrayList(edgeArray.length);
         
@@ -65,7 +67,7 @@ public class Graph implements Graph{
         }
     }
     
-    public Graph(ArrayList<Vertex> vertexList, ArrayList<EdgeImpl> edgeList){
+    public GraphImpl(ArrayList<Vertex> vertexList, ArrayList<EdgeImpl> edgeList){
         this.vertexList = vertexList;
         this.edgeList = edgeList;
     }
@@ -77,7 +79,7 @@ public class Graph implements Graph{
     /**
      * Empty Constructor
      */
-    public Graph(){
+    public GraphImpl(){
         
     }
 
@@ -90,7 +92,7 @@ public class Graph implements Graph{
      * @param edgeSize the number of edges in the graph
      * @param digraph a directed graph if true, undirected if false
      */
-    public Graph(int vertexSize, int edgeSize, boolean digraph) {
+    public GraphImpl(int vertexSize, int edgeSize, boolean digraph) {
     }
 
     /**
@@ -105,7 +107,7 @@ public class Graph implements Graph{
      * 
      * @return
      */
-    public EdgeImpl[] getEdgeArray(){
+    public Edge[] getEdgeArray(){
         return edgeList.toArray(new EdgeImpl[0]);
     }
 
@@ -292,7 +294,7 @@ public class Graph implements Graph{
         //returnString += "graph G{\nsize=\"8.5,11\";";
         }
 
-        returnString += Vertex.vertexListToString(vertexList.toArray(new Vertex[0])) + "\n";
+        returnString += VertexImpl.vertexListToString(vertexList.toArray(new Vertex[0])) + "\n";
         returnString += EdgeImpl.allEdgesWithoutRepeats(vertexList.toArray(new Vertex[0])) + "\n";
 
         returnString += "}\n";
