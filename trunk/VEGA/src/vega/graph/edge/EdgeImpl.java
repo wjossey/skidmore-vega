@@ -26,7 +26,8 @@ public class EdgeImpl implements Edge{
 
         //Arrange cities relative to their UID so we always know which city to expect first
         //The city with the greater UID will always be City A.
-        if (a.getUID() > b.getUID()) {
+        
+    	if (a.getUID() > b.getUID()) {
             this.a = a;
             this.b = b;
         } else {
