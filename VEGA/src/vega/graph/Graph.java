@@ -1,7 +1,8 @@
 package vega.graph;
 
 import vega.graph.edge.EdgeImpl;
-import vega.graph.vertex.Vertex;
+import vega.graph.vertex.VertexImpl;
+import interfaces.graph.vertex.Vertex;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -19,7 +20,7 @@ import java.util.Random;
  * or edges)."
  * @author w_jossey
  */
-public class Graph {
+public class Graph implements Graph{
 
     private int size = 0;
     private int positionInArray = 0;
@@ -130,7 +131,7 @@ public class Graph {
         for (int i = 0; i < size; i++) {
             int randX = (int) (Math.random() * (size * 10));
             int randY = (int) (Math.random() * (size * 10));
-            addVertex(new Vertex(randX, randY, this));
+            addVertex(new VertexImpl(randX, randY, this));
         }
     }
 
