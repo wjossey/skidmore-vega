@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package VEGA.Graph.Vertex.Tree;
+package vega.graph.vertex.tree;
 
 import java.util.ArrayList;
 

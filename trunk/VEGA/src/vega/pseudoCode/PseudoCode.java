@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package VEGA.PseudoCode;
+package vega.pseudoCode;
 
 import java.util.Collection;
 import java.util.HashMap;

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package Interfaces.Graph.Edge.Network;
+package interfaces.graph.edge.network;
 
 /**
  *

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package Interfaces.Graph.Vertex.Tree;
+package interfaces.graph.vertex.tree;
 
 /**
  *

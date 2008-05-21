@@ -3,9 +3,9 @@
  * and open the template in the editor.
  */
 
-package VEGA.DataStructures.Trees;
+package vega.dataStructures.trees;
 
-import VEGA.Graph.Vertex.Tree.BinaryTreeNode;
+import vega.graph.vertex.tree.BinaryTreeNode;
 
 /**
  *

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package Interfaces.Algorithms;
+package interfaces.algorithms;
 
 /**
  *

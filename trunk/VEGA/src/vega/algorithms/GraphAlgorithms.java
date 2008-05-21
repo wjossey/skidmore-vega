@@ -1,7 +1,7 @@
-package VEGA.Algorithms;
+package vega.algorithms;
 
-import VEGA.Algorithms.GraphAlgorithm;
-import VEGA.Graph.Graph;
+import vega.algorithms.GraphAlgorithm;
+import vega.graph.Graph;
 
 public class GraphAlgorithms implements Runnable{
 	/**

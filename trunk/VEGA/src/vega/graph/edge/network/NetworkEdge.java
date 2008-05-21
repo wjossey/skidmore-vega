@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package VEGA.Graph.Edge.Network;
+package vega.graph.edge.network;
 
-import VEGA.Graph.Edge.DirectedEdge;
-import VEGA.Graph.Vertex.Vertex;
+import vega.graph.edge.DirectedEdge;
+import vega.graph.vertex.Vertex;
 
 /**
  *
