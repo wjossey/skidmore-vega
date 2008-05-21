@@ -1,10 +1,12 @@
 package vega.graph.vertex;
 
-import vega.graph.Graph;
+import interfaces.graph.Graph;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 
 import java.util.HashMap;
+
+import vega.graph.edge.EdgeImpl;
 
 //
 //  Vertex.java
@@ -13,7 +15,7 @@ import java.util.HashMap;
 //  Created by Weston Jossey on 7/10/07.
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
-public class Vertex {
+public class VertexImpl implements Vertex{
 
     /* Variable Declarations Start*/
     private static int vertexCounter = 0;  //Used to generate the UID of the vertex.
@@ -39,6 +41,7 @@ public class Vertex {
     private Graph g;  //This is the parent graph we're working with
 
     private Vertex previousVertex;
+    
     private String color = "DEFAULT"; //Color of the vertex
 
     private String style = "DEFAULT"; //Style of the vertex (fill?)
@@ -61,7 +64,7 @@ public class Vertex {
      * @param y Y Coordinate
      * @param g Parent graph
      */
-    public Vertex(int x, int y, Graph g) {
+    public VertexImpl(int x, int y, Graph g) {
         this.g = g;
         uid = vertexCounter++;
         setX(x);
@@ -74,7 +77,7 @@ public class Vertex {
      * 
      * @param g Parent graph
      */
-    public Vertex(Graph g) {
+    public VertexImpl(Graph g) {
         this.g = g;
         setX(0);
         setY(0);
@@ -86,7 +89,7 @@ public class Vertex {
     /**
      * Empty Constructor.
      */
-    public Vertex() {
+    public VertexImpl() {
     }
 
     /**
@@ -261,7 +264,7 @@ public class Vertex {
     }
 
     /**
-     * Add an aedge to the vertex's adjacency list.
+     * Add an edge to the vertex's adjacency list.
      * @param e
      */
     public void addEdge(Edge e) {
@@ -317,7 +320,7 @@ public class Vertex {
     * Sorts the edges using quicksort.
     */
     public void sortEdges() {
-        vega.graph.edge.EdgeImpl.sortEdgesByDistance(edgeList);
+        EdgeImpl.sortEdgesByDistance(edgeList);
     }
 
     /**
@@ -404,7 +407,7 @@ public class Vertex {
     public Vertex getNearestNeighbor() {
         boolean vertexFound = false;
         Vertex returnVertex = null;
-        Edge.sortEdgesByDistance(edgeList);
+        EdgeImpl.sortEdgesByDistance(edgeList);
         for (int i = 0; i < edgeList.length && !vertexFound; i++) {
         	edgeList[i].getVertexA();
             Vertex a = edgeList[i].getVertexA();
@@ -434,7 +437,7 @@ public class Vertex {
     public Vertex[] getKNearestNeighbors(int k) {
         if (k <= edgeList.length) {
             Edge.sortEdgesByDistance(edgeList);
-            Vertex[] returnArray = new Vertex[k];
+            Vertex[] returnArray = new VertexImpl[k];
             for (int i = 0; i < returnArray.length; i++) {
                 Edge tempEdge = edgeList[i];
                 if (tempEdge.getVertexA().getUID() == uid) {
@@ -455,7 +458,7 @@ public class Vertex {
      * @return
      */
     public Vertex[] getNeighbors() {
-        Vertex[] neighborArray = new Vertex[edgeList.length];
+        Vertex[] neighborArray = new VertexImpl[edgeList.length];
         int arrayCounter = 0;
         for (int i = 0; i < edgeList.length && edgeList[i] != null; i++) {
             if (edgeList[i].getVertexA() != this) {
@@ -499,5 +502,6 @@ public class Vertex {
         return returnString;
 
     }
+
 }
 

@@ -9,6 +9,6 @@ package interfaces.graph.edge;
  *
  * @author w_jossey
  */
-public interface DirectedEdge {
+public interface DirectedEdge extends Edge{
 
 }

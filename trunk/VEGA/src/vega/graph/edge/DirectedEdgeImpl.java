@@ -5,14 +5,14 @@
 
 package vega.graph.edge;
 
-import vega.graph.vertex.Vertex;
+import interfaces.graph.vertex.Vertex;
 
 /**
  * A directed edge is an edge that has a source vertex and a destination vertex.
  * This prevents bi-directional movement by an algorithm.  
  * @author w_jossey
  */
-public class DirectedEdge extends EdgeImpl{
+public class DirectedEdgeImpl extends EdgeImpl{
     Vertex from = null; Vertex to = null;
     double weight;
     
@@ -21,7 +21,7 @@ public class DirectedEdge extends EdgeImpl{
      * @param source Source vertex
      * @param destination Destination vertex
      */
-    public DirectedEdge(Vertex source, Vertex destination){
+    public DirectedEdgeImpl(Vertex source, Vertex destination){
         super(source, destination);
         this.from = source;
         this.to = destination;
@@ -34,7 +34,7 @@ public class DirectedEdge extends EdgeImpl{
      * @param destination Destinatino vertex
      * @param weight The weight of the edge
      */
-    public DirectedEdge(Vertex source, Vertex destination, double weight){
+    public DirectedEdgeImpl(Vertex source, Vertex destination, double weight){
         super(source, destination, weight);
         this.from = source;
         this.to = destination;
