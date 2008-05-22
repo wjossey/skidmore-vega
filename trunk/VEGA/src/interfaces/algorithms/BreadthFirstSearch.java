@@ -9,6 +9,6 @@ package interfaces.algorithms;
  *
  * @author w_jossey
  */
-public interface BreadthFirstSearch {
+public interface BreadthFirstSearch{
 
 }

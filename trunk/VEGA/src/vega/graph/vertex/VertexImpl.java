@@ -3,7 +3,9 @@ package vega.graph.vertex;
 import interfaces.graph.Graph;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
+import interfaces.graph.vertex.GraphvizVertexProperties;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import vega.graph.edge.EdgeImpl;
@@ -15,47 +17,47 @@ import vega.graph.edge.EdgeImpl;
 //  Created by Weston Jossey on 7/10/07.
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
-public class VertexImpl implements Vertex{
+public class VertexImpl implements Vertex, Serializable, Cloneable{
 
-    /* Variable Declarations Start*/
-    private static int vertexCounter = 0;  //Used to generate the UID of the vertex.
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6521996750235441060L;
 
-    private int uid;  //UID of the vertex.  Equal to a primary key in a database.  Must be unique!
-
-    private int x = 0;    //If the vertex needs coordinates, this is the "x" value.
-
-    private int y = 0;    //If the vertex needs coordinates, this is the "y" value.
-
-    private Edge[] edgeList;  //Keeps track of all the edges for the vertex.
-   
-    private HashMap<Integer, Edge> edgeHash;  //A hash of edges
-
-    private int edgeCounter = 0;  //Keeps track of how many edges this vertex has
-
-    private boolean visited = false;  //Boolean as to whether or not the vertex has been visited
-
-    private Edge incomingEdge;  //We can use this to track a path if we so desire (Try to remove)
-
-    private Edge outgoingEdge;  //This is the outgoing edge in a path (Try to remove)
-
-    private Graph g;  //This is the parent graph we're working with
-
-    private Vertex previousVertex;
+	/* Variable Declarations Start*/
+	private static int vertexCounter = 0;  //Used to generate the UID of the vertex.
     
-    private String color = "DEFAULT"; //Color of the vertex
+	private VertexPropertiesImpl properties;
 
-    private String style = "DEFAULT"; //Style of the vertex (fill?)
+	private int uid;  //UID of the vertex.  Equal to a primary key in a database.  Must be unique!
 
-    private String shape = "DEFAULT"; //SHAPE
+	private int x = 0;    //If the vertex needs coordinates, this is the "x" value.
 
-    private boolean active = false; //Is the vertex active (VEGA)
+	private int y = 0;    //If the vertex needs coordinates, this is the "y" value.
 
-    private boolean inUse = false; //Is the vertex in-use (VEGA)
+	private Edge[] edgeList;  //Keeps track of all the edges for the vertex.
+   
+	private HashMap<Integer, Edge> edgeHash;  //A hash of edges
 
-    private String name = ""; //This does not have to be unique, but typicall is the UID.
+	private int edgeCounter = 0;  //Keeps track of how many edges this vertex has
 
-    private int sides = 0; //Used by Graphviz to draw polygons
-    /* Variable Declarations Start*/
+	private boolean visited = false;  //Boolean as to whether or not the vertex has been visited
+
+	private Edge incomingEdge;  //We can use this to track a path if we so desire (Try to remove)
+
+	private Edge outgoingEdge;  //This is the outgoing edge in a path (Try to remove)
+
+	private Graph g;  //This is the parent graph we're working with
+
+	private Vertex previousVertex;
+
+	private boolean active = false; //Is the vertex active (VEGA)
+
+	private boolean inUse = false; //Is the vertex in-use (VEGA)
+
+	private String name = ""; //This does not have to be unique, but typically is the UID.
+
+    /* Variable Declarations End*/
 
 
     /**
@@ -71,6 +73,7 @@ public class VertexImpl implements Vertex{
         setY(y);
         edgeList = new Edge[this.g.getSize() - 1];
         edgeHash = new HashMap<Integer, Edge>();
+        properties = new VertexPropertiesImpl(this);
     }
 
     /**
@@ -83,6 +86,7 @@ public class VertexImpl implements Vertex{
         setY(0);
         edgeList = new Edge[this.g.getSize() - 1];
         edgeHash = new HashMap<Integer, Edge>();
+        properties = new VertexPropertiesImpl(this);
 
     }
 
@@ -90,6 +94,7 @@ public class VertexImpl implements Vertex{
      * Empty Constructor.
      */
     public VertexImpl() {
+    	properties = new VertexPropertiesImpl(this);
     }
 
     /**
@@ -144,14 +149,6 @@ public class VertexImpl implements Vertex{
     }
 
     /**
-     * Set the style of the vertex based on the DOT attributes available.
-     * @param style
-     */
-    public void setStyle(String style) {
-        this.style = style;
-    }
-
-    /**
      * Assign an incoming edge to the vertex.
      * @param e
      */
@@ -176,22 +173,6 @@ public class VertexImpl implements Vertex{
     }
 
     /**
-     * Assigns a background color to the vertex
-     * @param color
-     */
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    /**
-     * Set the shape of the vertex
-     * @param shape
-     */
-    public void setShape(String shape) {
-        this.shape = shape;
-    }
-
-    /**
      * Set the outgoing edge from the vertex.
      * @param e
      */
@@ -207,21 +188,7 @@ public class VertexImpl implements Vertex{
         return edgeList;
     }
 
-    /**
-     * Returns the style of the vertex.
-     * @return
-     */
-    public String getStyle() {
-        if (active || inUse) {
-            return "filled";
-        } else {
-            if (style.equalsIgnoreCase("DEFAULT")) {
-                return "filled";
-            } else {
-                return style;
-            }
-        }
-    }
+    
 
     /**
      * Returns the boolean status of whether or not the vertex is in use.
@@ -331,64 +298,16 @@ public class VertexImpl implements Vertex{
         return previousVertex;
     }
 
-    /**
-     * Sets the number of sides to the vertex.  This is used for drawing with Graphviz.
-     * @param sides
-     */
-    public void setSides(int sides) {
-        this.sides = sides;
-    }
 
-    /**
-     * Gets the number of sides to the vertex.  This is used for drawing with Graphviz.
-     * @return
-     */
-    public int getSides() {
-        return sides;
-    }
+  
 
-    /**
-     * Returns the shape of the vertex.  By default, it is an Ellipse.
-     * @return
-     */
-    public String getShape() {
-        String returnString = "";
-        if (shape.equalsIgnoreCase("DEFAULT")) {
-            returnString += "ellipse";
-        } else {
-            returnString += shape;
-        }
-        return returnString;
-    }
-
-    /**
-     * Gets the color of the background for the vertex.
-     * @return
-     */
-    public String getColor() {
-        String returnString = "";
-
-        if (active) {
-            returnString = "red";
-        } else {
-            if (inUse) {
-                returnString = "gray";
-            } else {
-                if (color.equalsIgnoreCase("DEFAULT")) {
-                    returnString = "white";
-                } else {
-                    returnString = color;
-                }
-            }
-        }
-        return returnString;
-    }
+   
 
     /**
      * Returns whether or not the vertex is currently active.
      * @return
      */
-    public boolean getActive() {
+    public boolean isActive() {
         return active;
     }
 
@@ -497,11 +416,18 @@ public class VertexImpl implements Vertex{
         String returnString = "";
 
         returnString += getName();
-        returnString += " [fillcolor=" + getColor() + ", style=" + getStyle() +
-                ", shape=" + getShape() + ", sides=" + Integer.toString(sides) + "];";
+        
+        returnString += " [fillcolor=" + properties.getColor() + ", style=" + 
+        		properties.getStyle() + ", shape=" + properties.getShape() + 
+        		", sides=" + Integer.toString(properties.getSides()) + "];";
+        
         return returnString;
 
     }
+
+	public GraphvizVertexProperties getProperties() {
+		return properties;
+	}
 
 }
 
