@@ -5,10 +5,16 @@
 
 package interfaces.graph.edge;
 
+import interfaces.graph.vertex.Vertex;
+
 /**
  *
  * @author w_jossey
  */
 public interface DirectedEdge extends Edge{
+	
+	Vertex getSource();
+	
+	Vertex getDestination();
 
 }
