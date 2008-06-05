@@ -5,10 +5,16 @@
 
 package interfaces.graph;
 
+import interfaces.graph.vertex.tree.TreeNode;
+
 /**
  *
  * @author w_jossey
  */
-public interface Tree {
+public interface Tree extends Graph{
+	
+	public void setRoot(TreeNode v);
+	
+	public TreeNode getRoot();
 
 }

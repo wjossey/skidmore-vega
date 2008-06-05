@@ -1,5 +1,6 @@
 package interfaces.graph.vertex.tree;
 
+import interfaces.graph.edge.tree.TreeEdge;
 import interfaces.graph.vertex.tree.TreeNode;
 
 public interface TreeNode {
@@ -28,8 +29,16 @@ public interface TreeNode {
 	 */
 	public void setParentNode(TreeNode parent);
 
+	/**
+	 * 
+	 * @param child
+	 */
 	public void addChild(TreeNode child);
 
+	/**
+	 * 
+	 * @return
+	 */
 	public TreeNode[] getChildren();
 
 	/**
@@ -67,6 +76,17 @@ public interface TreeNode {
 	 */
 	public void setColor(boolean color);
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public int getID();
+	
+	/**
+	 * 
+	 * @param child
+	 * @return
+	 */
+	public TreeEdge getEdge(TreeNode child);
 
 }

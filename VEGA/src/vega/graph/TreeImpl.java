@@ -7,6 +7,7 @@ package vega.graph;
 
 import interfaces.graph.Tree;
 import interfaces.graph.edge.tree.TreeEdge;
+import interfaces.graph.vertex.Vertex;
 import interfaces.graph.vertex.tree.TreeNode;
 
 /**
@@ -75,5 +76,9 @@ public class TreeImpl extends GraphImpl implements Tree{
         
         return returnString;
     }
+
+	public void setRoot(TreeNode v) {
+		root = v;	
+	}
     
 }

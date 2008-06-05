@@ -27,7 +27,7 @@ public class GraphImpl implements Graph{
     private int size = 0;
     private int positionInArray = 0;
     private ArrayList<Vertex> vertexList;
-    private ArrayList<EdgeImpl> edgeList;
+    private ArrayList<Edge> edgeList;
     private boolean digraph;
 
     /**
@@ -57,7 +57,7 @@ public class GraphImpl implements Graph{
     
     public GraphImpl(Vertex[] vertexArray, EdgeImpl[] edgeArray){
         vertexList = new ArrayList<Vertex>(vertexArray.length);
-        edgeList = new ArrayList<EdgeImpl>(edgeArray.length);
+        edgeList = new ArrayList<Edge>(edgeArray.length);
         
         for(int i = 0; i < vertexArray.length; i++){
             vertexList.add(vertexArray[i]);
@@ -67,7 +67,7 @@ public class GraphImpl implements Graph{
         }
     }
     
-    public GraphImpl(ArrayList<Vertex> vertexList, ArrayList<EdgeImpl> edgeList){
+    public GraphImpl(ArrayList<Vertex> vertexList, ArrayList<Edge> edgeList){
         this.vertexList = vertexList;
         this.edgeList = edgeList;
     }
@@ -174,7 +174,7 @@ public class GraphImpl implements Graph{
     /**
      * Adds a vertex to the vertex array.  Internal method only.
      */
-    private void addVertex(Vertex v) {
+    public void addVertex(Vertex v) {
         vertexList.add(positionInArray++, v);
     }
 
@@ -300,4 +300,17 @@ public class GraphImpl implements Graph{
 
         return returnString;
     }
+
+	public boolean removeVertex(Vertex v) {
+		return vertexList.remove(v);
+	}
+
+	public int size() {
+		return vertexList.size();
+	}
+
+	public boolean removeEdge(Edge e) {
+		edgeList.remove(e);
+		return false;
+	}
 }

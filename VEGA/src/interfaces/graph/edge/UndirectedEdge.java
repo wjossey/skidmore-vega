@@ -5,10 +5,16 @@
 
 package interfaces.graph.edge;
 
+import interfaces.graph.vertex.Vertex;
+
 /**
  *
  * @author w_jossey
  */
 public interface UndirectedEdge extends Edge{
+	
+	public Vertex getVertexA();
+	
+	public Vertex getVertexB();
 
 }
