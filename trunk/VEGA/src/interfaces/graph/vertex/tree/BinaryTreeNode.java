@@ -32,6 +32,9 @@ public interface BinaryTreeNode extends TreeNode{
 	 */
 	public void setParentNode(BinaryTreeNode parent);
 	
+	/**
+	 * @return Returns the parent node
+	 */
 	public BinaryTreeNode getParentNode();
 
 	/**

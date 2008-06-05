@@ -15,10 +15,6 @@ public interface Edge {
     
     double getWeight();
     
-    Vertex getVertexA();
-    
-    Vertex getVertexB();
-    
     void setInUse(boolean inUseBool);
     
     boolean isInUse();

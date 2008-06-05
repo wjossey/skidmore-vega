@@ -9,6 +9,10 @@ package interfaces.dataStructures;
  *
  * @author w_jossey
  */
-public interface Heap {
+public interface Heap<E> {
+	
+	public void createHeap();
+	
+	public E findMin();
 
 }

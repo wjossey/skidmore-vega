@@ -29,5 +29,32 @@ public interface Graph {
 	 * Reset the boolean values for whether or not a city has been visited on a tour
 	 **/
 	public void resetVerticiesVisited();
+	
+	/**
+	 * Adds the vertex to the graph
+	 * @param v Vertex to add
+	 */
+	public void addVertex(Vertex v);
+	
+	/**
+	 * Returns the total number of vertices in the graph.  Also referred to as the size
+	 * of the graph.
+	 * @return
+	 */
+	public int size();
+	
+	/**
+	 * Removes the vertex from the graph.
+	 * @param v  Vertex to remove.
+	 * @return Returns true if the operation succeeds, returns false if it fails.
+	 */
+	public boolean removeVertex(Vertex v);
+	
+	/**
+	 * Removes the edge from the graph.
+	 * @param e Edge to remove
+	 * @return Returns true if the operation succeeds, returns false if it fails.
+	 */
+	public boolean removeEdge(Edge e);
 
 }

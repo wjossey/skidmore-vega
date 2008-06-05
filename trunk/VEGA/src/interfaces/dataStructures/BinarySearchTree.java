@@ -5,6 +5,8 @@
 
 package interfaces.dataStructures;
 
+import interfaces.graph.vertex.tree.TreeNode;
+
 /**
  *
  * @author w_jossey
@@ -16,17 +18,22 @@ public interface BinarySearchTree<A> {
      * @param arg  Object to delete
      * @return Returns true if found and deleted, false if it fails.
      */
-    boolean delete(A arg);
+    public boolean delete(A arg);
 
     /**
      * @return Returns the numElements.
      */
-    int getNumElements();
+    public int getNumElements();
 
-    void insert(A arg);
+    public void insert(A arg);
 
-    boolean isEmpty();
+    public boolean isEmpty();
 
-    Object search(A arg);
+    public Object search(A arg);
+    
+    public void insertNode(TreeNode node);
+    
+    public void deleteNode(TreeNode node);
+    
 
 }
