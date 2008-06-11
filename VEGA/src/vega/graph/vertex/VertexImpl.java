@@ -1,7 +1,9 @@
 package vega.graph.vertex;
 
 import interfaces.graph.Graph;
+import interfaces.graph.edge.DirectedEdge;
 import interfaces.graph.edge.Edge;
+import interfaces.graph.edge.UndirectedEdge;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.vertex.GraphvizVertexProperties;
 
@@ -27,7 +29,7 @@ public class VertexImpl implements Vertex, Serializable, Cloneable{
 	/* Variable Declarations Start*/
 	private static int vertexCounter = 0;  //Used to generate the UID of the vertex.
     
-	private VertexPropertiesImpl properties;
+	private GraphvizVertexProperties properties;
 
 	private int uid;  //UID of the vertex.  Equal to a primary key in a database.  Must be unique!
 
@@ -37,15 +39,15 @@ public class VertexImpl implements Vertex, Serializable, Cloneable{
 
 	private Edge[] edgeList;  //Keeps track of all the edges for the vertex.
    
-	private HashMap<Integer, Edge> edgeHash;  //A hash of edges
+	private HashMap edgeHash;  //A hash of edges
 
 	private int edgeCounter = 0;  //Keeps track of how many edges this vertex has
 
 	private boolean visited = false;  //Boolean as to whether or not the vertex has been visited
 
-	private Edge incomingEdge;  //We can use this to track a path if we so desire (Try to remove)
+	private DirectedEdge incomingEdge;  //We can use this to track a path if we so desire (Try to remove)
 
-	private Edge outgoingEdge;  //This is the outgoing edge in a path (Try to remove)
+	private DirectedEdge outgoingEdge;  //This is the outgoing edge in a path (Try to remove)
 
 	private Graph g;  //This is the parent graph we're working with
 
@@ -71,7 +73,13 @@ public class VertexImpl implements Vertex, Serializable, Cloneable{
         uid = vertexCounter++;
         setX(x);
         setY(y);
-        edgeList = new Edge[this.g.getSize() - 1];
+        if(g.isDigraph()){
+        	/* We have a directed graph*/
+        	edgeList = new DirectedEdge[this.g.getSize() - 1];
+        }else{
+        	/*We have an undirected graph*/
+        	edgeList = new UndirectedEdge[this.g.getSize() - 1];
+        }
         edgeHash = new HashMap<Integer, Edge>();
         properties = new VertexPropertiesImpl(this);
     }
@@ -84,7 +92,13 @@ public class VertexImpl implements Vertex, Serializable, Cloneable{
         this.g = g;
         setX(0);
         setY(0);
-        edgeList = new Edge[this.g.getSize() - 1];
+        if(g.isDigraph()){
+        	/*We have a directed graph*/
+        	edgeList = new DirectedEdge[this.g.getSize() - 1];
+        }else{
+        	/*We have an undirected graph*/
+        	edgeList = new UndirectedEdge[this.g.getSize() - 1];
+        }
         edgeHash = new HashMap<Integer, Edge>();
         properties = new VertexPropertiesImpl(this);
 
@@ -152,7 +166,7 @@ public class VertexImpl implements Vertex, Serializable, Cloneable{
      * Assign an incoming edge to the vertex.
      * @param e
      */
-    public void setIncomingEdge(Edge e) {
+    public void setIncomingEdge(DirectedEdge e) {
         incomingEdge = e;
     }
 
@@ -176,7 +190,7 @@ public class VertexImpl implements Vertex, Serializable, Cloneable{
      * Set the outgoing edge from the vertex.
      * @param e
      */
-    public void setOutgoingEdge(Edge e) {
+    public void setOutgoingEdge(DirectedEdge e) {
         outgoingEdge = e;
     }
 
@@ -218,7 +232,7 @@ public class VertexImpl implements Vertex, Serializable, Cloneable{
      * Returns the outgoing edge for the vertex.
      * @return
      */
-    public Edge getOutgoingEdge() {
+    public DirectedEdge getOutgoingEdge() {
         return outgoingEdge;
     }
 
@@ -226,19 +240,23 @@ public class VertexImpl implements Vertex, Serializable, Cloneable{
      * Returns the incoming edge for the vertex.
      * @return
      */
-    public Edge getIncomingEdge() {
+    public DirectedEdge getIncomingEdge() {
         return incomingEdge;
     }
 
     /**
      * Add an edge to the vertex's adjacency list.
-     * @param e
+     * @param e Edge to add to the vertex's adjacency list
      */
     public void addEdge(Edge e) {
         /*Put it in an array for sortability (quicksorted)*/
         edgeList[edgeCounter++] = e;
   
         /*Put it in a hash for rapid access*/
+        if(g.isDigraph()){
+        	DirectedEdge tempEdge = (DirectedEdge) e;
+        	edgeHash.put(tempEdge.getDestination().getUID(), tempEdge);
+        }
         if (e.getVertexA().getUID() == uid) {
             edgeHash.put(e.getVertexB().getUID(), e);
         } else {
@@ -356,9 +374,9 @@ public class VertexImpl implements Vertex, Serializable, Cloneable{
     public Vertex[] getKNearestNeighbors(int k) {
         if (k <= edgeList.length) {
             EdgeImpl.sortEdgesByDistance(edgeList);
-            Vertex[] returnArray = new VertexImpl[k];
+            Vertex[] returnArray = new Vertex[k];
             for (int i = 0; i < returnArray.length; i++) {
-                Edge tempEdge = edgeList[i];
+                UndirectedEdge tempEdge = edgeList[i];
                 if (tempEdge.getVertexA().getUID() == uid) {
                     returnArray[i] = tempEdge.getVertexB();
                 } else {
