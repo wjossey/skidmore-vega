@@ -13,8 +13,16 @@ import interfaces.graph.vertex.tree.TreeNode;
  */
 public interface Tree extends Graph{
 	
+	/**
+	 * Sets the root node of the graph.
+	 * @param v Node to set as root
+	 */
 	public void setRoot(TreeNode v);
 	
+	/**
+	 * Returns the root vertex of the Tree.
+	 * @return The root node.
+	 */
 	public TreeNode getRoot();
 
 }

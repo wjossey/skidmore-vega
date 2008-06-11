@@ -8,6 +8,7 @@ package vega.graph.edge.tree;
 import vega.graph.edge.UndirectedEdgeImpl;
 import interfaces.graph.edge.tree.TreeEdge;
 import interfaces.graph.vertex.Vertex;
+import interfaces.graph.vertex.tree.TreeNode;
 
 /**
  *
@@ -23,6 +24,16 @@ public class TreeEdgeImpl extends UndirectedEdgeImpl implements TreeEdge{
     public TreeEdgeImpl (Vertex parent, Vertex child){
         super(parent, child);
     }
+
+	public TreeNode getChild() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public TreeNode getParent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
     
 }
