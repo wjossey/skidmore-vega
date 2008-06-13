@@ -5,24 +5,25 @@
 
 package interfaces.graph;
 
+import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.tree.TreeNode;
 
 /**
  *
  * @author w_jossey
  */
-public interface Tree extends Graph{
+public interface Tree<T extends TreeNode<? extends Edge>>{
 	
 	/**
 	 * Sets the root node of the graph.
 	 * @param v Node to set as root
 	 */
-	public void setRoot(TreeNode v);
+	public void setRoot(TreeNode<? extends Edge> v);
 	
 	/**
 	 * Returns the root vertex of the Tree.
 	 * @return The root node.
 	 */
-	public TreeNode getRoot();
+	public TreeNode<? extends Edge> getRoot();
 
 }

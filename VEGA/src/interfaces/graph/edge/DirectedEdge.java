@@ -13,8 +13,8 @@ import interfaces.graph.vertex.Vertex;
  */
 public interface DirectedEdge extends Edge{
 	
-	Vertex getSource();
+	public <V extends Vertex<DirectedEdge>> V getSource();
 	
-	Vertex getDestination();
+	public <V extends Vertex<DirectedEdge>> V getDestination();
 
 }

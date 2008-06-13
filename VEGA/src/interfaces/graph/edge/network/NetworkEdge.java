@@ -1,6 +1,8 @@
 package interfaces.graph.edge.network;
 
-public interface NetworkEdge {
+import interfaces.graph.edge.Edge;
+
+public interface NetworkEdge extends Edge{
 
 	/**
 	 * Get capacity of the network edge

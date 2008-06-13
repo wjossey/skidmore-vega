@@ -12,64 +12,64 @@ import interfaces.graph.edge.Edge;
  *
  * @author w_jossey
  */
-public interface Vertex {
+public interface Vertex<E extends Edge>{
 	
-	void setGraph(Graph g);
+	public void setGraph(Graph<? extends Vertex<E>, E> g);
 	
-	Graph getGraph();
+	public Graph<? extends Vertex<E>, E> getGraph();
 	
-	void setName(String name);
+	public void setName(String name);
 	
-	void setX(int x);
+	public void setX(int x);
 	
-	void setY(int y);
+	public void setY(int y);
 	
-	void setIncomingEdge(Edge e);
+	public void setIncomingEdge(E e);
 	
-	void setPreviousVertex(Vertex v);
+	public <V extends Vertex<E>> void setPreviousVertex(V v);
 	
-	void setOutgoingEdge(Edge e);
+	public void setOutgoingEdge(E e);
 	
-	Edge[] getEdges();
+	public E[] getEdges();
 	
-	int getX();
+	public int getX();
 	
-	int getY();
+	public int getY();
 	
-	Edge getOutgoingEdge();
+	public Edge getOutgoingEdge();
 	
-	Edge getIncomingEdge();
+	public Edge getIncomingEdge();
 	
-	void addEdge(Edge e);
+	public void addEdge(E toTempVertex);
 	
-	Edge getEdge(Vertex b);
+	public <V extends Vertex<E>> E getEdge(V v);
 	
-	int getUID();
+	public int getUID();
 	
-	boolean visited();
+	public boolean visited();
 	
-	String getName();
+	public String getName();
 	
-	void sortEdges();
+	public void sortEdges();
 	
-	Vertex getNearestNeighbor();
+	public <V extends Vertex<E>> V getNearestNeighbor();
 	
-	Vertex[] getKNearestNeighbors(int k);
+	public <V extends Vertex<E>> V[] getKNearestNeighbors(int k);
 	
-	Vertex[] getNeighbors();
+	public <V extends Vertex<E>> V[] getNeighbors();
 	
-	Vertex getPreviousVertex();
+	public <V extends Vertex<E>> V getPreviousVertex();
 	
-	GraphvizVertexProperties getProperties();
+	public GraphvizVertexProperties getProperties();
 	
-	void setVisited(boolean visited);
+	public void setVisited(boolean visited);
 	
-	void setInUse(boolean inUse);
+	public void setInUse(boolean inUse);
 	
-	boolean inUse();
+	public boolean inUse();
 	
-	boolean isActive();
+	public boolean isActive();
 	
-	void setActive(boolean active);
+	public void setActive(boolean active);
 	
 }

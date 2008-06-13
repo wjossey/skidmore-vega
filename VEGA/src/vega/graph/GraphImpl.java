@@ -2,6 +2,7 @@ package vega.graph;
 
 import vega.graph.edge.EdgeImpl;
 import vega.graph.vertex.VertexImpl;
+import vega.graph.vertex.tree.TreeNodeImpl;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.Graph;
@@ -22,13 +23,13 @@ import java.util.Random;
  * or edges)."
  * @author w_jossey
  */
-public class GraphImpl implements Graph{
+public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, E>{
 
-    private int size = 0;
-    private int positionInArray = 0;
-    private ArrayList<Vertex> vertexList;
-    private ArrayList<Edge> edgeList;
-    private boolean digraph;
+    protected int size = 0;
+    protected int positionInArray = 0;
+    protected ArrayList<V> vertexList;
+    protected ArrayList<E> edgeList;
+    protected boolean digraph;
 
     /**
      * The constructor method for the Graph class.  Takes in a pre-set vertex
@@ -40,7 +41,7 @@ public class GraphImpl implements Graph{
     public GraphImpl(int vertexSize, boolean isDigraph) {
         this.size = vertexSize;
         this.digraph = isDigraph;
-        vertexList = new ArrayList<Vertex>(vertexSize);
+        vertexList = new ArrayList<V>(vertexSize);
         generateVertices();
         if (!digraph) {
             /*We don't have a digraph, so we go ahead and compute the edge weights between
@@ -55,9 +56,9 @@ public class GraphImpl implements Graph{
         }
     }
     
-    public GraphImpl(Vertex[] vertexArray, EdgeImpl[] edgeArray){
-        vertexList = new ArrayList<Vertex>(vertexArray.length);
-        edgeList = new ArrayList<Edge>(edgeArray.length);
+    public GraphImpl(V[] vertexArray, E[] edgeArray){
+        vertexList = new ArrayList<V>(vertexArray.length);
+        edgeList = new ArrayList<E>(edgeArray.length);
         
         for(int i = 0; i < vertexArray.length; i++){
             vertexList.add(vertexArray[i]);
@@ -67,7 +68,7 @@ public class GraphImpl implements Graph{
         }
     }
     
-    public GraphImpl(ArrayList<Vertex> vertexList, ArrayList<Edge> edgeList){
+    public GraphImpl(ArrayList<V> vertexList, ArrayList<E> edgeList){
         this.vertexList = vertexList;
         this.edgeList = edgeList;
     }
@@ -101,15 +102,17 @@ public class GraphImpl implements Graph{
     /* (non-Javadoc)
 	 * @see vega.graph.Graph#getVertexArray()
 	 */
-    public Vertex[] getVertexArray() {
-        return vertexList.toArray(new Vertex[0]);
+	public V[] getVertexArray() {
+        return (V[]) vertexList.toArray(new Vertex[0]);
     }
     
     /* (non-Javadoc)
 	 * @see vega.graph.Graph#getEdgeArray()
 	 */
-    public Edge[] getEdgeArray(){
-        return edgeList.toArray(new EdgeImpl[0]);
+   
+    @SuppressWarnings("unchecked")
+	public E[] getEdgeArray(){
+        return (E[]) edgeList.toArray(new Edge[0]);
     }
 
     /**
@@ -133,7 +136,7 @@ public class GraphImpl implements Graph{
         for (int i = 0; i < size; i++) {
             int randX = (int) (Math.random() * (size * 10));
             int randY = (int) (Math.random() * (size * 10));
-            addVertex(new VertexImpl(randX, randY, this));
+            addVertex((V) new VertexImpl(randX, randY, this));
         }
     }
 
@@ -145,7 +148,7 @@ public class GraphImpl implements Graph{
      */
     private void generateEdges() {
         for (int i = 0; i < vertexList.size(); i++) {
-            Vertex tempVertex = vertexList.get(i);;
+            V tempVertex = vertexList.get(i);;
             Random generator = new Random();
             int fromVertex, toVertex;
             int capacity1, capacity2;
@@ -162,19 +165,19 @@ public class GraphImpl implements Graph{
             EdgeImpl toTempVertex = new EdgeImpl(vertexList.get(fromVertex), tempVertex, capacity1);
             EdgeImpl fromTempVertex = new EdgeImpl(tempVertex, vertexList.get(toVertex), capacity2);
 
-            tempVertex.addEdge(toTempVertex);
-            tempVertex.addEdge(fromTempVertex);
+            tempVertex.addEdge((E) toTempVertex);
+            tempVertex.addEdge((E) fromTempVertex);
 
-            edgeList.add(toTempVertex);
-            vertexList.get(fromVertex).addEdge(toTempVertex);
-            vertexList.get(toVertex).addEdge(fromTempVertex);
+            edgeList.add((E) toTempVertex);
+            vertexList.get(fromVertex).addEdge((E) toTempVertex);
+            vertexList.get(toVertex).addEdge((E) fromTempVertex);
         }
     }
 
     /**
      * Adds a vertex to the vertex array.  Internal method only.
      */
-    public void addVertex(Vertex v) {
+    public void addVertex(V v) {
         vertexList.add(positionInArray++, v);
     }
 
@@ -183,7 +186,8 @@ public class GraphImpl implements Graph{
      * working with a complete graph. This is particularly useful in situations such as TSP where we 
      * are dealing with some complete Graph and want it to auto-generate the edges for us
      */
-    private void computeDistances() {
+    @SuppressWarnings("unchecked")
+	private void computeDistances() {
 
         /*For all of the vertices in the array...*/
         for (int i = 0; i < vertexList.size(); i++) {
@@ -218,9 +222,9 @@ public class GraphImpl implements Graph{
 
                 /*Create the edge and add it to both vertices*/
                 EdgeImpl e = new EdgeImpl(vertexList.get(i), vertexList.get(j), dist);
-                vertexList.get(i).addEdge(e);
-                vertexList.get(j).addEdge(e);
-                edgeList.add(e);
+                vertexList.get(i).addEdge((E) e);
+                vertexList.get(j).addEdge((E) e);
+                edgeList.add((E) e);
             }
         }
 
@@ -312,5 +316,12 @@ public class GraphImpl implements Graph{
 	public boolean removeEdge(Edge e) {
 		edgeList.remove(e);
 		return false;
+
+	}
+
+	@SuppressWarnings("unchecked")
+	public void addEdge(Edge e) {
+		// TODO Auto-generated method stub
+		edgeList.add((E) e);
 	}
 }

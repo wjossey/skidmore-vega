@@ -1,9 +1,10 @@
 package interfaces.graph.vertex.tree;
 
-import interfaces.graph.edge.tree.TreeEdge;
+import interfaces.graph.edge.Edge;
+import interfaces.graph.vertex.Vertex;
 import interfaces.graph.vertex.tree.TreeNode;
 
-public interface TreeNode {
+public interface TreeNode<E extends Edge> extends Vertex<E>{
 
 	/**
 	 * @param c
@@ -21,25 +22,25 @@ public interface TreeNode {
 	 * 
 	 * @return
 	 */
-	public TreeNode getParentNode();
+	public TreeNode<E> getParentNode();
 
 	/**
 	 * 
 	 * @param parent
 	 */
-	public void setParentNode(TreeNode parent);
+	public void setParentNode(TreeNode<E> parent);
 
 	/**
 	 * 
 	 * @param child
 	 */
-	public void addChild(TreeNode child);
+	public void addChild(TreeNode<E> child);
 
 	/**
 	 * 
 	 * @return
 	 */
-	public TreeNode[] getChildren();
+	public TreeNode<E>[] getChildren();
 
 	/**
 	 * 
@@ -87,6 +88,6 @@ public interface TreeNode {
 	 * @param child
 	 * @return
 	 */
-	public TreeEdge getEdge(TreeNode child);
+	public E getEdge(TreeNode<E> child);
 
 }
