@@ -14,7 +14,7 @@ import interfaces.graph.vertex.tree.TreeNode;
  *
  * @author w_jossey
  */
-public class TreeImpl<E extends Edge> extends GraphImpl<TreeNode, E> implements Tree{
+public class TreeImpl<E extends Edge> extends GraphImpl<TreeNode<E>, E> implements Tree<TreeNode<E>, E>{
     V root;
     V[] treeArray;
     E[] edgeArray;

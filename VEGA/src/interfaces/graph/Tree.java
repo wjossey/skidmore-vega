@@ -12,18 +12,18 @@ import interfaces.graph.vertex.tree.TreeNode;
  *
  * @author w_jossey
  */
-public interface Tree<T extends TreeNode<? extends Edge>>{
+public interface Tree<T extends TreeNode<E>, E extends Edge> extends Graph<T, E>{
 	
 	/**
 	 * Sets the root node of the graph.
 	 * @param v Node to set as root
 	 */
-	public void setRoot(TreeNode<? extends Edge> v);
+	public void setRoot(TreeNode<E> v);
 	
 	/**
 	 * Returns the root vertex of the Tree.
 	 * @return The root node.
 	 */
-	public TreeNode<? extends Edge> getRoot();
+	public TreeNode<E> getRoot();
 
 }

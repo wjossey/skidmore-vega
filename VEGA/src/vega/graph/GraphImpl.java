@@ -2,7 +2,6 @@ package vega.graph;
 
 import vega.graph.edge.EdgeImpl;
 import vega.graph.vertex.VertexImpl;
-import vega.graph.vertex.tree.TreeNodeImpl;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.Graph;
@@ -73,20 +72,6 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
         this.edgeList = edgeList;
     }
     
-    /* (non-Javadoc)
-	 * @see vega.graph.Graph#getSize()
-	 */
-    public int getSize(){
-        return vertexList.size();
-    }
-    
-    /**
-     * Empty Constructor
-     */
-    public GraphImpl(){
-        
-    }
-
     /**
      * Constructor class when we don't have a complete graph.  Has yet to be implemented yet.
      * The problem generating random graphs is mostly due to the question of whether or not the
@@ -97,22 +82,37 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
      * @param digraph a directed graph if true, undirected if false
      */
     public GraphImpl(int vertexSize, int edgeSize, boolean digraph) {
+    
+    }
+    
+    /**
+     * Empty Constructor
+     */
+    public GraphImpl(){
+        
     }
 
     /* (non-Javadoc)
 	 * @see vega.graph.Graph#getVertexArray()
 	 */
+	@SuppressWarnings("unchecked")
 	public V[] getVertexArray() {
         return (V[]) vertexList.toArray(new Vertex[0]);
+    }
+	
+	   /* (non-Javadoc)
+	 * @see vega.graph.Graph#getSize()
+	 */
+    public int getSize(){
+        return vertexList.size();
     }
     
     /* (non-Javadoc)
 	 * @see vega.graph.Graph#getEdgeArray()
-	 */
-   
-    @SuppressWarnings("unchecked")
+	 */ 
+	@SuppressWarnings("unchecked")
 	public E[] getEdgeArray(){
-        return (E[]) edgeList.toArray(new Edge[0]);
+        return (E[]) edgeList.toArray();
     }
 
     /**
@@ -132,11 +132,11 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
      * coordinates are then used to compute the distances between the vertices and create
      * edges that satisfy the triangle inequality
      */
-    private void generateVertices() {
+	private void generateVertices() {
         for (int i = 0; i < size; i++) {
             int randX = (int) (Math.random() * (size * 10));
             int randY = (int) (Math.random() * (size * 10));
-            addVertex((V) new VertexImpl(randX, randY, this));
+            addVertex(new VertexImpl(randX, randY, this));
         }
     }
 
@@ -235,7 +235,7 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
      * @param tour Array of vertices in the tour.  
      * @return
      */
-    public double computeDistanceOfCycle(Vertex[] cycle) {
+    public double computeDistanceOfCycle(V[] cycle) {
         double distance = 0;
         if(cycle[0] == cycle[cycle.length - 1]){
             /*
@@ -305,7 +305,7 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
         return returnString;
     }
 
-	public boolean removeVertex(Vertex v) {
+	public boolean removeVertex(V v) {
 		return vertexList.remove(v);
 	}
 
@@ -313,15 +313,15 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
 		return vertexList.size();
 	}
 
-	public boolean removeEdge(Edge e) {
+	public boolean removeEdge(E e) {
 		edgeList.remove(e);
-		return false;
+		return true;
 
 	}
 
 	@SuppressWarnings("unchecked")
-	public void addEdge(Edge e) {
+	public void addEdge(E e) {
 		// TODO Auto-generated method stub
-		edgeList.add((E) e);
+		edgeList.add(e);
 	}
 }

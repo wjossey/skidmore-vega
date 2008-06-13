@@ -6,8 +6,8 @@ import interfaces.graph.edge.Edge;
 public class EdgeImpl implements Edge{
 
     /*Variable declaration*/
-    private Vertex a;
-    private Vertex b;
+    private Vertex<? extends Edge> a;
+    private Vertex<? extends Edge> b;
     private boolean directed = false;
     private double weight;
     private boolean active = false;
