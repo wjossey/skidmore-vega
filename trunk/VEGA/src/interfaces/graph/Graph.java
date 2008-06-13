@@ -3,7 +3,7 @@ package interfaces.graph;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 
-public interface Graph {
+public interface Graph<V extends Vertex<? extends Edge>, E extends Edge>{
 
 	public int getSize();
 
@@ -11,13 +11,13 @@ public interface Graph {
 	 * Returns the vertex array for the graph
 	 * @return the vertex array for the graph
 	 */
-	public Vertex[] getVertexArray();
+	public V[] getVertexArray();
 
 	/**
-	 * 
-	 * @return
+	 * Returns the array of edges.
+	 * @return Edge array to return
 	 */
-	public Edge[] getEdgeArray();
+	public E[] getEdgeArray();
 
 	/**
 	 * Returns whether we have a directed or undirected graph 
@@ -34,7 +34,7 @@ public interface Graph {
 	 * Adds the vertex to the graph
 	 * @param v Vertex to add
 	 */
-	public void addVertex(Vertex v);
+	public void addVertex(V v);
 	
 	/**
 	 * Returns the total number of vertices in the graph.  Also referred to as the size
@@ -48,13 +48,19 @@ public interface Graph {
 	 * @param v  Vertex to remove.
 	 * @return Returns true if the operation succeeds, returns false if it fails.
 	 */
-	public boolean removeVertex(Vertex v);
+	public boolean removeVertex(V vertex);
 	
 	/**
 	 * Removes the edge from the graph.
 	 * @param e Edge to remove
 	 * @return Returns true if the operation succeeds, returns false if it fails.
 	 */
-	public boolean removeEdge(Edge e);
+	public boolean removeEdge(E e);
+	
+	/**
+	 * Adds an edge to the graph.
+	 * @param edge Edge to add to the graph
+	 */
+	public void addEdge(E e);
 
 }

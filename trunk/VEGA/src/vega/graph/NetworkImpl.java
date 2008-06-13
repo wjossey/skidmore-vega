@@ -6,89 +6,103 @@
 package vega.graph;
 
 import interfaces.graph.Network;
-import interfaces.graph.edge.DirectedEdge;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
+
+import java.util.ArrayList;
+
+import vega.graph.edge.EdgeImpl;
+import vega.graph.vertex.VertexImpl;
 
 /**
  *
  * @author w_jossey
  */
-public class NetworkImpl extends GraphImpl implements Network{
+public class NetworkImpl<V extends Vertex<E>, E extends Edge> extends GraphImpl<V, E> implements Network{
 
-	public void addEdge(DirectedEdge e) {
-		// TODO Auto-generated method stub
-		
+    /**
+     * The constructor method for the Graph class.  Takes in a pre-set vertex
+     * and a boolean setting to distinguish if it is a directed-graph or undirected-graph.
+     * 
+     * @param vertexSize the number of vertices in the graph
+     * @param digraph a directed graph if true, undirected if false
+     * 
+     */
+	
+	private V[] source;
+	private V[] sink;
+	
+    public NetworkImpl(int vertexSize, boolean isDigraph) {
+        super(vertexSize, isDigraph);
+    }
+    
+    public NetworkImpl(V[] vertexArray, E[] edgeArray){
+        super(vertexArray, edgeArray);
+    }
+    
+    public NetworkImpl(ArrayList<V> vertexList, ArrayList<E> edgeList){
+        super(vertexList, edgeList);
+    }
+
+    /**
+     * Constructor class when we don't have a complete graph.  Has yet to be implemented yet.
+     * The problem generating random graphs is mostly due to the question of whether or not the
+     * graph is strongly connected or not.  
+     * 
+     * @param vertexSize the number of vertices in the graph
+     * @param edgeSize the number of edges in the graph
+     * @param digraph a directed graph if true, undirected if false
+     */
+    public NetworkImpl(int vertexSize, int edgeSize, boolean digraph) {
+    }
+    
+    /**
+     * Empty Constructor
+     */
+    public NetworkImpl(){
+        
+    }
+
+	public V[] getSinks() {
+		return sink;
 	}
 
-	public void addVertex(Vertex v) {
-		// TODO Auto-generated method stub
-		
+	public V[] getSources() {
+		return source;
 	}
 
-	public boolean removeEdge(DirectedEdge e) {
-		// TODO Auto-generated method stub
-		return false;
+	@SuppressWarnings("unchecked")
+	public void setSinks(Vertex[] v) {
+		sink = (V[]) v;
 	}
 
-	public boolean removeVertex(Vertex v) {
-		// TODO Auto-generated method stub
-		return false;
+	@SuppressWarnings("unchecked")
+	public void setSources(Vertex[] v) {
+		source = (V[]) v;
 	}
+    
 
-	public void setSink(Vertex v) {
-		// TODO Auto-generated method stub
-		
-	}
+    /**
+     * Converts the graph into a DOT string.  
+     * @return Returns a well formed DOT string of the graph.
+     */
+    @Override
+    public String toString() {
+        String returnString = "";
 
-	public void setSink(Vertex[] a) {
-		// TODO Auto-generated method stub
-		
-	}
+        if (digraph) {
+            returnString = "digraph G{\n";
+        } else {
+            returnString += "graph G{\n;";
+        //returnString += "graph G{\nsize=\"8.5,11\";";
+        }
 
-	public void setSource(Vertex v) {
-		// TODO Auto-generated method stub
-		
-	}
+        returnString += VertexImpl.vertexListToString(vertexList.toArray(new Vertex[0])) + "\n";
+        returnString += EdgeImpl.allEdgesWithoutRepeats(vertexList.toArray(new Vertex[0])) + "\n";
 
-	public void setSource(Vertex[] a) {
-		// TODO Auto-generated method stub
-		
-	}
+        returnString += "}\n";
 
-	public Edge[] getEdgeArray() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public int getSize() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public Vertex[] getVertexArray() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public boolean isDigraph() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean removeEdge(Edge e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public void resetVerticiesVisited() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+        return returnString;
+    }
 
 }

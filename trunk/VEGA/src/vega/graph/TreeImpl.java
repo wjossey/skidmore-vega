@@ -6,7 +6,7 @@
 package vega.graph;
 
 import interfaces.graph.Tree;
-import interfaces.graph.edge.tree.TreeEdge;
+import interfaces.graph.edge.*;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.vertex.tree.TreeNode;
 
@@ -14,10 +14,10 @@ import interfaces.graph.vertex.tree.TreeNode;
  *
  * @author w_jossey
  */
-public class TreeImpl extends GraphImpl implements Tree{
-    TreeNode root;
-    TreeNode[] treeArray;
-    TreeEdge[] edgeArray;
+public class TreeImpl<E extends Edge> extends GraphImpl<TreeNode, E> implements Tree{
+    V root;
+    V[] treeArray;
+    E[] edgeArray;
     
     /**
      * 

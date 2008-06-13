@@ -13,8 +13,8 @@ import interfaces.graph.vertex.Vertex;
  */
 public interface UndirectedEdge extends Edge{
 	
-	public Vertex getVertexA();
+	public <V extends Vertex<UndirectedEdge>> V getVertexA();
 	
-	public Vertex getVertexB();
+	public <V extends Vertex<UndirectedEdge>> V getVertexB();
 
 }
