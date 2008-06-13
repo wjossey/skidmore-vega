@@ -5,7 +5,9 @@ import interfaces.graph.vertex.Vertex;
 import interfaces.graph.vertex.tree.TreeNode;
 
 public interface TreeNode<E extends Edge> extends Vertex<E>{
-
+	public static final boolean RED = true;
+    public static final boolean BLACK = false;
+	
 	/**
 	 * @param c
 	 * @return

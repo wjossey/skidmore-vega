@@ -4,7 +4,11 @@
  */
 package vega.graph.vertex.tree;
 
+import interfaces.graph.Graph;
+import interfaces.graph.vertex.Vertex;
 import interfaces.graph.vertex.tree.TreeNode;
+import interfaces.graph.edge.*;
+import vega.graph.vertex.VertexImpl;
 
 import java.util.ArrayList;
 
@@ -12,9 +16,13 @@ import java.util.ArrayList;
  *
  * @author w_jossey
  */
-public class TreeNodeImpl implements TreeNode{
+public class TreeNodeImpl<E extends Edge> extends VertexImpl implements TreeNode<E>{
 
-    private static int idCounter = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static int idCounter = 0;
     public static boolean RED = true;
     public static boolean BLACK = false;
 
