@@ -6,7 +6,7 @@ import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.vertex.tree.TreeNode;
 
-public interface TreeNode<E extends Edge> extends Vertex<E>{
+public interface TreeNode<C extends Comparable<C>, E extends Edge> extends Vertex<E>{
 	public static final boolean RED = true;
     public static final boolean BLACK = false;
 	
@@ -26,37 +26,37 @@ public interface TreeNode<E extends Edge> extends Vertex<E>{
 	 * 
 	 * @return
 	 */
-	public TreeNode<E> getParentNode();
+	public TreeNode<C,E> getParentNode();
 
 	/**
 	 * 
 	 * @param parent
 	 */
-	public void setParentNode(TreeNode<E> parent);
+	public void setParentNode(TreeNode<C,E> parent);
 
 	/**
 	 * 
 	 * @param child
 	 */
-	public void addChild(TreeNode<E> child);
+	public void addChild(TreeNode<C,E> child);
 
 	/**
 	 * 
 	 * @return
 	 */
-	public ArrayList<TreeNode<E>> getChildren();
+	public ArrayList<TreeNode<C,E>> getChildren();
 
 	/**
 	 * 
 	 * @return
 	 */
-	public Comparable<?> getData();
+	public C getData();
 
 	/**
 	 * 
 	 * @param c
 	 */
-	public void setData(Comparable<?> c);
+	public void setData(C c);
 
 	/**
 	 * 
@@ -92,6 +92,6 @@ public interface TreeNode<E extends Edge> extends Vertex<E>{
 	 * @param child
 	 * @return
 	 */
-	public E getEdge(TreeNode<E> child);
+	public E getEdge(TreeNode<C,E> child);
 
 }

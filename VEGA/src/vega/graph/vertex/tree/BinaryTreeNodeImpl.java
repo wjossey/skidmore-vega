@@ -11,29 +11,29 @@ import interfaces.graph.vertex.tree.BinaryTreeNode;
  *
  * @author w_jossey
  */
-public class BinaryTreeNodeImpl<E extends Edge> extends TreeNodeImpl<E> implements BinaryTreeNode<E>{
+public class BinaryTreeNodeImpl<C extends Comparable<C>, E extends Edge> extends TreeNodeImpl<C,E> implements BinaryTreeNode<C,E>{
 
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1808529175569579047L;
 	
-	private BinaryTreeNode<E> leftNode;
-    private BinaryTreeNode<E> rightNode;
-    private BinaryTreeNode<E> parentNode;
+	private BinaryTreeNode<C,E> leftNode;
+    private BinaryTreeNode<C,E> rightNode;
+    private BinaryTreeNode<C,E> parentNode;
 
     /**
      * 
      * @param c
      */
-    public BinaryTreeNodeImpl(Comparable<?> c) {
+    public BinaryTreeNodeImpl(C c) {
         super(c);
         leftNode = null;
         rightNode = null;
 
     }
     
-    public BinaryTreeNodeImpl(Comparable<?> c, boolean color){
+    public BinaryTreeNodeImpl(C c, boolean color){
         super(c);
         leftNode = null;
         rightNode = null;
@@ -46,7 +46,7 @@ public class BinaryTreeNodeImpl<E extends Edge> extends TreeNodeImpl<E> implemen
      * @param left
      * @param right
      */
-    public BinaryTreeNodeImpl(Comparable<?> c, BinaryTreeNode<E> left, BinaryTreeNode<E> right) {
+    public BinaryTreeNodeImpl(C c, BinaryTreeNode<C,E> left, BinaryTreeNode<C,E> right) {
         super(c);
         leftNode = left;
         rightNode = right;
@@ -56,32 +56,32 @@ public class BinaryTreeNodeImpl<E extends Edge> extends TreeNodeImpl<E> implemen
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.BinaryTreeNode#getLeftNode()
 	 */
-    public BinaryTreeNode<E> getLeftNode() {
+    public BinaryTreeNode<C,E> getLeftNode() {
         return leftNode;
     }
 
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.BinaryTreeNode#getRightNode()
 	 */
-    public BinaryTreeNode<E> getRightNode() {
+    public BinaryTreeNode<C,E> getRightNode() {
         return rightNode;
     }
 
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.BinaryTreeNode#setLeftNode(interfaces.graph.vertex.tree.BinaryTreeNode)
 	 */
-    public void setLeftNode(BinaryTreeNode<E> left) {
+    public void setLeftNode(BinaryTreeNode<C,E> left) {
        leftNode = left;
     }
     
-    public BinaryTreeNode<E> getParentNode(){
-    	return (BinaryTreeNode<E>) super.getParentNode();
+    public BinaryTreeNode<C,E> getParentNode(){
+    	return (BinaryTreeNode<C,E>) super.getParentNode();
     }
 
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.BinaryTreeNode#setRightNode(interfaces.graph.vertex.tree.BinaryTreeNode)
 	 */
-    public void setRightNode(BinaryTreeNode<E> right) {
+    public void setRightNode(BinaryTreeNode<C,E> right) {
         rightNode = right;
     }
 
@@ -94,7 +94,7 @@ public class BinaryTreeNodeImpl<E extends Edge> extends TreeNodeImpl<E> implemen
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.BinaryTreeNode#setParentNode(interfaces.graph.vertex.tree.BinaryTreeNode)
 	 */
-    public void setParentNode(BinaryTreeNode<E> parent) {
+    public void setParentNode(BinaryTreeNode<C,E> parent) {
         parentNode = parent;
     }
 
