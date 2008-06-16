@@ -5,6 +5,8 @@
 
 package interfaces.graph.vertex;
 
+import java.util.ArrayList;
+
 import interfaces.graph.Graph;
 import interfaces.graph.edge.Edge;
 
@@ -30,15 +32,15 @@ public interface Vertex<E extends Edge>{
 	
 	public void setOutgoingEdge(E e);
 	
-	public E[] getEdges();
+	public ArrayList<E> getEdges();
 	
 	public int getX();
 	
 	public int getY();
 	
-	public Edge getOutgoingEdge();
+	public E getOutgoingEdge();
 	
-	public Edge getIncomingEdge();
+	public E getIncomingEdge();
 	
 	public void addEdge(E toTempVertex);
 	
@@ -52,15 +54,9 @@ public interface Vertex<E extends Edge>{
 	
 	public void sortEdges();
 	
-	public <V extends Vertex<E>> V getNearestNeighbor();
-	
-	public <V extends Vertex<E>> V[] getKNearestNeighbors(int k);
-	
-	public <V extends Vertex<E>> V[] getNeighbors();
-	
 	public <V extends Vertex<E>> V getPreviousVertex();
 	
-	public GraphvizVertexProperties getProperties();
+	public GraphvizVertexProperties<E> getProperties();
 	
 	public void setVisited(boolean visited);
 	

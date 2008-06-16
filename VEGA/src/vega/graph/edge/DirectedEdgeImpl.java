@@ -5,6 +5,7 @@
 
 package vega.graph.edge;
 
+import interfaces.graph.edge.DirectedEdge;
 import interfaces.graph.vertex.Vertex;
 
 /**
@@ -13,7 +14,8 @@ import interfaces.graph.vertex.Vertex;
  * @author w_jossey
  */
 public class DirectedEdgeImpl extends EdgeImpl{
-    Vertex from = null; Vertex to = null;
+    Vertex<? extends DirectedEdge> from = null; 
+    Vertex<? extends DirectedEdge> to = null;
     double weight;
     
     /**
@@ -21,7 +23,8 @@ public class DirectedEdgeImpl extends EdgeImpl{
      * @param source Source vertex
      * @param destination Destination vertex
      */
-    public DirectedEdgeImpl(Vertex source, Vertex destination){
+    
+	public <E extends DirectedEdge> DirectedEdgeImpl(Vertex<E> source, Vertex<E> destination){
         super(source, destination);
         this.from = source;
         this.to = destination;
@@ -34,7 +37,8 @@ public class DirectedEdgeImpl extends EdgeImpl{
      * @param destination Destinatino vertex
      * @param weight The weight of the edge
      */
-    public DirectedEdgeImpl(Vertex source, Vertex destination, double weight){
+    public <E extends DirectedEdge> DirectedEdgeImpl(Vertex<E> source, 
+    		Vertex<E> destination, double weight){
         super(source, destination, weight);
         this.from = source;
         this.to = destination;
@@ -44,7 +48,7 @@ public class DirectedEdgeImpl extends EdgeImpl{
      * 
      * @return
      */
-    public Vertex getSourceVertex(){
+    public Vertex<? extends DirectedEdge> getSourceVertex(){
         return from;
     }
     
@@ -52,7 +56,7 @@ public class DirectedEdgeImpl extends EdgeImpl{
      * 
      * @return
      */
-    public Vertex getDestinationVertex(){
+    public Vertex<? extends DirectedEdge> getDestinationVertex(){
         return to;
     }
     

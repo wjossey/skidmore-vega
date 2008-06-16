@@ -30,7 +30,7 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
 	/* Variable Declarations Start*/
 	private static int vertexCounter = 0;  //Used to generate the UID of the vertex.
     
-	private GraphvizVertexProperties properties;
+	private GraphvizVertexProperties<E> properties;
 
 	private int uid;  //UID of the vertex.  Equal to a primary key in a database.  Must be unique!
 
@@ -42,8 +42,6 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
 	
 	private HashMap<Integer, E> edgeHash;
  
-	private int edgeCounter = 0;  //Keeps track of how many edges this vertex has
-
 	private boolean visited = false;  //Boolean as to whether or not the vertex has been visited
 
 	private E incomingEdge;  //We can use this to track a path if we so desire (Try to remove)
@@ -75,7 +73,7 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
         setX(x);
         setY(y);
         edgeHash = new HashMap<Integer, E>();
-        properties = new VertexPropertiesImpl(this);
+        properties = new VertexPropertiesImpl<E>(this);
     }
 
     /**
@@ -92,7 +90,7 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
         	/*We have an undirected graph*/
         }
         edgeHash = new HashMap<Integer, E>();
-        properties = new VertexPropertiesImpl(this);
+        properties = new VertexPropertiesImpl<E>(this);
 
     }
 
@@ -100,7 +98,7 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
      * Empty Constructor.
      */
     public VertexImpl() {
-    	properties = new VertexPropertiesImpl(this);
+    	properties = new VertexPropertiesImpl<E>(this);
     }
 
     /**
@@ -191,8 +189,8 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
      * @return
      */
     @SuppressWarnings("unchecked")
-	public E[] getEdges() {
-        return (E[]) edgeList.toArray();
+	public ArrayList<E> getEdges() {
+        return edgeList;
     }
 
     
@@ -309,8 +307,9 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
      * Gets the previous vertex.
      * @return
      */
-    public Vertex<E> getPreviousVertex() {
-        return previousVertex;
+    @SuppressWarnings("unchecked")
+	public <V extends Vertex<E>> V getPreviousVertex() {
+    	return (V) previousVertex;
     }
 
 
@@ -334,93 +333,8 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
         this.active = active;
     }
 
-    /**
-     * Returns the nearest neighbor to the vertex.
-     * @return
-     */
-    public Vertex getNearestNeighbor() {
-        boolean vertexFound = false;
-        Vertex returnVertex = null;
-        EdgeImpl.sortEdgesByDistance(edgeList);
-        for (int i = 0; i < edgeList.length && !vertexFound; i++) {
-        	edgeList[i].getVertexA();
-            Vertex a = edgeList[i].getVertexA();
-            Vertex b = edgeList[i].getVertexB();
-            if (a.getUID() == this.uid) {
-                if (!b.inUse()) {
-                    returnVertex = b;
-                    vertexFound = true;
-                }
-            } else {
-                if (!a.inUse()) {
-                    returnVertex = a;
-                    vertexFound = true;
-                }
-            }
-        }
 
-        return returnVertex;
-    }
 
-    /**
-     * Gets the k nearest neighbors, where k is some natural number that is less than the 
-     * total number of neighbors for this vertex.
-     * @param k 
-     * @return
-     */
-    public Vertex[] getKNearestNeighbors(int k) {
-        if (k <= edgeList.length) {
-            EdgeImpl.sortEdgesByDistance(edgeList);
-            Vertex[] returnArray = new Vertex[k];
-            for (int i = 0; i < returnArray.length; i++) {
-                UndirectedEdge tempEdge = edgeList[i];
-                if (tempEdge.getVertexA().getUID() == uid) {
-                    returnArray[i] = tempEdge.getVertexB();
-                } else {
-                    returnArray[i] = tempEdge.getVertexA();
-                }
-            }
-
-            return returnArray;
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * Returns all adjacent vertices based on the edge list.
-     * @return
-     */
-    public Vertex[] getNeighbors() {
-        Vertex[] neighborArray = new VertexImpl[edgeList.length];
-        int arrayCounter = 0;
-        for (int i = 0; i < edgeList.length && edgeList[i] != null; i++) {
-            if (edgeList[i].getVertexA() != this) {
-                neighborArray[arrayCounter++] = edgeList[i].getVertexA();
-            } else {
-                if (edgeList[i].getVertexB() != this) {
-                    neighborArray[arrayCounter++] = edgeList[i].getVertexB();
-                }
-            }
-        }
-
-        return neighborArray;
-    }
-
-    /**
-     * Static method that takes an array of vertices and returns well formed DOT strings to
-     * represent each vertex.
-     * @param vertexList
-     * @return
-     */
-    public static String vertexListToString(Vertex[] vertexList) {
-        String returnString = "";
-        for (int i = 0; i < vertexList.length; i++) {
-            returnString += vertexList[i].toString() + "\n";
-        }
-
-        return returnString;
-    }
 
     /**
      * 
@@ -440,7 +354,8 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
 
     }
 
-	public GraphvizVertexProperties getProperties() {
+	public GraphvizVertexProperties<E> getProperties() {
+		
 		return properties;
 	}
 

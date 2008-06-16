@@ -3,14 +3,16 @@ package vega.algorithms.tsp;
 import vega.Controller;
 import vega.pseudoCode.Procedure;
 import vega.pseudoCode.PseudoCode;
-import vega.algorithms.GraphAlgorithm;
+import interfaces.algorithms.GraphAlgorithm;
 import interfaces.graph.Graph;
+import interfaces.graph.edge.Edge;
+import interfaces.graph.edge.UndirectedEdge;
 import interfaces.graph.vertex.Vertex;
 import java.util.LinkedList;
 
-public class TwoOpt implements GraphAlgorithm {
+public class TwoOpt implements GraphAlgorithm<Vertex<UndirectedEdge>, UndirectedEdge> {
 
-    private Graph g;
+    private Graph<Vertex<UndirectedEdge>, UndirectedEdge> g;
     private PseudoCode pseudoCode;
     Controller controller;
     int imageCounter = 0;
@@ -20,7 +22,7 @@ public class TwoOpt implements GraphAlgorithm {
     private boolean running = false;
     private Procedure twoOptMove;
 
-    public void run(Graph g) {
+    public void run(Graph<Vertex<UndirectedEdge>, UndirectedEdge> g) {
         // TODO Auto-generated method stub
         running = true;
         instanceID = instanceCounter++;
@@ -248,4 +250,5 @@ public class TwoOpt implements GraphAlgorithm {
     public String getPseudoCodeText(int line, String procedure) {
         return pseudoCode.getPseudoCodeWithLineMarker(line, procedure);
     }
+
 }

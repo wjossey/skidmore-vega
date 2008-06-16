@@ -3,7 +3,7 @@ package vega.algorithms.tsp;
 import vega.Controller;
 import vega.pseudoCode.Procedure;
 import vega.pseudoCode.PseudoCode;
-import vega.algorithms.GraphAlgorithm;
+import interfaces.algorithms.GraphAlgorithm;
 import interfaces.graph.Graph;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;

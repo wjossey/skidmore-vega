@@ -1,11 +1,13 @@
 package vega.dataStructures.trees;
 
 import interfaces.dataStructures.tree.BinarySearchTree;
+import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.tree.BinaryTreeNode;
 import interfaces.graph.vertex.tree.TreeNode;
 
 import java.util.Iterator;
 
+import vega.exceptions.InvalidTreeException;
 import vega.graph.TreeImpl;
 import vega.graph.vertex.tree.BinaryTreeNodeImpl;
 
@@ -15,29 +17,15 @@ import vega.graph.vertex.tree.BinaryTreeNodeImpl;
  * @author Edit by:  Weston Jossey-  April 21, 2008
  *  
  */
-public class BinarySearchTreeImpl extends TreeImpl implements BinarySearchTree<Object>{
+public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> extends TreeImpl<E> implements BinarySearchTree<C, E>{
 
     public static boolean RED = true;
     public static boolean BLACK = false;
 
-    public class InvalidTreeException extends Exception {
-
-        /**
-		 * 
-		 */
-		private static final long serialVersionUID = -7533735938974561488L;
-
-		public InvalidTreeException(String s) {
-            super(s);
-        } // end constructor
-
-    } // end class InvalidTreeException 
-
-
     private class BSTIterator implements Iterator<Object> {
 
-        private BinaryTreeNode curr;
-        private BinaryTreeNode prev;
+        private BinaryTreeNode<E> curr;
+        private BinaryTreeNode<E> prev;
 
         public BSTIterator() {
             curr = minimum(root);
@@ -730,6 +718,21 @@ public class BinarySearchTreeImpl extends TreeImpl implements BinarySearchTree<O
 
         return valid;
     } // end validateTree()
+
+	public boolean delete(Comparable arg) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void insert(Comparable arg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Object search(Comparable arg) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
 	

@@ -12,13 +12,13 @@ import interfaces.graph.vertex.Vertex;
 import java.util.ArrayList;
 
 import vega.graph.edge.EdgeImpl;
-import vega.graph.vertex.VertexImpl;
+import vega.helperClasses.VertexHelper;
 
 /**
  *
  * @author w_jossey
  */
-public class NetworkImpl<V extends Vertex<E>, E extends Edge> extends GraphImpl<V, E> implements Network{
+public class NetworkImpl<V extends Vertex<E>, E extends Edge> extends GraphImpl<V, E> implements Network<V, E>{
 
     /**
      * The constructor method for the Graph class.  Takes in a pre-set vertex
@@ -97,8 +97,8 @@ public class NetworkImpl<V extends Vertex<E>, E extends Edge> extends GraphImpl<
         //returnString += "graph G{\nsize=\"8.5,11\";";
         }
 
-        returnString += VertexImpl.vertexListToString(vertexList.toArray(new Vertex[0])) + "\n";
-        returnString += EdgeImpl.allEdgesWithoutRepeats(vertexList.toArray(new Vertex[0])) + "\n";
+        returnString += VertexHelper.vertexListToString(vertexList) + "\n";
+        returnString += EdgeImpl.allEdgesWithoutRepeats(vertexList) + "\n";
 
         returnString += "}\n";
 
