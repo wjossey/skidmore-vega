@@ -5,9 +5,10 @@
 
 package vega.graph;
 
+import java.util.ArrayList;
+
 import interfaces.graph.Tree;
 import interfaces.graph.edge.*;
-import interfaces.graph.vertex.Vertex;
 import interfaces.graph.vertex.tree.TreeNode;
 
 /**
@@ -15,8 +16,8 @@ import interfaces.graph.vertex.tree.TreeNode;
  * @author w_jossey
  */
 public class TreeImpl<E extends Edge> extends GraphImpl<TreeNode<E>, E> implements Tree<TreeNode<E>, E>{
-    V root;
-    V[] treeArray;
+    TreeNode<E> root;
+    TreeNode<E>[] treeArray;
     E[] edgeArray;
     
     /**
@@ -24,7 +25,7 @@ public class TreeImpl<E extends Edge> extends GraphImpl<TreeNode<E>, E> implemen
      * @param t
      * @param e
      */
-    public TreeImpl(TreeNode[] t, TreeEdge[] e){
+    public TreeImpl(TreeNode<E>[] t, E[] e){
         treeArray = t;
         edgeArray = e;
     }
@@ -33,7 +34,7 @@ public class TreeImpl<E extends Edge> extends GraphImpl<TreeNode<E>, E> implemen
      * 
      * @param treeNodes
      */
-    public TreeImpl(TreeNode[] treeNodes){
+    public TreeImpl(TreeNode<E>[] treeNodes){
         treeArray = treeNodes;
     }
     
@@ -41,7 +42,7 @@ public class TreeImpl<E extends Edge> extends GraphImpl<TreeNode<E>, E> implemen
      * 
      * @param root
      */
-    public TreeImpl(TreeNode root){
+    public TreeImpl(TreeNode<E> root){
         this.root = root;
     }
     
@@ -56,7 +57,7 @@ public class TreeImpl<E extends Edge> extends GraphImpl<TreeNode<E>, E> implemen
      * 
      * @return
      */
-    public TreeNode getRoot(){
+    public TreeNode<E> getRoot(){
         return root;
     }
     
@@ -64,20 +65,20 @@ public class TreeImpl<E extends Edge> extends GraphImpl<TreeNode<E>, E> implemen
         return toString(root);
     }
     
-    private String toString(TreeNode t){
+    private String toString(TreeNode<E> t){
         String returnString = "";
         returnString += t.toString();
-        TreeNode[] childArray = t.getChildren();
+        ArrayList<TreeNode<E>> childArray = t.getChildren();
         
-        for(int i = 0; i < childArray.length; i++){
-            returnString += childArray[i].toString();
-            returnString += toString(childArray[i]);
+        for(int i = 0; i < childArray.size(); i++){
+            returnString += childArray.get(i).toString();
+            returnString += toString(childArray.get(i));
         }
         
         return returnString;
     }
 
-	public void setRoot(TreeNode v) {
+	public void setRoot(TreeNode<E> v) {
 		root = v;	
 	}
     

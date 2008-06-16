@@ -1,5 +1,7 @@
 package interfaces.graph.vertex.tree;
 
+import java.util.ArrayList;
+
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.vertex.tree.TreeNode;
@@ -42,7 +44,7 @@ public interface TreeNode<E extends Edge> extends Vertex<E>{
 	 * 
 	 * @return
 	 */
-	public TreeNode<E>[] getChildren();
+	public ArrayList<TreeNode<E>> getChildren();
 
 	/**
 	 * 

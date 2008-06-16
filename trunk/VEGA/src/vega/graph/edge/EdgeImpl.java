@@ -1,13 +1,15 @@
 package vega.graph.edge;
 
+import java.util.ArrayList;
+
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.edge.Edge;
 
 public class EdgeImpl implements Edge{
 
     /*Variable declaration*/
-    private Vertex<? extends Edge> a;
-    private Vertex<? extends Edge> b;
+    protected Vertex<? extends Edge> a;
+    protected Vertex<? extends Edge> b;
     private boolean directed = false;
     private double weight;
     private boolean active = false;
@@ -22,7 +24,7 @@ public class EdgeImpl implements Edge{
      * @param b Vertex b
      * @param weight Edge weight
      */
-    public EdgeImpl(Vertex a, Vertex b, double weight) {
+    public <E extends Edge> EdgeImpl(Vertex<E> a, Vertex<E> b, double weight) {
 
         //Arrange cities relative to their UID so we always know which city to expect first
         //The city with the greater UID will always be City A.
@@ -42,7 +44,7 @@ public class EdgeImpl implements Edge{
      * @param a Vertex a
      * @param b Vertex b
      */
-    public EdgeImpl(Vertex a, Vertex b) {
+    public EdgeImpl(Vertex<? extends Edge> a, Vertex<? extends Edge> b) {
         //Arrange cities relative to their UID so we always know which city to expect first
         //The city with the greater UID will always be City A.
         if (a.getUID() > b.getUID()) {
@@ -77,23 +79,7 @@ public class EdgeImpl implements Edge{
             return null;
         }
     }
-
-    /**
-     * Get Vertex a.
-     * @return
-     */
-    public Vertex getVertexA() {
-        return a;
-    }
-
-    /**
-     * Get Vertex b.
-     * @return
-     */
-    public Vertex getVertexB() {
-        return b;
-    }
-
+    
     /**
      *
      * @param inUseBool
@@ -254,10 +240,10 @@ public class EdgeImpl implements Edge{
      * @param edgeList
      * @return
      */
-    private static String edgeListToString(Edge[] edgeList) {
+    private static <E extends Edge> String edgeListToString(ArrayList<E> edgeList) {
         String returnString = "";
-        for (int i = 0; i < edgeList.length; i++) {
-            returnString += edgeList[i].toString() + "\n";
+        for (int i = 0; i < edgeList.size(); i++) {
+            returnString += edgeList.get(i).toString() + "\n";
         }
 
         return returnString;
@@ -269,10 +255,10 @@ public class EdgeImpl implements Edge{
      * @param index
      * @return
      */
-    public static String edgeListToString(Edge[] edgeList, int index) {
+    public static <E extends Edge> String edgeListToString(ArrayList<E> edgeList, int index) {
         String returnString = "";
-        for (int i = index; i < edgeList.length; i++) {
-            returnString += edgeList[i].toString() + "\n";
+        for (int i = index; i < edgeList.size(); i++) {
+            returnString += edgeList.get(i).toString() + "\n";
         }
 
         return returnString;
@@ -283,10 +269,10 @@ public class EdgeImpl implements Edge{
      * @param vertexList
      * @return
      */
-    public static String allEdgesToString(Vertex[] vertexList) {
+    public static <E extends Edge> String allEdgesToString(ArrayList<Vertex<E>> vertexList) {
         String returnString = "";
-        for (int i = 0; i < vertexList.length; i++) {
-            Edge[] edgeList = vertexList[i].getEdges();
+        for (int i = 0; i < vertexList.size(); i++) {
+            ArrayList<E> edgeList = vertexList.get(i).getEdges();
             returnString += edgeListToString(edgeList);
         }
 
@@ -299,11 +285,11 @@ public class EdgeImpl implements Edge{
      * @param vertexList a vertex array
      * @return returns the generated String.
      */
-    public static String allEdgesWithoutRepeats(Vertex[] vertexList) {
+    public static <V extends Vertex<E>, E extends Edge> String allEdgesWithoutRepeats(ArrayList<V> vertexList) {
         String returnString = "";
-        for (int i = 0; i < vertexList.length; i++) {
-            for (int j = i + 1; j < vertexList.length; j++) {
-                Edge e = vertexList[i].getEdge(vertexList[j]);
+        for (int i = 0; i < vertexList.size(); i++) {
+            for (int j = i + 1; j < vertexList.size(); j++) {
+                Edge e = vertexList.get(i).getEdge(vertexList.get(j));
                 if (e != null) {
                     returnString += e.toString() + "\n";
                 }

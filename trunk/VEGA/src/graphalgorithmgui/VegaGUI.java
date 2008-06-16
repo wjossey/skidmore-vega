@@ -6,10 +6,10 @@
 package graphalgorithmgui;
 
 import vega.graph.GraphImpl;
-import vega.algorithms.GraphAlgorithm;
 import vega.algorithms.GraphAlgorithms;
 import vega.algorithms.tsp.NearestNeighbor;
 import vega.algorithms.tsp.TwoOpt;
+import interfaces.algorithms.GraphAlgorithm;
 import interfaces.graph.Graph;
 
 import java.awt.event.ActionEvent;

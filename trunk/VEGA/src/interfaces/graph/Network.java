@@ -12,7 +12,7 @@ import interfaces.graph.vertex.Vertex;
  *
  * @author w_jossey
  */
-public interface Network<V extends Vertex<? extends Edge>>{
+public interface Network<V extends Vertex<E>, E extends Edge>{
 	
 	public void setSources(V[] v);
 	

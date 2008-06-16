@@ -9,7 +9,7 @@ package interfaces.graph.edge;
  *
  * @author w_jossey
  */
-public interface Edge {
+public interface Edge{
     
     double getWeight();
     

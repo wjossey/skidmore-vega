@@ -5,6 +5,7 @@
 
 package vega.graph.edge;
 
+import interfaces.graph.edge.UndirectedEdge;
 import interfaces.graph.vertex.Vertex;
 
 /**
@@ -13,14 +14,18 @@ import interfaces.graph.vertex.Vertex;
  * that developers can easily distinguish if an edge is directed or undirected.
  * @author w_jossey
  */
-public class UndirectedEdgeImpl extends EdgeImpl{
+public class UndirectedEdgeImpl extends EdgeImpl implements UndirectedEdge{
     
     /**
      * See Edge class for documentation.
      * @param a
      * @param b
      */
-    public UndirectedEdgeImpl(Vertex a, Vertex b){
+	
+	Vertex<? extends UndirectedEdge> vertexA = null;
+	Vertex<? extends UndirectedEdge> vertexB = null;
+	
+    public <E extends UndirectedEdge> UndirectedEdgeImpl(Vertex<E> a, Vertex<E> b){
         super(a, b);
     }
     
@@ -30,8 +35,21 @@ public class UndirectedEdgeImpl extends EdgeImpl{
      * @param b
      * @param weight
      */
-    public UndirectedEdgeImpl(Vertex a, Vertex b, double weight){
+    public <E extends UndirectedEdge> UndirectedEdgeImpl(Vertex<E> a, Vertex<E> b, double weight){
         super(a, b, weight);
     }
+
+    
+	@SuppressWarnings("unchecked")
+	public Vertex<? extends UndirectedEdge> getVertexA() {
+		return vertexA;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Vertex<? extends UndirectedEdge> getVertexB() {
+		return vertexB;
+	}
+    
+    
     
 }

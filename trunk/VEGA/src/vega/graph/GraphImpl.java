@@ -1,7 +1,8 @@
 package vega.graph;
 
 import vega.graph.edge.EdgeImpl;
-import vega.graph.vertex.VertexImpl;
+import vega.graph.vertex.*;
+import vega.helperClasses.VertexHelper;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.Graph;
@@ -136,7 +137,8 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
         for (int i = 0; i < size; i++) {
             int randX = (int) (Math.random() * (size * 10));
             int randY = (int) (Math.random() * (size * 10));
-            addVertex(new VertexImpl(randX, randY, this));
+            VertexImpl<E> tempVertex = new VertexImpl<E>(randX, randY, this);
+            addVertex((V)tempVertex);
         }
     }
 
@@ -297,8 +299,8 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
         //returnString += "graph G{\nsize=\"8.5,11\";";
         }
 
-        returnString += VertexImpl.vertexListToString(vertexList.toArray(new Vertex[0])) + "\n";
-        returnString += EdgeImpl.allEdgesWithoutRepeats(vertexList.toArray(new Vertex[0])) + "\n";
+        returnString += VertexHelper.vertexListToString(vertexList) + "\n";
+        returnString += EdgeImpl.allEdgesWithoutRepeats(vertexList) + "\n";
 
         returnString += "}\n";
 

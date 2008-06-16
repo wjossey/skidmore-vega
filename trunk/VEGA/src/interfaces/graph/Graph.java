@@ -3,7 +3,7 @@ package interfaces.graph;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 
-public interface Graph<V extends Vertex<? extends Edge>, E extends Edge>{
+public interface Graph<V extends Vertex<E>, E extends Edge>{
 
 	public int getSize();
 
