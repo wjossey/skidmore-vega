@@ -1,6 +1,9 @@
 package vega.algorithms.tsp;
 
+import java.util.ArrayList;
+
 import vega.Controller;
+import vega.helperClasses.VertexHelper;
 import vega.pseudoCode.Procedure;
 import vega.pseudoCode.PseudoCode;
 import interfaces.algorithms.GraphAlgorithm;
@@ -8,12 +11,12 @@ import interfaces.graph.Graph;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 
-public class NearestNeighbor implements GraphAlgorithm {
+public class NearestNeighbor<V extends Vertex<E>, E extends Edge> implements GraphAlgorithm<V,E> {
 
     private PseudoCode pseudoCode;
-    private Graph g;
-    private Vertex[] vertexArray;
-    Controller controller;
+    private Graph<V,E> g;
+    private ArrayList<V> vertexArray;
+    Controller<V,E> controller;
     private String FILENAME = "nearestNeighbor";
     private static int instanceCounter = 0;
     private int instanceID = 0;
@@ -44,34 +47,33 @@ public class NearestNeighbor implements GraphAlgorithm {
      * @param startIndex Root vertex
      * @return Returns vertex array sorted based on the Hamiltonian Cycle found.
      */
-    private Vertex[] runNearestNeighbor(int startIndex) {
+    private ArrayList<V> runNearestNeighbor(int startIndex) {
 
         //Take a snapshot of the graph before the algorithm is run.
         controller.generateGraphInstance(1, nearestNeighborProcedure.getTitle());
 
-        Vertex[] nearestNeighborArray = new Vertex[g.getSize() + 1];
+        ArrayList<V> nearestNeighborArray = new ArrayList<V>(g.getSize() + 1);
         int counter = 0;
         
-        if (startIndex < vertexArray.length) {
-            Vertex curr = vertexArray[startIndex];
+        if (startIndex < vertexArray.size()) {
+            V curr = vertexArray.get(startIndex);
 
-            nearestNeighborArray[counter++] = NearestNeighborProcedureStepTwo(curr);
+            nearestNeighborArray.set(counter++, NearestNeighborProcedureStepTwo(curr));
 
             while (curr != null) {
-                Vertex next = curr.getNearestNeighbor();
+            	V next = VertexHelper.getNearestNeighbor(curr);
                 if (next != null) {
-                    Edge e = curr.getEdge(next);
+                    E e = curr.getEdge(next);
 
                     //Step Three
-                    nearestNeighborArray[counter++] = NearestNeighborProcedureStepThree(curr, e, next);
+                    nearestNeighborArray.set(counter++, NearestNeighborProcedureStepThree(curr, e, next));
                     
                     curr = next;
 
                 } else {
-                    Vertex root = vertexArray[startIndex];
+                    V root = vertexArray.get(startIndex);
                     NearestNeighborProcedureStepFive(curr, root);
-                    nearestNeighborArray[counter] = NearestNeighborProcedureStepSix(curr, root);
-
+                    nearestNeighborArray.set(counter, NearestNeighborProcedureStepSix(curr, root));
                     curr = null;
                 }
             }
@@ -89,7 +91,7 @@ public class NearestNeighbor implements GraphAlgorithm {
      * @param curr
      * @return
      */
-    private Vertex NearestNeighborProcedureStepTwo(Vertex curr) {
+    private V NearestNeighborProcedureStepTwo(V curr) {
         curr.setActive(true);
         curr.setInUse(true);
         controller.generateGraphInstance(2, nearestNeighborProcedure.getTitle());
@@ -103,7 +105,7 @@ public class NearestNeighbor implements GraphAlgorithm {
      * @param next
      * @return
      */
-    private Vertex NearestNeighborProcedureStepThree(Vertex curr, Edge e, Vertex next) {
+    private V NearestNeighborProcedureStepThree(V curr, E e, V next) {
         curr.setInUse(true);
         curr.setActive(true);
         e.setInUse(true);
@@ -124,12 +126,12 @@ public class NearestNeighbor implements GraphAlgorithm {
      * @param curr
      * @param root
      */
-    private void NearestNeighborProcedureStepFive(Vertex curr, Vertex root) {
+    private void NearestNeighborProcedureStepFive(V curr, V root) {
         root.setActive(true);
-        Edge e = root.getEdge(curr);
-        if (e != null) {
-            e.setActive(true);
-            e.setInUse(true);
+        E edge = root.getEdge(curr);
+        if (edge != null) {
+            edge.setActive(true);
+            edge.setInUse(true);
         }
 
 
@@ -142,7 +144,7 @@ public class NearestNeighbor implements GraphAlgorithm {
      * @param root
      * @return
      */
-    private Vertex NearestNeighborProcedureStepSix(Vertex curr, Vertex root) {
+    private V NearestNeighborProcedureStepSix(V curr, V root) {
         curr.setActive(false);
         curr.getEdge(root).setActive(false);
         root.setActive(false);
@@ -173,7 +175,7 @@ public class NearestNeighbor implements GraphAlgorithm {
      * Gets the controller for the algorithm.  Used to communicate with VEGA.
      * @return
      */
-    public Controller getController() {
+    public Controller<V,E> getController() {
         return controller;
     }
 
@@ -189,13 +191,13 @@ public class NearestNeighbor implements GraphAlgorithm {
      * Run method executes the algorithm on the graph.
      * @param g Graph to execute algorithm on.
      */
-    public void run(Graph g) {
+    public void run(Graph<V,E> g) {
         // TODO Auto-generated method stub
         running = true;
         instanceID = instanceCounter++;
         vertexArray = g.getVertexArray();
         this.g = g;
-        controller = new Controller(g, pseudoCode, this);
+        controller = new Controller<V,E>(g, pseudoCode, this);
         runNearestNeighbor(0); //Let's assume we don't assign a starting vertex
 
         running = false;
@@ -206,12 +208,12 @@ public class NearestNeighbor implements GraphAlgorithm {
      * @param g
      * @param startIndex
      */
-    public void run(Graph g, int startIndex) {
+    public void run(Graph<V,E> g, int startIndex) {
         running = true;
         vertexArray = g.getVertexArray();
         this.g = g;
         pseudoCode = new PseudoCode("Nearest Neighbor");
-        controller = new Controller(g, pseudoCode, this);
+        controller = new Controller<V,E>(g, pseudoCode, this);
         runNearestNeighbor(startIndex);
         running = false;
     }

@@ -1,5 +1,7 @@
 package interfaces.graph;
 
+import java.util.ArrayList;
+
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 
@@ -11,13 +13,13 @@ public interface Graph<V extends Vertex<E>, E extends Edge>{
 	 * Returns the vertex array for the graph
 	 * @return the vertex array for the graph
 	 */
-	public V[] getVertexArray();
+	public ArrayList<V> getVertexArray();
 
 	/**
 	 * Returns the array of edges.
 	 * @return Edge array to return
 	 */
-	public E[] getEdgeArray();
+	public ArrayList<E> getEdgeArray();
 
 	/**
 	 * Returns whether we have a directed or undirected graph 

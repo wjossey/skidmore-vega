@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author w_jossey
  */
-public class TreeNodeImpl<E extends Edge> extends VertexImpl<E> implements TreeNode<E>{
+public class TreeNodeImpl<C extends Comparable<C>, E extends Edge> extends VertexImpl<E> implements TreeNode<C,E>{
 
     /**
 	 * 
@@ -28,7 +28,7 @@ public class TreeNodeImpl<E extends Edge> extends VertexImpl<E> implements TreeN
      * Creates a tree node with the value of @param k
      * @param k
      */
-    public TreeNodeImpl(Comparable<?> k) {
+    public TreeNodeImpl(C k) {
     	super();
     	data = k;
         parent = null;
@@ -42,7 +42,7 @@ public class TreeNodeImpl<E extends Edge> extends VertexImpl<E> implements TreeN
      * @param k
      * @param c
      */
-    public TreeNodeImpl(Comparable<?> k, boolean c) {
+    public TreeNodeImpl(C k, boolean c) {
         super();
     	data = k;
         parent = null;
@@ -83,42 +83,42 @@ public class TreeNodeImpl<E extends Edge> extends VertexImpl<E> implements TreeN
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.TreeNode#getParentNode()
 	 */
-    public TreeNode<E> getParentNode(){
+    public TreeNode<C,E> getParentNode(){
         return parent;
     }
     
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.TreeNode#setParentNode(interfaces.graph.vertex.tree.TreeNode)
 	 */
-    public void setParentNode(TreeNode<E>parent){
+    public void setParentNode(TreeNode<C,E>parent){
         this.parent = parent;
     }
     
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.TreeNode#addChild(interfaces.graph.vertex.tree.TreeNode)
 	 */
-    public void addChild(TreeNode<E> child){
+    public void addChild(TreeNode<C,E> child){
         childNodes.add(child);
     }
     
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.TreeNode#getChildren()
 	 */
-    public ArrayList<TreeNode<E>> getChildren(){
+    public ArrayList<TreeNode<C,E>> getChildren(){
         return childNodes;
     }
     
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.TreeNode#getData()
 	 */
-    public Comparable<?> getData(){
+    public C getData(){
         return data;
     }
     
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.TreeNode#setData(java.lang.Comparable)
 	 */
-    public void setData(Comparable<?> c){
+    public void setData(C c){
         data = c;
     }
     
@@ -144,10 +144,10 @@ public class TreeNodeImpl<E extends Edge> extends VertexImpl<E> implements TreeN
     }
     
     private int id; // unique identifier for the node for graphViz data
-    private TreeNode<E> parent;
-    private Comparable<?> data;
+    private TreeNode<C,E> parent;
+    private C data;
     private int height; // for AVL trees
-    private ArrayList<TreeNode<E>> childNodes = new ArrayList<TreeNode<E>>();
+    private ArrayList<TreeNode<C,E>> childNodes = new ArrayList<TreeNode<C,E>>();
 
     private boolean color; // for Red Black trees
 
@@ -168,7 +168,7 @@ public class TreeNodeImpl<E extends Edge> extends VertexImpl<E> implements TreeN
         return result;
     } // end toString()
 
-	public E getEdge(TreeNode<E> child) {
+	public E getEdge(TreeNode<C, E> child) {
 		// TODO Auto-generated method stub
 		return null;
 	}

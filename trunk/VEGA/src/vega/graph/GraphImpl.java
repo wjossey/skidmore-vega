@@ -97,8 +97,8 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
 	 * @see vega.graph.Graph#getVertexArray()
 	 */
 	@SuppressWarnings("unchecked")
-	public V[] getVertexArray() {
-        return (V[]) vertexList.toArray(new Vertex[0]);
+	public ArrayList<V> getVertexArray() {
+        return vertexList;
     }
 	
 	   /* (non-Javadoc)
@@ -111,9 +111,9 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
     /* (non-Javadoc)
 	 * @see vega.graph.Graph#getEdgeArray()
 	 */ 
-	@SuppressWarnings("unchecked")
-	public E[] getEdgeArray(){
-        return (E[]) edgeList.toArray();
+    
+	public ArrayList<E> getEdgeArray(){
+        return edgeList;
     }
 
     /**
@@ -137,8 +137,8 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
         for (int i = 0; i < size; i++) {
             int randX = (int) (Math.random() * (size * 10));
             int randY = (int) (Math.random() * (size * 10));
-            VertexImpl<E> tempVertex = new VertexImpl<E>(randX, randY, this);
-            addVertex((V)tempVertex);
+            V tempVertex = (V) new VertexImpl<E>(randX, randY, this);
+            addVertex(tempVertex);
         }
     }
 

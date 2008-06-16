@@ -2,42 +2,42 @@ package interfaces.graph.vertex.tree;
 
 import interfaces.graph.edge.Edge;
 
-public interface BinaryTreeNode<E extends Edge> extends TreeNode<E>{
+public interface BinaryTreeNode<C extends Comparable<C>, E extends Edge> extends TreeNode<C,E>{
 
 	/**
 	 * 
 	 * @return
 	 */
-	public BinaryTreeNode<E> getLeftNode();
+	public BinaryTreeNode<C,E> getLeftNode();
 
 	/**
 	 * 
 	 * @return
 	 */
-	public BinaryTreeNode<E> getRightNode();
+	public BinaryTreeNode<C,E> getRightNode();
 
 	/**
 	 * 
 	 * @param left
 	 */
-	public void setLeftNode(BinaryTreeNode<E> left);
+	public void setLeftNode(BinaryTreeNode<C,E> left);
 
 	/**
 	 * 
 	 * @param right
 	 */
-	public void setRightNode(BinaryTreeNode<E> right);
+	public void setRightNode(BinaryTreeNode<C,E> right);
 
 	/**
 	 * 
 	 * @param parent
 	 */
-	public void setParentNode(BinaryTreeNode<E> parent);
+	public void setParentNode(BinaryTreeNode<C,E> parent);
 	
 	/**
 	 * @return Returns the parent node
 	 */
-	public BinaryTreeNode<E> getParentNode();
+	public BinaryTreeNode<C,E> getParentNode();
 
 	/**
 	 * 

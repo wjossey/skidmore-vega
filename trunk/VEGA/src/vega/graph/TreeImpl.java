@@ -15,17 +15,17 @@ import interfaces.graph.vertex.tree.TreeNode;
  *
  * @author w_jossey
  */
-public class TreeImpl<E extends Edge> extends GraphImpl<TreeNode<E>, E> implements Tree<TreeNode<E>, E>{
-    TreeNode<E> root;
-    TreeNode<E>[] treeArray;
-    E[] edgeArray;
+public class TreeImpl<C extends Comparable<C>, E extends Edge> extends GraphImpl<TreeNode<C,E>, E> implements Tree<C, TreeNode<C,E>, E>{
+    TreeNode<C,E> root;
+    ArrayList<TreeNode<C,E>> treeArray;
+    ArrayList<E> edgeArray;
     
     /**
      * 
      * @param t
      * @param e
      */
-    public TreeImpl(TreeNode<E>[] t, E[] e){
+    public TreeImpl(ArrayList<TreeNode<C,E>> t, ArrayList<E> e){
         treeArray = t;
         edgeArray = e;
     }
@@ -34,7 +34,7 @@ public class TreeImpl<E extends Edge> extends GraphImpl<TreeNode<E>, E> implemen
      * 
      * @param treeNodes
      */
-    public TreeImpl(TreeNode<E>[] treeNodes){
+    public TreeImpl(ArrayList<TreeNode<C,E>> treeNodes){
         treeArray = treeNodes;
     }
     
@@ -42,7 +42,7 @@ public class TreeImpl<E extends Edge> extends GraphImpl<TreeNode<E>, E> implemen
      * 
      * @param root
      */
-    public TreeImpl(TreeNode<E> root){
+    public TreeImpl(TreeNode<C,E> root){
         this.root = root;
     }
     
@@ -57,7 +57,7 @@ public class TreeImpl<E extends Edge> extends GraphImpl<TreeNode<E>, E> implemen
      * 
      * @return
      */
-    public TreeNode<E> getRoot(){
+    public TreeNode<C,E> getRoot(){
         return root;
     }
     
@@ -65,10 +65,10 @@ public class TreeImpl<E extends Edge> extends GraphImpl<TreeNode<E>, E> implemen
         return toString(root);
     }
     
-    private String toString(TreeNode<E> t){
+    private String toString(TreeNode<C,E> t){
         String returnString = "";
         returnString += t.toString();
-        ArrayList<TreeNode<E>> childArray = t.getChildren();
+        ArrayList<TreeNode<C,E>> childArray = t.getChildren();
         
         for(int i = 0; i < childArray.size(); i++){
             returnString += childArray.get(i).toString();
@@ -78,7 +78,7 @@ public class TreeImpl<E extends Edge> extends GraphImpl<TreeNode<E>, E> implemen
         return returnString;
     }
 
-	public void setRoot(TreeNode<E> v) {
+	public void setRoot(TreeNode<C,E> v) {
 		root = v;	
 	}
     

@@ -3,18 +3,20 @@ package vega.algorithms.tsp;
 import vega.Controller;
 import vega.pseudoCode.Procedure;
 import vega.pseudoCode.PseudoCode;
+import vega.helperClasses.*;
 import interfaces.algorithms.GraphAlgorithm;
 import interfaces.graph.Graph;
-import interfaces.graph.edge.Edge;
 import interfaces.graph.edge.UndirectedEdge;
 import interfaces.graph.vertex.Vertex;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class TwoOpt implements GraphAlgorithm<Vertex<UndirectedEdge>, UndirectedEdge> {
+public class TwoOpt<V extends Vertex<E>, E extends UndirectedEdge> implements GraphAlgorithm<V, E> {
 
-    private Graph<Vertex<UndirectedEdge>, UndirectedEdge> g;
+    private Graph<V,E> g;
     private PseudoCode pseudoCode;
-    Controller controller;
+    Controller<V, E> controller;
     int imageCounter = 0;
     private String FILENAME = "twoOpt";
     private static int instanceCounter = 0;
@@ -22,7 +24,7 @@ public class TwoOpt implements GraphAlgorithm<Vertex<UndirectedEdge>, Undirected
     private boolean running = false;
     private Procedure twoOptMove;
 
-    public void run(Graph<Vertex<UndirectedEdge>, UndirectedEdge> g) {
+    public void run(Graph<V, E> g) {
         // TODO Auto-generated method stub
         running = true;
         instanceID = instanceCounter++;
@@ -31,7 +33,7 @@ public class TwoOpt implements GraphAlgorithm<Vertex<UndirectedEdge>, Undirected
         twoOptMove = new Procedure("2OPT(V, E):");
         twoOptMove.appendLine("Code To Be Inserted)");
         pseudoCode.addProcedure(twoOptMove);
-        controller = new Controller(this.g, pseudoCode, this);
+        controller = new Controller<V, E>(this.g, pseudoCode, this);
         executeTwoOpt(this.g.getVertexArray()); //Let's assume we don't assign a starting vertex
 
         running = false;
@@ -49,17 +51,17 @@ public class TwoOpt implements GraphAlgorithm<Vertex<UndirectedEdge>, Undirected
      * The 2OPT algorithm.  
      * @return returns the tour in the form of a Vertex array
      */
-    public Vertex[] executeTwoOpt(Vertex[] tour) {
+    public ArrayList<V> executeTwoOpt(ArrayList<V> tour) {
         //Transform tour to a linked list
 
         /*Start of the twoOpt algorithm.  First, let's connect our tour*/
-        for (int i = 0; i < tour.length; i++) {
-            tour[i].setInUse(true);
+        for (int i = 0; i < tour.size(); i++) {
+            tour.get(i).setInUse(true);
 
-            if (i == tour.length - 1) {
-                tour[i].getEdge(tour[0]).setInUse(true);
+            if (i == tour.size() - 1) {
+                tour.get(i).getEdge(tour.get(0)).setInUse(true);
             } else {
-                tour[i].getEdge(tour[i + 1]).setInUse(true);
+                tour.get(i).getEdge(tour.get(i + 1)).setInUse(true);
             }
         }
 
@@ -67,17 +69,17 @@ public class TwoOpt implements GraphAlgorithm<Vertex<UndirectedEdge>, Undirected
         //controller.generateGraphInstance();
 
         boolean moveMade = true;
-        LinkedList<Vertex> tourLinked = new LinkedList<Vertex>();
-        for (int i = 0; i < tour.length; i++) {
-            tourLinked.add(tour[i]);
+        LinkedList<V> tourLinked = new LinkedList<V>();
+        for (int i = 0; i < tour.size(); i++) {
+            tourLinked.add(tour.get(i));
         }
         while (moveMade) {
             moveMade = false;
-            for (int i = 0; i < tour.length; i++) {
-                Vertex v1 = tour[i];
-                Vertex v2 = null;
-                Vertex v3 = null;
-                Vertex v4 = null;
+            for (int i = 0; i < tour.size(); i++) {
+                V v1 = tour.get(i);
+                V v2 = null;
+                V v3 = null;
+                V v4 = null;
 
                 int indexV1 = tourLinked.indexOf(v1);
                 int indexV2;
@@ -85,7 +87,7 @@ public class TwoOpt implements GraphAlgorithm<Vertex<UndirectedEdge>, Undirected
                 /*If we have the last index as our v1, then we have a wrap
                  * around situation.
                  */
-                if (indexV1 == tour.length - 1) {
+                if (indexV1 == tour.size() - 1) {
                     v2 = tourLinked.get(0);  //v1 is the last element in the tour
 
                     indexV2 = 0;
@@ -104,14 +106,16 @@ public class TwoOpt implements GraphAlgorithm<Vertex<UndirectedEdge>, Undirected
                 } else {
                     constantK = g.getSize() - 1;
                 }
-                Vertex[] nearestNeighborArray = tour[i].getKNearestNeighbors(constantK);
+                
+                
+                ArrayList<V> nearestNeighborArray = VertexHelper.getKNearestNeighbors(tour.get(i), constantK);
 
                 Double twoOptDistance = Double.POSITIVE_INFINITY;
-                for (int k = 0; k < nearestNeighborArray.length; k++) {
-                    Vertex tempV3 = null;
-                    Vertex tempV4 = null;
-                    if (nearestNeighborArray[k].getUID() != v2.getUID()) {
-                        tempV3 = nearestNeighborArray[k];
+                for (int k = 0; k < nearestNeighborArray.size(); k++) {
+                    V tempV3 = null;
+                    V tempV4 = null;
+                    if (nearestNeighborArray.get(k).getUID() != v2.getUID()) {
+                        tempV3 = nearestNeighborArray.get(k);
                         tempV4 = nextVertex(tourLinked, tourLinked.indexOf(tempV3));
 
                         Double tempV3toTempV4Distance = tempV3.getEdge(tempV4).getWeight();
@@ -188,10 +192,10 @@ public class TwoOpt implements GraphAlgorithm<Vertex<UndirectedEdge>, Undirected
     /*A simple conversion method that takes in a LinkedList that is 
      * a LL of vertices and converts them to an array.  
      */
-    private Vertex[] linkedListToArray(LinkedList<Vertex> linkedList) {
-        Vertex[] returnArray = new Vertex[linkedList.size()];
+    private ArrayList<V> linkedListToArray(LinkedList<V> linkedList) {
+        ArrayList<V> returnArray = new ArrayList<V>(linkedList.size());
         for (int i = 0; i < linkedList.size(); i++) {
-            returnArray[i] = linkedList.get(i);
+            returnArray.set(i, linkedList.get(i));
         }
 
         return returnArray;
@@ -200,8 +204,8 @@ public class TwoOpt implements GraphAlgorithm<Vertex<UndirectedEdge>, Undirected
     /* Internal method to give you the next vertex in a linked list of vertices.
      * The method returns the first vertex in the list if it reaches the end of the list 
      */
-    private Vertex nextVertex(LinkedList<Vertex> tour, int curr) {
-        Vertex returnVertex;
+    private V nextVertex(LinkedList<V> tour, int curr) {
+        V returnVertex;
         if (curr == tour.size() - 1 || curr >= tour.size()) {
             returnVertex = tour.get(0);
         } else {
@@ -215,7 +219,7 @@ public class TwoOpt implements GraphAlgorithm<Vertex<UndirectedEdge>, Undirected
      * vertex.  This is particularly useful for the 2opt algorithm as we are forced
      * to reverse the list when a shorter path is found.
      */
-    private void reverse(LinkedList<Vertex> tour, int start, int end) {
+    private void reverse(LinkedList<V> tour, int start, int end) {
         int length = end - start;
 
         if (length < 0) {
@@ -225,7 +229,7 @@ public class TwoOpt implements GraphAlgorithm<Vertex<UndirectedEdge>, Undirected
         length = length / 2 + 1; //Only need to compute it in half
 
         for (int k = 0; k < length; k++) {
-            Vertex tempVertex = tour.get(start);
+            V tempVertex = tour.get(start);
             tour.set(start, tour.get(end)); //Swap the two cities
 
             tour.set(end, tempVertex);
@@ -239,7 +243,7 @@ public class TwoOpt implements GraphAlgorithm<Vertex<UndirectedEdge>, Undirected
 
     }
 
-    public Controller getController() {
+    public Controller<V,E> getController() {
         return controller;
     }
 
