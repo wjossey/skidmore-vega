@@ -16,16 +16,16 @@ import java.util.ArrayList;
  * an algorithm manipulates the graph.
  * @author w_jossey
  */
-public class Controller<V extends Vertex<E>, E extends Edge> {
+public class Controller<V extends Vertex<V,E>, E extends Edge<V,E>> {
 
     int counter = 0;
     int imageCounter = 0;
     ArrayList<AlgorithmStep> stepTracker = new ArrayList<AlgorithmStep>();
     PseudoCode pseudoCode;
     Graph<V, E> g;
-    GraphAlgorithm<V, E> a;
+    GraphAlgorithm<? extends Graph<V,E>, V, E> a;
 
-    public Controller(Graph<V, E> g, PseudoCode pseudoCode, GraphAlgorithm<V, E> a) {
+    public <G extends Graph<V,E>> Controller(G g, PseudoCode pseudoCode, GraphAlgorithm<G,V,E> a) {
         this.g = g;
         this.a = a;
         this.pseudoCode = pseudoCode;

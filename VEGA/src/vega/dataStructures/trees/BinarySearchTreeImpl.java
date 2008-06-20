@@ -1,14 +1,12 @@
 package vega.dataStructures.trees;
 
-import interfaces.dataStructures.tree.BinarySearchTree;
-import interfaces.graph.edge.Edge;
-import interfaces.graph.vertex.tree.BinaryTreeNode;
+import interfaces.graph.edge.UndirectedEdge;
+import vega.graph.vertex.tree.BinaryTreeNode;
 
 import java.util.Iterator;
 
 import vega.exceptions.InvalidTreeException;
-import vega.graph.TreeImpl;
-import vega.graph.vertex.tree.BinaryTreeNodeImpl;
+import vega.graph.AbstractTree;
 
 /**
  * Binary search tree class.  Moved the InvaliTreeException subclass to it's own class in the
@@ -17,15 +15,12 @@ import vega.graph.vertex.tree.BinaryTreeNodeImpl;
  * @author Weston Jossey-  April 21, 2008
  *  
  */
-public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> extends TreeImpl<C,E> implements BinarySearchTree<C, E>{
-
-    public static boolean RED = true;
-    public static boolean BLACK = false;
+public abstract class BinarySearchTreeImpl<C extends Comparable<C>> extends AbstractTree<C, BinaryTreeNode<C>, UndirectedEdge<BinaryTreeNode<C>>> implements interfaces.dataStructures.tree.BinarySearchTree<C>{
 
     private class BSTIterator implements Iterator<C> {
 
-        private BinaryTreeNode<C,E> curr;
-        private BinaryTreeNode<C,E> prev;
+        private BinaryTreeNode<C> curr;
+        private BinaryTreeNode<C> prev;
 
         public BSTIterator() {
             curr = minimum(root);
@@ -72,28 +67,23 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
         return new BSTIterator();
     } // end getIterator()
 
-    protected BinaryTreeNode<C,E> root;
+    protected BinaryTreeNode<C> root;
     protected int numElements;
-
-    public BinarySearchTreeImpl() {
-        root = null;
-        numElements = 0;
-    }
 
     public boolean isEmpty() {
         return root == null;
     }
 
-    public void insert(C arg) {
-        BinaryTreeNodeImpl<C,E> newNode = new BinaryTreeNodeImpl<C,E>(arg);
-        insertNode(newNode);
-    } // end insert();
-
-
-	protected void insertNode(BinaryTreeNode<C,E> newNode) {
+	public abstract void insert(C arg);
+	
+	/**
+	 * 
+	 * @param newNode
+	 */
+	protected void insertNode(BinaryTreeNode<C> newNode) {
         C k = newNode.getData();
-        BinaryTreeNode<C,E> prev = null;
-        BinaryTreeNode<C,E> curr = root;
+        BinaryTreeNode<C> prev = null;
+        BinaryTreeNode<C> curr = root;
         while (curr != null) {
             prev = curr;
             if (k.compareTo(curr.getData()) < 0) {
@@ -120,18 +110,20 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
     } // end insertNode();
 
 
-    public String inOrderWalk(BinaryTreeNode<C,E> curr) {
+    public String inOrderWalk(BinaryTreeNode<C> curr) {
         String result = "";
         if (curr != null) {
-            result = inOrderWalk(curr.getLeftNode());
-            result += " " + curr.getData() + " color = " + curr.getColor();
-            result += inOrderWalk(curr.getRightNode());
+        	BinaryTreeNode<C> leftNode = curr.getLeftNode();
+        	BinaryTreeNode<C> rightNode = curr.getRightNode();
+            result = inOrderWalk(leftNode);
+            result += " " + curr.getData();
+            result += inOrderWalk(rightNode);
         }
         return result;
     }
 
-    private BinaryTreeNode<C,E> minimum(BinaryTreeNode<C,E> subtree) {
-        BinaryTreeNode<C,E> minimum = null;
+	private BinaryTreeNode<C> minimum(BinaryTreeNode<C> subtree) {
+		BinaryTreeNode<C> minimum = null;
         while (subtree != null) {
             minimum = subtree;
             subtree = subtree.getLeftNode();
@@ -144,11 +136,12 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
      * @param subtree
      * @return
      */
-    private BinaryTreeNode<C,E> successor(BinaryTreeNode<C,E> subtree) {
+	private BinaryTreeNode<C> successor(BinaryTreeNode<C> subtree) {
         if (subtree.getRightNode() != null) {
-            return minimum(subtree.getRightNode());
+        	BinaryTreeNode<C> rightNode = subtree.getRightNode();
+            return minimum(rightNode);
         }
-        BinaryTreeNode<C,E> prev = subtree.getParentNode();
+        BinaryTreeNode<C> prev = subtree.getParentNode();
         while (prev != null && subtree == prev.getRightNode()) {
             subtree = prev;
             prev = subtree.getParentNode();
@@ -157,22 +150,24 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
         return prev;
     }
 
-	protected BinaryTreeNode<C,E> search(BinaryTreeNode<C,E> subtree, C key) {
+	protected BinaryTreeNode<C> search(BinaryTreeNode<C> subtree, C key) {
         if (subtree == null || key.compareTo(subtree.getData()) == 0) {
             return subtree;
         }
         if (key.compareTo(subtree.getData()) < 0) {
-            return search(subtree.getLeftNode(), key);
+        	BinaryTreeNode<C> leftNode = subtree.getLeftNode();
+            return search(leftNode, key);
         } else {
-            return search(subtree.getRightNode(), key);
+        	BinaryTreeNode<C> rightNode = subtree.getRightNode();
+            return search(rightNode, key);
         } // end if
 
     } // end search()
 
 
-	public Object search(C arg) {
+	public C search(C arg) {
         C key = arg;
-        BinaryTreeNode<C,E> node = search(root, key);
+        BinaryTreeNode<C> node = search(root, key);
         if (node != null) {
             return node.getData();
         } else {
@@ -182,7 +177,7 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
 
 
 	public C searchLoop(C key) {
-        BinaryTreeNode<C,E> subtree = root;
+		BinaryTreeNode<C> subtree = root;
         boolean found = false;
         while (subtree != null && !found) {
             if (key.compareTo(subtree.getData()) == 0) {
@@ -208,9 +203,9 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
      * @return
      */
 	public C successor(C key) {
-        BinaryTreeNode<C,E> node = search(root, key);
+		BinaryTreeNode<C> node = search(root, key);
         if (node != null) {
-            BinaryTreeNode<C,E> succ = successor(node);
+        	BinaryTreeNode<C> succ = successor(node);
             if (succ != null) {
                 return succ.getData();
             } else {
@@ -230,7 +225,7 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
 	public boolean delete(C arg) {
         boolean result = false;
         C key = arg;
-        BinaryTreeNode<C,E> node = search(root, key);
+        BinaryTreeNode<C> node = search(root, key);
         if (node != null) {
             delete(node);
             numElements--;
@@ -250,7 +245,7 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
      * @return returns the parent of the actual node that was 
      * spliced out of the tree. 
      */
-    private BinaryTreeNode<C,E> delete(BinaryTreeNode<C,E> node) {
+	private BinaryTreeNode<C> delete(BinaryTreeNode<C> node) {
         /*
          * 3 cases
          * 
@@ -259,7 +254,7 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
          * 1 child)
          *  
          */
-        BinaryTreeNode<C,E> nodeToDelete;
+		BinaryTreeNode<C> nodeToDelete;
 
         if (node.getLeftNode() == null || node.getRightNode() == null) {
             nodeToDelete = node;
@@ -268,7 +263,7 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
             node.setData(nodeToDelete.getData());
         } // end if
 
-        BinaryTreeNode<C,E> nodeToUpdate;
+        BinaryTreeNode<C> nodeToUpdate;
 
         if (nodeToDelete.getLeftNode() != null) {
             nodeToUpdate = nodeToDelete.getLeftNode();
@@ -280,7 +275,7 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
             nodeToUpdate.setParentNode(nodeToDelete.getParentNode());
         } // end if 
 
-        BinaryTreeNode<C,E> par = null;
+        BinaryTreeNode<C> par = null;
         if (nodeToDelete.getParentNode() == null) {
             root = nodeToUpdate;
         } else {
@@ -297,7 +292,7 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
     } // end delete(TreeNode)
 
 
-    protected BinaryTreeNode<C,E> getNodeToDelete(BinaryTreeNode<C,E> node) {
+	protected BinaryTreeNode<C> getNodeToDelete(BinaryTreeNode<C> node) {
         /*
          * 3 cases
          * 
@@ -306,7 +301,7 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
          * 1 child)
          *  
          */
-        BinaryTreeNode<C,E> nodeToDelete;
+		BinaryTreeNode<C> nodeToDelete;
 
         //Debug.println("getNodeToDelete(): node passed in is " + node);
         //Debug.println("getNodeToDelete(): node's parent is " + node.getParentNode());
@@ -324,8 +319,8 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
     } // end getNodeToDelete();
 
 
-    protected BinaryTreeNode<C,E> spliceOutNode(BinaryTreeNode<C,E> nodeToDelete) {
-        BinaryTreeNode<C,E> nodeToUpdate;
+	protected BinaryTreeNode<C> spliceOutNode(BinaryTreeNode<C> nodeToDelete) {
+		BinaryTreeNode<C> nodeToUpdate;
 
         if (nodeToDelete.getLeftNode() != null) {
             nodeToUpdate = nodeToDelete.getLeftNode();
@@ -337,7 +332,7 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
             nodeToUpdate.setParentNode(nodeToDelete.getParentNode());
         } // end if 
 
-        BinaryTreeNode<C,E> par = null;
+        BinaryTreeNode<C> par = null;
         if (nodeToDelete.getParentNode() == null) {
             root = nodeToUpdate;
         } else {
@@ -359,35 +354,26 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
      * @param curr Root of the tree (or sub tree) to walk through.
      * @return Returns graphviz formatted node information.
      */
-    public String preOrderGraphViz(BinaryTreeNode<C,E> curr) {
+    public String preOrderGraphViz(BinaryTreeNode<C> curr) {
         String result = "";
         if (curr != null) {
-            result += "node[color = " + (curr.isColor(RED) ? "red" : "black") + "]\n";
-            result += curr.graphVizName() + "\n";
 
             //Try to go to the left
             if (curr.getLeftNode() != null) {
-                result += curr.graphVizName() + " -> ";
-                result += curr.getLeftNode().graphVizName() + "\n";
-                result += preOrderGraphViz(curr.getLeftNode());
+            	BinaryTreeNode<C> leftNode = curr.getLeftNode();
+                result += preOrderGraphViz(leftNode);
             } else {
                 //No node to the left
-                result += "node[color = black]\n";
-                result += curr.graphVizName() + " -> \" null" + numNull + "\"\n";
-                numNull++;
+
             } // end if
 
             //Try to go to the right
             if (curr.getRightNode() != null) {
-                // result += "node[color = " + (curr.isColor(RED)? "red":"black") + "]\n";
-                result += curr.graphVizName() + " -> ";
-                result += curr.getRightNode().graphVizName() + "\n";
-                result += preOrderGraphViz(curr.getRightNode());
+            	BinaryTreeNode<C> rightNode = curr.getRightNode();
+                result += preOrderGraphViz(rightNode);
             } else {
                 //No node to the right
-                result += "node[color = black]\n";
-                result += curr.graphVizName() + " -> \"null" + numNull + "\"\n";
-                numNull++;
+            	
             } // end if
 
         } // end if
@@ -397,9 +383,8 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
 
 
     //Left, right, root
-    public String postOrderGraphViz(BinaryTreeNode<C,E> curr) {
+    public String postOrderGraphViz(BinaryTreeNode<C> curr) {
         String result = "";
-        String blackString = "black";
 
         if (curr != null) {
 
@@ -407,47 +392,34 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
              * First output the color and name of the current node to make
              * sure the color is set correctly in graphViz.
              */
-            result += "node[style=filled, fontcolor=White, color = " + (curr.isColor(RED) ? "red" : blackString) + "]\n";
-            result += curr.graphVizName() + "\n";
 
             /*
-             * Now check the left, outputing the whole left subtree before 
-             * outputing the edge between the current node and its left child 
+             * Now check the left, output the whole left subtree before 
+             * outputting the edge between the current node and its left child 
              */
             if (curr.getLeftNode() != null) {
-                // result += "node[color = " + (curr.isColor(RED)? "red":"black") + "]\n";
-                result += postOrderGraphViz(curr.getLeftNode());
-
-                result += curr.graphVizName() + " -> ";
-                result += curr.getLeftNode().graphVizName() + "\n";
+            	BinaryTreeNode<C> leftNode = curr.getLeftNode();
+                result += postOrderGraphViz(leftNode);
 
             } else {
-                result += "node[color = " + blackString + ", style=filled]\n";
-                result += curr.graphVizName() + " -> \" null" + numNull + "\"\n";
-                numNull++;
+                
             } // end if
 
             /*
              * Now output the right subtree
              */
             if (curr.getRightNode() != null) {
-                // result += "node[color = " + (curr.isColor(RED)? "red":"black") + "]\n";
-                result += postOrderGraphViz(curr.getRightNode());
-                result += curr.graphVizName() + " -> ";
-                result += curr.getRightNode().graphVizName() + "\n";
+            	BinaryTreeNode<C> rightNode = curr.getRightNode();
+                result += postOrderGraphViz(rightNode);
 
             } else {
-                result += "node[color = " + blackString + ", style=filled]\n";
-                result += curr.graphVizName() + " -> \"null" + numNull + "\"\n";
-                numNull++;
+            	
             } // end if
 
         } // end if
 
         return result;
     } // end preOrderGraphViz()
-
-    private static int numNull = 0;
 
     /**
      * create a graphViz() representation of the tree
@@ -456,7 +428,6 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
      */
     public String toGraphViz(String title) {
         String result = "digraph " + title + "  {\n";
-        numNull = 0;
         result += postOrderGraphViz(root);
         result += "}";
         return result;
@@ -486,11 +457,12 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
         return numElements;
     }
 
-    public BinaryTreeNode<C,E> getRoot(){
+    @SuppressWarnings("unchecked")
+	public BinaryTreeNode<C> getRoot(){
         return root;
     }
     
-    public void setRoot(BinaryTreeNode<C,E> root){
+    public void setRoot(BinaryTreeNode<C> root){
         this.root = root;
     }
 
@@ -498,9 +470,9 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
      * Generic rotate takes the parent and child
      * @param 
      */
-    protected void rotate(BinaryTreeNode<C,E> parent, BinaryTreeNode<C,E> child) {
-        BinaryTreeNode<C,E> transferredChild = null;
-        BinaryTreeNode<C,E> grandParent = parent.getParentNode();
+    protected void rotate(BinaryTreeNode<C> parent, BinaryTreeNode<C> child) {
+    	BinaryTreeNode<C> transferredChild = null;
+    	BinaryTreeNode<C> grandParent = parent.getParentNode();
         boolean parentWasLeftChild = parent.isLeftChild();
 
         //Debug.println("rotate(): called with parent = " + parent + " child = " + child);
@@ -557,10 +529,10 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
     /*
      * CLRS calls this Left-Rotate
      */
-    protected void rotateWithRightChild(BinaryTreeNode<C,E> problemNode) {
-        BinaryTreeNode<C,E> oldRight = problemNode.getRightNode();
-        BinaryTreeNode<C,E> newRight = oldRight.getLeftNode();
-        BinaryTreeNode<C,E> parentOfProblem = problemNode.getParentNode();
+    protected void rotateWithRightChild(BinaryTreeNode<C> problemNode) {
+    	BinaryTreeNode<C> oldRight = problemNode.getRightNode();
+    	BinaryTreeNode<C> newRight = oldRight.getLeftNode();
+    	BinaryTreeNode<C> parentOfProblem = problemNode.getParentNode();
 
 
         oldRight.setLeftNode(problemNode);
@@ -594,10 +566,10 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
      * CLRS calls this method "RightRotate". *Note from Tom*
      * @param problemNode
      */
-    protected void rotateWithLeftChild(BinaryTreeNode<C,E> problemNode) {
-        BinaryTreeNode<C,E> oldLeft = problemNode.getLeftNode();
-        BinaryTreeNode<C,E> newLeft = oldLeft.getRightNode();
-        BinaryTreeNode<C,E> parentOfProblem = problemNode.getParentNode();
+    protected void rotateWithLeftChild(BinaryTreeNode<C> problemNode) {
+    	BinaryTreeNode<C> oldLeft = problemNode.getLeftNode();
+    	BinaryTreeNode<C> newLeft = oldLeft.getRightNode();
+    	BinaryTreeNode<C> parentOfProblem = problemNode.getParentNode();
 
 
         oldLeft.setRightNode(problemNode);
@@ -612,7 +584,6 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
 
         if (parentOfProblem == null) {
             root = oldLeft;
-            System.out.println("rotateWithLeft(): root set to " + oldLeft.graphVizName());
         } else {
             if (parentOfProblem.getLeftNode() == problemNode) {
                 parentOfProblem.setLeftNode(oldLeft);
@@ -632,7 +603,7 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
      * @param parent Node to update height on
      * @return Returns true if balanced
      */
-    protected boolean updateHeight(BinaryTreeNode<C,E> parent) {
+    protected boolean updateHeight(BinaryTreeNode<C> parent) {
         int heightLeft = -1;
         int heightRight = -1;
         boolean balanced = false;
@@ -666,7 +637,8 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
      */
     public boolean validateTree() throws InvalidTreeException {
         boolean result = true;
-        result = validateTree(root);
+        BinaryTreeNode<C> tempRoot = root;
+        result = validateTree(tempRoot);
         return result;
     } // end validateTree()
 
@@ -677,13 +649,14 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
      * @return Returns true if a valid binary tree, false if invalid.
      * @throws RedBlackTree.BinarySearchTree.InvalidTreeException
      */
-    public boolean validateTree(BinaryTreeNode<C,E> sub) throws InvalidTreeException {
+    public boolean validateTree(BinaryTreeNode<C> sub) throws InvalidTreeException {
         boolean valid = true;
         if (sub == null) {
             return true;
         } else {
             if (sub.getLeftNode() != null) {
-                valid = validateTree(sub.getLeftNode());
+            	BinaryTreeNode<C> leftNode = sub.getLeftNode();
+                valid = validateTree(leftNode);
 
                 if (sub.getLeftNode().getParentNode() != sub) {
                     valid = false;
@@ -695,7 +668,8 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
             } // end if 
 
             if (sub.getRightNode() != null) {
-                valid = validateTree(sub.getRightNode());
+            	BinaryTreeNode<C> rightNode = sub.getRightNode();
+                valid = validateTree(rightNode);
 
                 if (sub.getRightNode().getParentNode() != sub) {
                     valid = false;
@@ -710,6 +684,7 @@ public class BinarySearchTreeImpl<C extends Comparable<C>, E extends Edge> exten
 
         return valid;
     } // end validateTree()
+    
 }
 	
 	

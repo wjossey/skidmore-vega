@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.edge.Edge;
 
-public class EdgeImpl implements Edge{
+public abstract class AbstractEdge<V extends Vertex<? extends Edge>> implements Edge{
 
     /*Variable declaration*/
-    protected Vertex<? extends Edge> a;
-    protected Vertex<? extends Edge> b;
-    private boolean directed = false;
+	
     private double weight;
     private boolean active = false;
     private boolean inUse = false;
@@ -19,49 +17,15 @@ public class EdgeImpl implements Edge{
     /*End variable declaration*/
 
     /**
-     * Constructor method for the Edge class.  Takes in two vertices and their edge weight.
-     * @param a Vertex a
-     * @param b Vertex b
-     * @param weight Edge weight
-     */
-    public <E extends Edge> EdgeImpl(Vertex<E> a, Vertex<E> b, double weight) {
-
-        //Arrange cities relative to their UID so we always know which city to expect first
-        //The city with the greater UID will always be City A.
-        
-    	if (a.getUID() > b.getUID()) {
-            this.a = a;
-            this.b = b;
-        } else {
-            this.a = b;
-            this.b = a;
-        }
-        this.weight = weight;
-    }
-
-    /**
-     * Edge constructor method without edge weight.
-     * @param a Vertex a
-     * @param b Vertex b
-     */
-    public EdgeImpl(Vertex<? extends Edge> a, Vertex<? extends Edge> b) {
-        //Arrange cities relative to their UID so we always know which city to expect first
-        //The city with the greater UID will always be City A.
-        if (a.getUID() > b.getUID()) {
-            this.a = a;
-            this.b = b;
-        } else {
-            this.a = b;
-            this.b = a;
-        }
-    }
-
-    /**
      * Returns the edge weight
      * @return
      */
     public double getWeight() {
         return weight;
+    }
+    
+    public void setWeight(double d){
+    	weight = d;
     }
 
     /**
@@ -170,7 +134,7 @@ public class EdgeImpl implements Edge{
      *
      * @param edgeList
      */
-    public static void sortEdgesByDistance(Edge[] edgeList) {
+    public static <V extends Vertex<E>, E extends Edge> void sortEdgesByDistance(E[] edgeList) {
         quicksort(edgeList, 0, edgeList.length - 1);
     }
 
@@ -180,7 +144,7 @@ public class EdgeImpl implements Edge{
      * @param left
      * @param right
      */
-    private static void quicksort(Edge[] edgeList, int left, int right) {
+    private static <V extends Vertex<E>, E extends Edge> void quicksort(E[] edgeList, int left, int right) {
         if (right <= left) {
             return;
         //Else
@@ -191,7 +155,7 @@ public class EdgeImpl implements Edge{
 
     }
 
-    private static int partition(Edge[] edgeList, int left, int right) {
+    private static <V extends Vertex<E>, E extends Edge> int partition(E[] edgeList, int left, int right) {
         int i = left - 1;
         int j = right;
 
@@ -228,9 +192,9 @@ public class EdgeImpl implements Edge{
      * @param i
      * @param j
      */
-    private static void swap(Edge[] edgeList, int i, int j) {
+    private static <V extends Vertex<E>, E extends Edge> void swap(E[] edgeList, int i, int j) {
         //swaps++;  //We can keep track of our swaps for proof purposes.
-        Edge temp = edgeList[i];
+        E temp = edgeList[i];
         edgeList[i] = edgeList[j];
         edgeList[j] = temp;
     }
@@ -240,7 +204,7 @@ public class EdgeImpl implements Edge{
      * @param edgeList
      * @return
      */
-    private static <E extends Edge> String edgeListToString(ArrayList<E> edgeList) {
+    private static <V extends Vertex<E>, E extends Edge> String edgeListToString(ArrayList<E> edgeList) {
         String returnString = "";
         for (int i = 0; i < edgeList.size(); i++) {
             returnString += edgeList.get(i).toString() + "\n";
@@ -255,7 +219,7 @@ public class EdgeImpl implements Edge{
      * @param index
      * @return
      */
-    public static <E extends Edge> String edgeListToString(ArrayList<E> edgeList, int index) {
+    public static <V extends Vertex<E>, E extends Edge> String edgeListToString(ArrayList<E> edgeList, int index) {
         String returnString = "";
         for (int i = index; i < edgeList.size(); i++) {
             returnString += edgeList.get(i).toString() + "\n";
@@ -269,7 +233,7 @@ public class EdgeImpl implements Edge{
      * @param vertexList
      * @return
      */
-    public static <E extends Edge> String allEdgesToString(ArrayList<Vertex<E>> vertexList) {
+    public static <V extends Vertex<E>, E extends Edge> String allEdgesToString(ArrayList<V> vertexList) {
         String returnString = "";
         for (int i = 0; i < vertexList.size(); i++) {
             ArrayList<E> edgeList = vertexList.get(i).getEdges();
@@ -289,7 +253,7 @@ public class EdgeImpl implements Edge{
         String returnString = "";
         for (int i = 0; i < vertexList.size(); i++) {
             for (int j = i + 1; j < vertexList.size(); j++) {
-                Edge e = vertexList.get(i).getEdge(vertexList.get(j));
+                E e = vertexList.get(i).getEdge(vertexList.get(j));
                 if (e != null) {
                     returnString += e.toString() + "\n";
                 }
@@ -304,23 +268,5 @@ public class EdgeImpl implements Edge{
      * a -- b [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled];
      * @return the DOT formatted string.
      */
-    @Override
-    public String toString() {
-        String returnString = "";
-        returnString += a.getName(); //a -- b [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled];
-
-        if (directed) {
-            returnString += " -> ";
-        } else {
-            returnString += " -- ";
-        }
-
-        returnString += b.getName() + " ";
-        returnString += "[ " + getStyle() + getFormattedWeight() +
-                getColor() + "];";
-
-
-        return returnString;
-    }
 
 }

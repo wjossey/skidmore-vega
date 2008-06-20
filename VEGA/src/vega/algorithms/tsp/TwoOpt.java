@@ -6,15 +6,17 @@ import vega.pseudoCode.PseudoCode;
 import vega.helperClasses.*;
 import interfaces.algorithms.GraphAlgorithm;
 import interfaces.graph.Graph;
+import interfaces.graph.Tree;
 import interfaces.graph.edge.UndirectedEdge;
 import interfaces.graph.vertex.Vertex;
+import interfaces.graph.vertex.tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class TwoOpt<V extends Vertex<E>, E extends UndirectedEdge> implements GraphAlgorithm<V, E> {
+public class TwoOpt<C extends Comparable<C>, V extends TreeNode<C,V,E>, E extends UndirectedEdge<V,E>> implements GraphAlgorithm<Tree<C,V,E>,V, E> {
 
-    private Graph<V,E> g;
+    private Tree<C,V,E> g;
     private PseudoCode pseudoCode;
     Controller<V, E> controller;
     int imageCounter = 0;
@@ -24,7 +26,7 @@ public class TwoOpt<V extends Vertex<E>, E extends UndirectedEdge> implements Gr
     private boolean running = false;
     private Procedure twoOptMove;
 
-    public void run(Graph<V, E> g) {
+    public void run(Tree<C,V,E> g) {
         // TODO Auto-generated method stub
         running = true;
         instanceID = instanceCounter++;

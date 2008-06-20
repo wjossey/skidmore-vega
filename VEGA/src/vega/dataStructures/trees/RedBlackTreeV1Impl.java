@@ -1,7 +1,10 @@
 package vega.dataStructures.trees;
 
+import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.tree.BinaryTreeNode;
-import vega.graph.vertex.tree.BinaryTreeNodeImpl;
+import interfaces.graph.vertex.tree.RedBlackTreeNode;
+import vega.exceptions.InvalidTreeException;
+import vega.graph.vertex.tree.RedBlackTreeNode;
 import interfaces.dataStructures.tree.BinarySearchTree;
 import interfaces.dataStructures.tree.RedBlackTreeV1;
 
@@ -12,28 +15,30 @@ import interfaces.dataStructures.tree.RedBlackTreeV1;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class RedBlackTreeV1Impl extends BinarySearchTreeImpl implements RedBlackTreeV1, BinarySearchTree<Object> {
-
+public class RedBlackTreeV1Impl <C extends Comparable<C>, V extends RedBlackTreeNode<C,V,E>, E extends Edge> extends BinarySearchTreeImpl<C,V,E> implements BinarySearchTree<C,V,E>, RedBlackTreeV1<C,V,E>{
+	
+	private boolean RED = RedBlackTreeNode.RED;
+	private boolean BLACK = RedBlackTreeNode.BLACK;
+	
     public RedBlackTreeV1Impl() {
         super();
         super.root = null;
     }
 
-    @Override
-    public void insert(Object x) {
-        BinaryTreeNodeImpl newNode = new BinaryTreeNodeImpl((Comparable<?>) x, RED);
-        insertNode(newNode);
-        fixupInsert(newNode);
-    } // end insert();
-
-
     @SuppressWarnings("unchecked")
-	public BinaryTreeNode search(BinaryTreeNode subTree, Comparable c) {
+	public void insert(C x) {
+        RedBlackTreeNode<C,V,E> newNode = new RedBlackTreeNode<C,V,E>(x, RedBlackTreeNode.RED);
+        insertNode((V) newNode);
+        fixupInsert((V) newNode);
+    } // end insert();
+    
+    
+	public V search(V subTree, C c) {
         return super.search(subTree, c);
     }
 
     @Override
-    public boolean delete(Object x) {
+    public boolean delete(C x) {
 
         boolean result = false;
 
@@ -43,12 +48,12 @@ public class RedBlackTreeV1Impl extends BinarySearchTreeImpl implements RedBlack
             System.out.println("Cannot validate the tree.");
         } // end try-catch
 
-        BinaryTreeNode node = search(getRoot(), (Comparable<?>) x);
+        V node = search(getRoot(), x);
         if (node != null) {
 
-            BinaryTreeNode nodeToSplice = super.getNodeToDelete(node);
-            BinaryTreeNode parent = nodeToSplice.getParentNode();
-            BinaryTreeNode child = null;
+            V nodeToSplice = super.getNodeToDelete(node);
+            V parent = nodeToSplice.getParentNode();
+            V child = null;
 
             boolean leftChild = nodeToSplice.isLeftChild();
 
@@ -92,7 +97,7 @@ public class RedBlackTreeV1Impl extends BinarySearchTreeImpl implements RedBlack
     } // end delete()
 
 
-    private boolean isColor(BinaryTreeNode node, boolean color) {
+    private boolean isColor(V node, boolean color) {
         boolean result = false;
         if (node == null) {
             if (color == BLACK) {
@@ -107,7 +112,7 @@ public class RedBlackTreeV1Impl extends BinarySearchTreeImpl implements RedBlack
     } // end isColor()
 
 
-    private void fixupDelete(BinaryTreeNode parent, BinaryTreeNode child, boolean leftChild) {
+    private void fixupDelete(V parent, V child, boolean leftChild) {
 
         while (parent != null && (child == null || child.isColor(BLACK))) {
 
@@ -115,7 +120,7 @@ public class RedBlackTreeV1Impl extends BinarySearchTreeImpl implements RedBlack
                 /*
                  * problem node is a left child 
                  */
-                BinaryTreeNode sibling = parent.getRightNode();
+                V sibling = parent.getRightNode();
                 if (isColor(sibling, RED)) {
                     /*
                      * Case 1: child's sibling is red 
@@ -171,7 +176,7 @@ public class RedBlackTreeV1Impl extends BinarySearchTreeImpl implements RedBlack
                 /*
                  * problem node is a right child 
                  */
-                BinaryTreeNode sibling = parent.getLeftNode();
+                V sibling = parent.getLeftNode();
                 //Debug.println("Right child: parent is " + parent + " sibling is" + sibling);
                 if (isColor(sibling, RED)) {
                     /*
@@ -250,11 +255,10 @@ public class RedBlackTreeV1Impl extends BinarySearchTreeImpl implements RedBlack
     } // end fixupDelete()
 
 
-    @SuppressWarnings("unchecked")
-	protected void insertNode(BinaryTreeNode newNode) {
-        Comparable k = newNode.getData();
-        BinaryTreeNode prev = null;
-        BinaryTreeNode curr = getRoot();
+	protected void insertNode(V newNode) {
+        C k = newNode.getData();
+        V prev = null;
+        V curr = getRoot();
         while (curr != null) {
             prev = curr;
             if (k.compareTo(curr.getData()) < 0) {
@@ -281,13 +285,13 @@ public class RedBlackTreeV1Impl extends BinarySearchTreeImpl implements RedBlack
     } // end insertNode();
 
 
-    private void fixupInsert(BinaryTreeNode node) {
+    private void fixupInsert(V node) {
 
         while (node.getParentNode() != null && node.getParentNode().isColor(RED)) {
 
             if (node.getParentNode().isLeftChild()) {
 
-                BinaryTreeNode uncle = node.getParentNode().getParentNode().getRightNode();
+                V uncle = node.getParentNode().getParentNode().getRightNode();
                 if (uncle.isColor(RED)) {
                     /*
                      * Case 1: z's uncle is red
@@ -320,7 +324,7 @@ public class RedBlackTreeV1Impl extends BinarySearchTreeImpl implements RedBlack
                 } // end if 
 
             } else {
-                BinaryTreeNode uncle = node.getParentNode().getParentNode().getLeftNode();
+                V uncle = node.getParentNode().getParentNode().getLeftNode();
                 if (uncle != null && uncle.isColor(RED)) {
                     //Debug.println("fixup insert(): right side case 1");
                     node.getParentNode().setColor(BLACK);

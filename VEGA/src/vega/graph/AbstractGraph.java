@@ -1,8 +1,8 @@
 package vega.graph;
 
-import vega.graph.edge.EdgeImpl;
-import vega.graph.vertex.*;
+import vega.graph.edge.AbstractEdge;
 import vega.helperClasses.VertexHelper;
+import vega.graph.edge.UndirectedEdge;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.Graph;
@@ -23,7 +23,7 @@ import java.util.Random;
  * or edges)."
  * @author w_jossey
  */
-public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, E>{
+public class AbstractGraph<V extends Vertex<V,E>, E extends Edge> implements Graph<V, E>{
 
     protected int size = 0;
     protected int positionInArray = 0;
@@ -38,11 +38,11 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
      * @param vertexSize the number of vertices in the graph
      * @param digraph a directed graph if true, undirected if false
      */
-    public GraphImpl(int vertexSize, boolean isDigraph) {
+    public AbstractGraph(int vertexSize, boolean isDigraph) {
         this.size = vertexSize;
         this.digraph = isDigraph;
         vertexList = new ArrayList<V>(vertexSize);
-        generateVertices();
+        //generateVertices();
         if (!digraph) {
             /*We don't have a digraph, so we go ahead and compute the edge weights between
              * each vertex.  This is going to create a complete graph of size K.  
@@ -56,7 +56,7 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
         }
     }
     
-    public GraphImpl(V[] vertexArray, E[] edgeArray){
+    public AbstractGraph(V[] vertexArray, E[] edgeArray){
         vertexList = new ArrayList<V>(vertexArray.length);
         edgeList = new ArrayList<E>(edgeArray.length);
         
@@ -68,7 +68,7 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
         }
     }
     
-    public GraphImpl(ArrayList<V> vertexList, ArrayList<E> edgeList){
+    public AbstractGraph(ArrayList<V> vertexList, ArrayList<E> edgeList){
         this.vertexList = vertexList;
         this.edgeList = edgeList;
     }
@@ -82,14 +82,14 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
      * @param edgeSize the number of edges in the graph
      * @param digraph a directed graph if true, undirected if false
      */
-    public GraphImpl(int vertexSize, int edgeSize, boolean digraph) {
+    public AbstractGraph(int vertexSize, int edgeSize, boolean digraph) {
     
     }
     
     /**
      * Empty Constructor
      */
-    public GraphImpl(){
+    public AbstractGraph(){
         
     }
 
@@ -122,7 +122,7 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
      */
 
     /* (non-Javadoc)
-	 * @see vega.graph.Graph#isDigraph()
+	 * @see vega.graph.Graph#i 
 	 */
     public boolean isDigraph() {
         return digraph;
@@ -133,14 +133,14 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
      * coordinates are then used to compute the distances between the vertices and create
      * edges that satisfy the triangle inequality
      */
-	private void generateVertices() {
+	/*private void generateVertices() {
         for (int i = 0; i < size; i++) {
             int randX = (int) (Math.random() * (size * 10));
             int randY = (int) (Math.random() * (size * 10));
-            V tempVertex = (V) new VertexImpl<E>(randX, randY, this);
-            addVertex(tempVertex);
+            VertexImpl<E> tempVertex = new VertexImpl<E>(randX, randY, this);
+            addVertex((V)tempVertex);
         }
-    }
+    }*/
 
     /**
      * This method merely loops through the vertexArray array that has been already created.
@@ -148,7 +148,8 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
      * vertex.  By guaranteeing that there is always a flow in and out of the vertex, we
      * are guaranteed a strongly connected graph.
      */
-    private void generateEdges() {
+    @SuppressWarnings("unchecked")
+	private void generateEdges() {
         for (int i = 0; i < vertexList.size(); i++) {
             V tempVertex = vertexList.get(i);;
             Random generator = new Random();
@@ -164,8 +165,8 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
             } while (fromVertex != i && toVertex != i);
 
 
-            EdgeImpl toTempVertex = new EdgeImpl(vertexList.get(fromVertex), tempVertex, capacity1);
-            EdgeImpl fromTempVertex = new EdgeImpl(tempVertex, vertexList.get(toVertex), capacity2);
+            UndirectedEdge toTempVertex = new UndirectedEdge(vertexList.get(fromVertex), tempVertex, capacity1);
+            UndirectedEdge fromTempVertex = new UndirectedEdge(tempVertex, vertexList.get(toVertex), capacity2);
 
             tempVertex.addEdge((E) toTempVertex);
             tempVertex.addEdge((E) fromTempVertex);
@@ -223,7 +224,7 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
                 double dist = Math.sqrt(distanceSquared);
 
                 /*Create the edge and add it to both vertices*/
-                EdgeImpl e = new EdgeImpl(vertexList.get(i), vertexList.get(j), dist);
+                UndirectedEdge e = new UndirectedEdge(vertexList.get(i), vertexList.get(j), dist);
                 vertexList.get(i).addEdge((E) e);
                 vertexList.get(j).addEdge((E) e);
                 edgeList.add((E) e);
@@ -263,7 +264,7 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
     /**
      * Same as the method above except it gives you the edges instead of the vertices
      **/
-    public double computeDistanceOfTour(EdgeImpl[] edges) {
+    public double computeDistanceOfTour(E[] edges) {
         double distance = 0;
         for (int i = 0; i < edges.length; i++) {
             distance += edges[i].getWeight();
@@ -300,7 +301,7 @@ public class GraphImpl<V extends Vertex<E>, E extends Edge> implements Graph<V, 
         }
 
         returnString += VertexHelper.vertexListToString(vertexList) + "\n";
-        returnString += EdgeImpl.allEdgesWithoutRepeats(vertexList) + "\n";
+        returnString += AbstractEdge.allEdgesWithoutRepeats(vertexList) + "\n";
 
         returnString += "}\n";
 

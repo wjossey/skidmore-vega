@@ -11,10 +11,10 @@ import interfaces.graph.vertex.Vertex;
  *
  * @author w_jossey
  */
-public interface UndirectedEdge extends Edge{
+public interface UndirectedEdge<V extends Vertex<V,UndirectedEdge<V>>> extends Edge{
 	
-	public <V extends Vertex<UndirectedEdge>> V getVertexA();
+	public V getVertexA();
 	
-	public <V extends Vertex<UndirectedEdge>> V getVertexB();
+	public V getVertexB();
 
 }

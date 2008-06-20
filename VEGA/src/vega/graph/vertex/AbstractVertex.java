@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import vega.graph.edge.EdgeImpl;
+import vega.graph.edge.AbstractEdge;
 
 //
 //  Vertex.java
@@ -20,7 +20,7 @@ import vega.graph.edge.EdgeImpl;
 //  Created by Weston Jossey on 7/10/07.
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
-public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Cloneable{
+public class AbstractVertex<V extends Vertex<E>, E extends Edge> implements Vertex<E>, Serializable, Cloneable{
 
     /**
 	 * 
@@ -28,9 +28,8 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
 	private static final long serialVersionUID = 6521996750235441060L;
 
 	/* Variable Declarations Start*/
-	private static int vertexCounter = 0;  //Used to generate the UID of the vertex.
     
-	private GraphvizVertexProperties<E> properties;
+	private GraphvizVertexProperties properties;
 
 	private int uid;  //UID of the vertex.  Equal to a primary key in a database.  Must be unique!
 
@@ -44,13 +43,7 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
  
 	private boolean visited = false;  //Boolean as to whether or not the vertex has been visited
 
-	private E incomingEdge;  //We can use this to track a path if we so desire (Try to remove)
-
-	private E outgoingEdge;  //This is the outgoing edge in a path (Try to remove)
-
-	private Graph<? extends Vertex<E>, E> g;  //This is the parent graph we're working with
-
-	private Vertex<E> previousVertex;
+	private Graph<V,E> g;  //This is the parent graph we're working with
 
 	private boolean active = false; //Is the vertex active (VEGA)
 
@@ -60,52 +53,23 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
 
     /* Variable Declarations End*/
 
-
-    /**
-     * Takes in an x coordinate and a y coordinate and a parent graph.
-     * @param x X Coordinate
-     * @param y Y Coordinate
-     * @param g Parent graph
-     */
-    public VertexImpl(int x, int y, Graph<? extends Vertex<E>, E> g) {
-    	this.g = g;
-        uid = vertexCounter++;
-        setX(x);
-        setY(y);
-        edgeHash = new HashMap<Integer, E>();
-        properties = new VertexPropertiesImpl<E>(this);
-    }
-
-    /**
-     * 
-     * @param g Parent graph
-     */
-    public VertexImpl(Graph<? extends Vertex<E>, E> g) {
-        this.g = g;
-        setX(0);
-        setY(0);
-        if(g.isDigraph()){
-        	/*We have a directed graph*/
-        }else{
-        	/*We have an undirected graph*/
-        }
-        edgeHash = new HashMap<Integer, E>();
-        properties = new VertexPropertiesImpl<E>(this);
-
-    }
-
-    /**
-     * Empty Constructor.
-     */
-    public VertexImpl() {
-    	properties = new VertexPropertiesImpl<E>(this);
-    }
+	public AbstractVertex(int x, int y){
+		this.x = x;
+		this.y = y;
+	}
+	
+	public AbstractVertex(int x, int y, ArrayList<E> edgeList){
+		this.edgeList = edgeList;
+		this.x = x;
+		this.y = y;
+	}
+	
 
     /**
      * Set the parent graph.
      * @param g Parent graph
      */
-    public void setGraph(Graph<? extends Vertex<E>, E> g) {
+    public void setGraph(Graph<V,E> g) {
         this.g = g;
     }
 
@@ -113,7 +77,7 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
      * 
      * @return Returns parent graph
      */
-    public Graph<? extends Vertex<E>, E> getGraph() {
+    public Graph<? extends Vertex<E>,E> getGraph() {
         return g;
     }
 
@@ -153,35 +117,11 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
     }
 
     /**
-     * Assign an incoming edge to the vertex.
-     * @param e
-     */
-    public void setIncomingEdge(E e) {
-        incomingEdge = e;
-    }
-
-    /**
      * Marks the vertex as visited so we know not to re-visit.
      * @param visited
      */
     public void setVisited(boolean visited) {
         this.visited = visited;
-    }
-
-    /**
-     * Assign a previous vertex.  Could be useful for tour or cycle building.
-     * @param v
-     */
-    public <V extends Vertex<E>> void setPreviousVertex(V v) {
-        previousVertex = v;
-    }
-
-    /**
-     * Set the outgoing edge from the vertex.
-     * @param e
-     */
-    public void setOutgoingEdge(E e) {
-        outgoingEdge = e;
     }
 
     /**
@@ -220,22 +160,6 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
     }
 
     /**
-     * Returns the outgoing edge for the vertex.
-     * @return
-     */
-    public E getOutgoingEdge() {
-        return outgoingEdge;
-    }
-
-    /**
-     * Returns the incoming edge for the vertex.
-     * @return
-     */
-    public E getIncomingEdge() {
-        return incomingEdge;
-    }
-
-    /**
      * Add an edge to the vertex's adjacency list.
      * @param e Edge to add to the vertex's adjacency list
      */
@@ -243,16 +167,18 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
         /*Put it in an array for sortability (quicksorted)*/
         edgeList.add(e);
         if(e instanceof DirectedEdge){
-        	DirectedEdge tempEdge = (DirectedEdge) e;
+        	DirectedEdge<?> tempEdge = (DirectedEdge<?>) e;
         	edgeHash.put(tempEdge.getDestination().getUID(), e);
         }else{
         	if(e instanceof UndirectedEdge){
-        		UndirectedEdge tempEdge = (UndirectedEdge) e;
+        		UndirectedEdge<?> tempEdge = (UndirectedEdge<?>) e;
         		if(tempEdge.getVertexA().getUID() == this.getUID()){
         			edgeHash.put(tempEdge.getVertexB().getUID(), e);
         		}else{
         			edgeHash.put(tempEdge.getVertexA().getUID(), e);
         		}
+        	}else{
+        		//Exception
         	}
         }
     }
@@ -262,7 +188,7 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
      * @param b Destination or source vertex
      * @return Connecting edge from this vertex to Vertex b.
      */
-    public <V extends Vertex<E>> E getEdge(V b) {
+    public E getEdge(Vertex<E> b) {
         return edgeHash.get(b.getUID());
     }
 
@@ -300,23 +226,9 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
     public void sortEdges() {
         Edge[] edgeArray = (Edge[]) edgeList.toArray();
         
-        EdgeImpl.sortEdgesByDistance(edgeArray);
+        AbstractEdge.sortEdgesByDistance(edgeArray);
     }
-
-    /**
-     * Gets the previous vertex.
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-	public <V extends Vertex<E>> V getPreviousVertex() {
-    	return (V) previousVertex;
-    }
-
-
   
-
-   
-
     /**
      * Returns whether or not the vertex is currently active.
      * @return
@@ -354,7 +266,7 @@ public class VertexImpl<E extends Edge> implements Vertex<E>, Serializable, Clon
 
     }
 
-	public GraphvizVertexProperties<E> getProperties() {
+	public GraphvizVertexProperties getProperties() {
 		
 		return properties;
 	}

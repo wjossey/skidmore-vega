@@ -6,19 +6,19 @@
 package vega.graph;
 
 import interfaces.graph.Network;
-import interfaces.graph.edge.Edge;
-import interfaces.graph.vertex.Vertex;
+import interfaces.graph.edge.network.NetworkEdge;
+import interfaces.graph.vertex.network.NetworkNode;
 
 import java.util.ArrayList;
 
-import vega.graph.edge.EdgeImpl;
+import vega.graph.edge.AbstractEdge;
 import vega.helperClasses.VertexHelper;
 
 /**
  *
  * @author w_jossey
  */
-public class NetworkImpl<V extends Vertex<E>, E extends Edge> extends GraphImpl<V, E> implements Network<V, E>{
+public class AbstractNetwork<N extends NetworkNode<N,E>, E extends NetworkEdge> extends AbstractGraph<N,E> implements Network<N,E>{
 
     /**
      * The constructor method for the Graph class.  Takes in a pre-set vertex
@@ -29,18 +29,18 @@ public class NetworkImpl<V extends Vertex<E>, E extends Edge> extends GraphImpl<
      * 
      */
 	
-	private V[] source;
-	private V[] sink;
+	private ArrayList<N> source;
+	private ArrayList<N> sink;
 	
-    public NetworkImpl(int vertexSize, boolean isDigraph) {
+    public AbstractNetwork(int vertexSize, boolean isDigraph) {
         super(vertexSize, isDigraph);
     }
     
-    public NetworkImpl(V[] vertexArray, E[] edgeArray){
+    public AbstractNetwork(N[] vertexArray, E[] edgeArray){
         super(vertexArray, edgeArray);
     }
     
-    public NetworkImpl(ArrayList<V> vertexList, ArrayList<E> edgeList){
+    public AbstractNetwork(ArrayList<N> vertexList, ArrayList<E> edgeList){
         super(vertexList, edgeList);
     }
 
@@ -53,32 +53,30 @@ public class NetworkImpl<V extends Vertex<E>, E extends Edge> extends GraphImpl<
      * @param edgeSize the number of edges in the graph
      * @param digraph a directed graph if true, undirected if false
      */
-    public NetworkImpl(int vertexSize, int edgeSize, boolean digraph) {
+    public AbstractNetwork(int vertexSize, int edgeSize, boolean digraph) {
     }
     
     /**
      * Empty Constructor
      */
-    public NetworkImpl(){
+    public AbstractNetwork(){
         
     }
 
-	public V[] getSinks() {
+	public ArrayList<N> getSinks() {
 		return sink;
 	}
 
-	public V[] getSources() {
+	public ArrayList<N> getSources() {
 		return source;
 	}
 
-	@SuppressWarnings("unchecked")
-	public void setSinks(Vertex[] v) {
-		sink = (V[]) v;
+	public void setSinks(ArrayList<N> v) {
+		sink = v;
 	}
 
-	@SuppressWarnings("unchecked")
-	public void setSources(Vertex[] v) {
-		source = (V[]) v;
+	public void setSources(ArrayList<N> v) {
+		source = v;
 	}
     
 
@@ -98,11 +96,10 @@ public class NetworkImpl<V extends Vertex<E>, E extends Edge> extends GraphImpl<
         }
 
         returnString += VertexHelper.vertexListToString(vertexList) + "\n";
-        returnString += EdgeImpl.allEdgesWithoutRepeats(vertexList) + "\n";
+        returnString += AbstractEdge.allEdgesWithoutRepeats(vertexList) + "\n";
 
         returnString += "}\n";
 
         return returnString;
     }
-
 }

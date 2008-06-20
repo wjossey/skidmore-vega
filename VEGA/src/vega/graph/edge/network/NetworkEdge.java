@@ -4,25 +4,24 @@
  */
 package vega.graph.edge.network;
 
-import interfaces.graph.edge.network.NetworkEdge;
-import interfaces.graph.vertex.Vertex;
-import vega.graph.edge.EdgeImpl;
-
+import interfaces.graph.edge.network.DirectedNetworkEdge;
+import interfaces.graph.vertex.network.NetworkNode;
+import vega.graph.edge.DirectedEdge;
 /**
  *
  * @author w_jossey
  */
-public class NetworkEdgeImpl extends EdgeImpl implements NetworkEdge {
+public abstract class NetworkEdge<N extends NetworkNode<DirectedNetworkEdge<N>>> extends DirectedEdge<N> implements interfaces.graph.edge.network.NetworkEdge {
 
     double capacity;
     double flow;
 
-    public NetworkEdgeImpl(Vertex<? extends NetworkEdge> source, Vertex<? extends NetworkEdge> destination, double capacity) {
+    public NetworkEdge(N source, N destination, double capacity) {
         super(source, destination);
         this.capacity = capacity;
     }
     
-    public NetworkEdgeImpl(Vertex<? extends NetworkEdge> source, Vertex<? extends NetworkEdge> destination, double capacity, double initialFlow){
+    public NetworkEdge(N source, N destination, double capacity, double initialFlow){
         super(source, destination);
         this.capacity = capacity;
         flow = initialFlow;

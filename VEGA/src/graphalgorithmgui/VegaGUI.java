@@ -5,7 +5,7 @@
  */
 package graphalgorithmgui;
 
-import vega.graph.GraphImpl;
+import vega.graph.AbstractGraph;
 import vega.algorithms.GraphAlgorithms;
 import vega.algorithms.tsp.NearestNeighbor;
 import vega.algorithms.tsp.TwoOpt;
@@ -748,7 +748,7 @@ public class VegaGUI extends javax.swing.JFrame {
                     int edgeNum = ((vertexInt * (vertexInt - 1)) / 2);
                     edgeTextField.setText("" + edgeNum);
                     if (vertexInt > 1) {
-                        Graph g = new GraphImpl(vertexInt, false);
+                        Graph g = new AbstractGraph(vertexInt, false);
 
                         if (algorithmString.equalsIgnoreCase("2-OPT")) {
 
