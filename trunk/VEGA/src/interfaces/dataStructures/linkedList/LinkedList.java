@@ -3,18 +3,16 @@
  * and open the template in the editor.
  */
 
-package interfaces.graph.edge;
+package interfaces.dataStructures.linkedList;
 
+import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
+
 
 /**
  *
  * @author w_jossey
  */
-public interface DirectedEdge<V extends Vertex<V,DirectedEdge<V>>> extends Edge{
-	
-	public V getSource();
-	
-	public V getDestination();
-
+public interface LinkedList<V extends Vertex<E>, E extends Edge>{
+    
 }

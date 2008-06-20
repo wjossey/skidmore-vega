@@ -13,6 +13,8 @@ public interface Edge{
     
     double getWeight();
     
+    void setWeight(double d);
+    
     void setInUse(boolean inUseBool);
     
     boolean isInUse();

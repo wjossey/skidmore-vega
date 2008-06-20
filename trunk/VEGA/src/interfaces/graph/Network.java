@@ -5,21 +5,39 @@
 
 package interfaces.graph;
 
-import interfaces.graph.edge.Edge;
-import interfaces.graph.vertex.Vertex;
+import java.util.ArrayList;
+
+import interfaces.graph.vertex.network.NetworkNode;
+import interfaces.graph.edge.network.NetworkEdge;
 
 /**
  *
  * @author w_jossey
  */
-public interface Network<V extends Vertex<E>, E extends Edge>{
+public interface Network<N extends NetworkNode<N,E>, E extends NetworkEdge>{
 	
-	public void setSources(V[] v);
+	/**
+	 * 
+	 * @param v
+	 */
+	public void setSources(ArrayList<N> v);
 	
-	public V[] getSources();
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<N> getSources();
 	
-	public void setSinks(V[] v);
+	/**
+	 * 
+	 * @param v
+	 */
+	public void setSinks(ArrayList<N> v);
 	
-	public V[] getSinks();
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<N> getSinks();
 
 }

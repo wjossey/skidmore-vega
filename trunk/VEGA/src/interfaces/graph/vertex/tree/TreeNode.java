@@ -6,45 +6,31 @@ import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.vertex.tree.TreeNode;
 
-public interface TreeNode<C extends Comparable<C>, E extends Edge> extends Vertex<E>{
-	public static final boolean RED = true;
-    public static final boolean BLACK = false;
-	
-	/**
-	 * @param c
-	 * @return
-	 */
-	public boolean isColor(boolean c);
+public interface TreeNode<C extends Comparable<C>, T extends TreeNode<C,T,E>, E extends Edge> extends Vertex<T,E>{
 
 	/**
 	 * 
 	 * @return
 	 */
-	public String graphVizName(); // end graphVizName()
-
-	/**
-	 * 
-	 * @return
-	 */
-	public TreeNode<C,E> getParentNode();
+	public T getParentNode();
 
 	/**
 	 * 
 	 * @param parent
 	 */
-	public void setParentNode(TreeNode<C,E> parent);
+	public void setParentNode(T parent);
 
 	/**
 	 * 
 	 * @param child
 	 */
-	public void addChild(TreeNode<C,E> child);
+	public void addChild(T child);
 
 	/**
 	 * 
 	 * @return
 	 */
-	public ArrayList<TreeNode<C,E>> getChildren();
+	public ArrayList<T> getChildren();
 
 	/**
 	 * 
@@ -69,17 +55,6 @@ public interface TreeNode<C extends Comparable<C>, E extends Edge> extends Verte
 	 * @param height
 	 */
 	public void setHeight(int height);
-
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean getColor();
-
-	/**
-	 * @param color The color to set.
-	 */
-	public void setColor(boolean color);
 	
 	/**
 	 * 
@@ -92,6 +67,11 @@ public interface TreeNode<C extends Comparable<C>, E extends Edge> extends Verte
 	 * @param child
 	 * @return
 	 */
-	public E getEdge(TreeNode<C,E> child);
+	public E getEdge(T child);
+	
+	/**
+	 * 
+	 * @return
+	 */
 
 }

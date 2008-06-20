@@ -1,7 +1,8 @@
 package vega.dataStructures.trees;
 
 import vega.dataStructures.trees.BinarySearchTreeImpl;
-import vega.graph.vertex.tree.BinaryTreeNodeImpl;
+import vega.graph.vertex.tree.AbstractBinaryTreeNode;
+import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.tree.BinaryTreeNode;
 
 
@@ -13,7 +14,7 @@ import interfaces.graph.vertex.tree.BinaryTreeNode;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class RedBlackTreeInsideOutsideImpl extends BinarySearchTreeImpl {
+public class RedBlackTreeInsideOutsideImpl<C extends Comparable<C>, E extends Edge> extends BinarySearchTreeImpl<C,E> {
 	
 	
     RedBlackTreeInsideOutsideImpl(){
@@ -21,9 +22,8 @@ public class RedBlackTreeInsideOutsideImpl extends BinarySearchTreeImpl {
         setRoot(null);
     }
     
-    @Override
 	public void insert(Object x) {
-                BinaryTreeNodeImpl newNode = new BinaryTreeNodeImpl((Comparable<?>) x, RED);
+                AbstractBinaryTreeNode<C,E> newNode = new AbstractBinaryTreeNode<C,E>(((Comparable<C>) x), RED);
                 super.insertNode(newNode);
 		fixupInsert(newNode);
 	} // end insert();

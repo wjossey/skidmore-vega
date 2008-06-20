@@ -14,11 +14,11 @@ import interfaces.graph.edge.Edge;
  *
  * @author w_jossey
  */
-public interface Vertex<E extends Edge>{
+public interface Vertex<V extends Vertex<V,E>, E extends Edge>{
 	
-	public void setGraph(Graph<? extends Vertex<E>, E> g);
+	public void setGraph(Graph<V, E> g);
 	
-	public Graph<? extends Vertex<E>, E> getGraph();
+	public Graph<V, E> getGraph();
 	
 	public void setName(String name);
 	
@@ -26,25 +26,15 @@ public interface Vertex<E extends Edge>{
 	
 	public void setY(int y);
 	
-	public void setIncomingEdge(E e);
-	
-	public <V extends Vertex<E>> void setPreviousVertex(V v);
-	
-	public void setOutgoingEdge(E e);
-	
 	public ArrayList<E> getEdges();
 	
 	public int getX();
 	
 	public int getY();
 	
-	public E getOutgoingEdge();
-	
-	public E getIncomingEdge();
-	
 	public void addEdge(E toTempVertex);
 	
-	public <V extends Vertex<E>> E getEdge(V v);
+	public E getEdge(V v);
 	
 	public int getUID();
 	
@@ -54,9 +44,7 @@ public interface Vertex<E extends Edge>{
 	
 	public void sortEdges();
 	
-	public <V extends Vertex<E>> V getPreviousVertex();
-	
-	public GraphvizVertexProperties<E> getProperties();
+	public GraphvizVertexProperties getProperties();
 	
 	public void setVisited(boolean visited);
 	

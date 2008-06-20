@@ -4,9 +4,8 @@
  */
 package vega.graph.vertex.tree;
 
-import interfaces.graph.vertex.tree.TreeNode;
 import interfaces.graph.edge.*;
-import vega.graph.vertex.VertexImpl;
+import vega.graph.vertex.AbstractVertex;
 
 import java.util.ArrayList;
 
@@ -14,47 +13,44 @@ import java.util.ArrayList;
  *
  * @author w_jossey
  */
-public class TreeNodeImpl<C extends Comparable<C>, E extends Edge> extends VertexImpl<E> implements TreeNode<C,E>{
+
+public class AbstractTreeNode<C extends Comparable<C>, T extends interfaces.graph.vertex.tree.TreeNode<C,T,E>, E extends Edge> extends AbstractVertex<T,E> implements interfaces.graph.vertex.tree.TreeNode<C,T,E>{
 
     /**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
 	private static int idCounter = 0;
-    public static boolean RED = true;
-    public static boolean BLACK = false;
+    private int id; // unique identifier for the node for graphViz data
+    private T parent;
+    private C data;
+    private int height; // for AVL trees
+    private ArrayList<T> childNodes = new ArrayList<T>();
 
     /**
      * Creates a tree node with the value of @param k
      * @param k
      */
-    public TreeNodeImpl(C k) {
+    public AbstractTreeNode(C k, E e) {
     	super();
     	data = k;
         parent = null;
         id = idCounter;
         idCounter++;
-        color = RED;
     }
-
-    /**
-     * 
-     * @param k
-     * @param c
-     */
-    public TreeNodeImpl(C k, boolean c) {
-        super();
+    
+    public AbstractTreeNode(C k){
+    	super();
     	data = k;
-        parent = null;
-        id = idCounter;
-        idCounter++;
-        color = c;
+    	parent = null;
+    	id = idCounter++;
     }
 
     /**
      * 
      */
-    public TreeNodeImpl() {
+    public AbstractTreeNode() {
         super(); 
     	data = null;
         parent = null;
@@ -64,47 +60,30 @@ public class TreeNodeImpl<C extends Comparable<C>, E extends Edge> extends Verte
     }
 
     /* (non-Javadoc)
-	 * @see vega.graph.vertex.tree.TreeNode#isColor(boolean)
-	 */
-    public boolean isColor(boolean c) {
-        return color == c;
-    }
-
-    /* (non-Javadoc)
-	 * @see vega.graph.vertex.tree.TreeNode#graphVizName()
-	 */
-    public String graphVizName() {
-//			String result = "\"" + id + "\\n " + data + "\\n " + " height is "
-//									+ height + "\"";
-        String result = "\"" + data + "\\n color is " + (color ? "red" : "black") + "\"";
-        return result;
-    } // end graphVizName()
-
-    /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.TreeNode#getParentNode()
 	 */
-    public TreeNode<C,E> getParentNode(){
+	public T getParentNode(){
         return parent;
     }
     
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.TreeNode#setParentNode(interfaces.graph.vertex.tree.TreeNode)
 	 */
-    public void setParentNode(TreeNode<C,E>parent){
+    public void setParentNode(T parent){
         this.parent = parent;
     }
     
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.TreeNode#addChild(interfaces.graph.vertex.tree.TreeNode)
 	 */
-    public void addChild(TreeNode<C,E> child){
+    public void addChild(T child){
         childNodes.add(child);
     }
     
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.TreeNode#getChildren()
 	 */
-    public ArrayList<TreeNode<C,E>> getChildren(){
+    public ArrayList<T> getChildren(){
         return childNodes;
     }
     
@@ -136,27 +115,6 @@ public class TreeNodeImpl<C extends Comparable<C>, E extends Edge> extends Verte
         this.height = height;
     }
     
-    /* (non-Javadoc)
-	 * @see vega.graph.vertex.tree.TreeNode#getColor()
-	 */
-    public boolean getColor(){
-        return color;
-    }
-    
-    private int id; // unique identifier for the node for graphViz data
-    private TreeNode<C,E> parent;
-    private C data;
-    private int height; // for AVL trees
-    private ArrayList<TreeNode<C,E>> childNodes = new ArrayList<TreeNode<C,E>>();
-
-    private boolean color; // for Red Black trees
-
-    /* (non-Javadoc)
-	 * @see vega.graph.vertex.tree.TreeNode#setColor(boolean)
-	 */
-    public void setColor(boolean color) {
-        this.color = color;
-    }
     
     public int getID(){
     	return id;
@@ -168,7 +126,7 @@ public class TreeNodeImpl<C extends Comparable<C>, E extends Edge> extends Verte
         return result;
     } // end toString()
 
-	public E getEdge(TreeNode<C, E> child) {
+	public E getEdge(T child) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,23 +1,29 @@
 package vega.dataStructures.trees;
 
 import vega.dataStructures.trees.BinarySearchTreeImpl;
-import vega.graph.vertex.tree.BinaryTreeNodeImpl;
-import interfaces.graph.vertex.tree.BinaryTreeNode;
+import vega.graph.vertex.tree.RedBlackTreeNode;
+import interfaces.graph.edge.Edge;
+import interfaces.graph.edge.UndirectedEdge;
+import interfaces.graph.vertex.tree.RedBlackTreeNode;
 
 
-public class RBT extends BinarySearchTreeImpl {
-
+public class RBT<C extends Comparable<C>, V extends RedBlackTreeNode<C,V,E>, E extends Edge> extends BinarySearchTreeImpl<C,V,E>{
 	
-	public void insert(Comparable<?> key) { 
-		BinaryTreeNodeImpl newNode = new BinaryTreeNodeImpl(key, RED);
-		super.insertNode(newNode);
-		fixUpInsert(newNode);
+	private final boolean RED = RedBlackTreeNode.RED;
+	private final boolean BLACK = RedBlackTreeNode.BLACK;
+	
+	@SuppressWarnings("unchecked")
+	public void insert(C key) { 
+		RedBlackTreeNode<C,V,E> newNode = new RedBlackTreeNode<C,V,E>(key, RedBlackTreeNode.RED);
+		super.insertNode((V) newNode);
+		fixUpInsert((V) newNode);
 	} // end insert()
 	
-	private void fixUpInsert(BinaryTreeNode problemChild) {
-		while(problemChild.getParentNode() != null && problemChild.getParentNode().isColor(RED)) {
+	private void fixUpInsert(V problemChild) {
+		RedBlackTreeNode<C,V,E> problemNode = problemChild;
+		while(problemNode.getParentNode() != null && problemNode.getParentNode().isColor(RED)) {
 			if (problemChild.getParentNode().isLeftChild()) { 
-				BinaryTreeNode uncle = problemChild.getParentNode().getParentNode().getRightNode();
+				RedBlackTreeNode<C,V,E> uncle = problemChild.getParentNode().getParentNode().getRightNode();
 				
 				if (uncle != null && uncle.isColor(RED)) {
 					/*
@@ -52,7 +58,7 @@ public class RBT extends BinarySearchTreeImpl {
 				 */
 				System.out.println(this.toGraphViz("NullPointer"));
 				System.out.flush();
-				BinaryTreeNode uncle = problemChild.getParentNode().getParentNode().getLeftNode();
+				RedBlackTreeNode<C,V,E> uncle = problemChild.getParentNode().getParentNode().getLeftNode();
 				
 				if (uncle != null && uncle.isColor(RED)) {
 					/*

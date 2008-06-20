@@ -5,7 +5,6 @@
 
 package vega.graph.edge;
 
-import interfaces.graph.edge.DirectedEdge;
 import interfaces.graph.vertex.Vertex;
 
 /**
@@ -13,9 +12,9 @@ import interfaces.graph.vertex.Vertex;
  * This prevents bi-directional movement by an algorithm.  
  * @author w_jossey
  */
-public class DirectedEdgeImpl extends EdgeImpl{
-    Vertex<? extends DirectedEdge> from = null; 
-    Vertex<? extends DirectedEdge> to = null;
+public class DirectedEdge<V extends Vertex<? extends interfaces.graph.edge.DirectedEdge<V>>> extends AbstractEdge<V>{
+    V from = null; 
+    V to = null;
     double weight;
     
     /**
@@ -24,8 +23,7 @@ public class DirectedEdgeImpl extends EdgeImpl{
      * @param destination Destination vertex
      */
     
-	public <E extends DirectedEdge> DirectedEdgeImpl(Vertex<E> source, Vertex<E> destination){
-        super(source, destination);
+	public DirectedEdge(V source, V destination){
         this.from = source;
         this.to = destination;
         weight = Double.NaN;
@@ -37,9 +35,7 @@ public class DirectedEdgeImpl extends EdgeImpl{
      * @param destination Destinatino vertex
      * @param weight The weight of the edge
      */
-    public <E extends DirectedEdge> DirectedEdgeImpl(Vertex<E> source, 
-    		Vertex<E> destination, double weight){
-        super(source, destination, weight);
+    public DirectedEdge(V source, V destination, double weight){
         this.from = source;
         this.to = destination;
     }
@@ -48,7 +44,7 @@ public class DirectedEdgeImpl extends EdgeImpl{
      * 
      * @return
      */
-    public Vertex<? extends DirectedEdge> getSourceVertex(){
+    public V getSourceVertex(){
         return from;
     }
     
@@ -56,7 +52,7 @@ public class DirectedEdgeImpl extends EdgeImpl{
      * 
      * @return
      */
-    public Vertex<? extends DirectedEdge> getDestinationVertex(){
+    public V getDestinationVertex(){
         return to;
     }
     
@@ -64,5 +60,5 @@ public class DirectedEdgeImpl extends EdgeImpl{
     public String toString(){
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
+  
 }

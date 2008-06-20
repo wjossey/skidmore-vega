@@ -1,13 +1,16 @@
 package vega.helperClasses;
 
 import interfaces.graph.vertex.Vertex;
-import interfaces.graph.edge.Edge;
+import interfaces.graph.vertex.tree.BinaryTreeNode;
+import interfaces.graph.edge.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class Tour<V extends Vertex<E>, E extends Edge> {
+import vega.dataStructures.trees.BinarySearchTreeImpl;
+
+public class Tour<V extends Vertex<V,E>, E extends Edge<V,E>> {
 	LinkedList<V> tour;
 	Iterator<V> iter;
 	
@@ -23,5 +26,9 @@ public class Tour<V extends Vertex<E>, E extends Edge> {
 		
 	public Iterator<V> getIterator(){
 		return tour.iterator();
+	}
+	
+	public static <R extends BinaryTreeNode<String,R,E>, E extends UndirectedEdge<R,E>> void main(String[] args){
+		BinarySearchTreeImpl<String, R, E> t = new BinarySearchTreeImpl<String, R, E>();
 	}
 }

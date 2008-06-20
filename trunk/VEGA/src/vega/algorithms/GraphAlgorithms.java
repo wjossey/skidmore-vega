@@ -9,13 +9,13 @@ public class GraphAlgorithms<V extends Vertex<E>, E extends Edge> implements Run
 	/**
 	 * @param args
 	 */
-         Graph<V, E> g;
-         GraphAlgorithm<V, E> a;
+     Graph<V, E> g;
+     GraphAlgorithm<Graph<V,E>, V, E> a;
     
-         public GraphAlgorithms(GraphAlgorithm<V, E> a, Graph<V, E> g){
-             this.g = g;
-             this.a = a;
-         }
+    public GraphAlgorithms(GraphAlgorithm<Graph<V,E>, V, E> a, Graph<V, E> g){
+    	this.g = g;
+        this.a = a;
+    }
 
     public void run() {
         a.run(g);
