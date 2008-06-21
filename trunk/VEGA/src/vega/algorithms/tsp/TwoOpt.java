@@ -5,20 +5,18 @@ import vega.pseudoCode.Procedure;
 import vega.pseudoCode.PseudoCode;
 import vega.helperClasses.*;
 import interfaces.algorithms.GraphAlgorithm;
-import interfaces.graph.Graph;
 import interfaces.graph.Tree;
 import interfaces.graph.edge.UndirectedEdge;
-import interfaces.graph.vertex.Vertex;
 import interfaces.graph.vertex.tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class TwoOpt<C extends Comparable<C>, V extends TreeNode<C,V,E>, E extends UndirectedEdge<V,E>> implements GraphAlgorithm<Tree<C,V,E>,V, E> {
+public class TwoOpt<C extends Comparable<C>, T extends TreeNode<C,T,UndirectedEdge<T>>> implements GraphAlgorithm<Tree<C,T,UndirectedEdge<T>>,T, UndirectedEdge<T>> {
 
-    private Tree<C,V,E> g;
+    private Tree<C,T,UndirectedEdge<T>> g;
     private PseudoCode pseudoCode;
-    Controller<V, E> controller;
+    Controller<T, UndirectedEdge<T>> controller;
     int imageCounter = 0;
     private String FILENAME = "twoOpt";
     private static int instanceCounter = 0;
@@ -26,7 +24,7 @@ public class TwoOpt<C extends Comparable<C>, V extends TreeNode<C,V,E>, E extend
     private boolean running = false;
     private Procedure twoOptMove;
 
-    public void run(Tree<C,V,E> g) {
+    public void run(Tree<C,T,UndirectedEdge<T>> g) {
         // TODO Auto-generated method stub
         running = true;
         instanceID = instanceCounter++;
@@ -35,7 +33,7 @@ public class TwoOpt<C extends Comparable<C>, V extends TreeNode<C,V,E>, E extend
         twoOptMove = new Procedure("2OPT(V, E):");
         twoOptMove.appendLine("Code To Be Inserted)");
         pseudoCode.addProcedure(twoOptMove);
-        controller = new Controller<V, E>(this.g, pseudoCode, this);
+        controller = new Controller<T, UndirectedEdge<T>>(this.g, pseudoCode, this);
         executeTwoOpt(this.g.getVertexArray()); //Let's assume we don't assign a starting vertex
 
         running = false;
@@ -53,7 +51,7 @@ public class TwoOpt<C extends Comparable<C>, V extends TreeNode<C,V,E>, E extend
      * The 2OPT algorithm.  
      * @return returns the tour in the form of a Vertex array
      */
-    public ArrayList<V> executeTwoOpt(ArrayList<V> tour) {
+    public ArrayList<T> executeTwoOpt(ArrayList<T> tour) {
         //Transform tour to a linked list
 
         /*Start of the twoOpt algorithm.  First, let's connect our tour*/
@@ -71,17 +69,17 @@ public class TwoOpt<C extends Comparable<C>, V extends TreeNode<C,V,E>, E extend
         //controller.generateGraphInstance();
 
         boolean moveMade = true;
-        LinkedList<V> tourLinked = new LinkedList<V>();
+        LinkedList<T> tourLinked = new LinkedList<T>();
         for (int i = 0; i < tour.size(); i++) {
             tourLinked.add(tour.get(i));
         }
         while (moveMade) {
             moveMade = false;
             for (int i = 0; i < tour.size(); i++) {
-                V v1 = tour.get(i);
-                V v2 = null;
-                V v3 = null;
-                V v4 = null;
+                T v1 = tour.get(i);
+                T v2 = null;
+                T v3 = null;
+                T v4 = null;
 
                 int indexV1 = tourLinked.indexOf(v1);
                 int indexV2;
@@ -110,12 +108,12 @@ public class TwoOpt<C extends Comparable<C>, V extends TreeNode<C,V,E>, E extend
                 }
                 
                 
-                ArrayList<V> nearestNeighborArray = VertexHelper.getKNearestNeighbors(tour.get(i), constantK);
+                ArrayList<T> nearestNeighborArray = VertexHelper.getKNearestNeighbors(tour.get(i), constantK);
 
                 Double twoOptDistance = Double.POSITIVE_INFINITY;
                 for (int k = 0; k < nearestNeighborArray.size(); k++) {
-                    V tempV3 = null;
-                    V tempV4 = null;
+                    T tempV3 = null;
+                    T tempV4 = null;
                     if (nearestNeighborArray.get(k).getUID() != v2.getUID()) {
                         tempV3 = nearestNeighborArray.get(k);
                         tempV4 = nextVertex(tourLinked, tourLinked.indexOf(tempV3));
@@ -194,8 +192,8 @@ public class TwoOpt<C extends Comparable<C>, V extends TreeNode<C,V,E>, E extend
     /*A simple conversion method that takes in a LinkedList that is 
      * a LL of vertices and converts them to an array.  
      */
-    private ArrayList<V> linkedListToArray(LinkedList<V> linkedList) {
-        ArrayList<V> returnArray = new ArrayList<V>(linkedList.size());
+    private ArrayList<T> linkedListToArray(LinkedList<T> linkedList) {
+        ArrayList<T> returnArray = new ArrayList<T>(linkedList.size());
         for (int i = 0; i < linkedList.size(); i++) {
             returnArray.set(i, linkedList.get(i));
         }
@@ -206,8 +204,8 @@ public class TwoOpt<C extends Comparable<C>, V extends TreeNode<C,V,E>, E extend
     /* Internal method to give you the next vertex in a linked list of vertices.
      * The method returns the first vertex in the list if it reaches the end of the list 
      */
-    private V nextVertex(LinkedList<V> tour, int curr) {
-        V returnVertex;
+    private T nextVertex(LinkedList<T> tour, int curr) {
+        T returnVertex;
         if (curr == tour.size() - 1 || curr >= tour.size()) {
             returnVertex = tour.get(0);
         } else {
@@ -221,7 +219,7 @@ public class TwoOpt<C extends Comparable<C>, V extends TreeNode<C,V,E>, E extend
      * vertex.  This is particularly useful for the 2opt algorithm as we are forced
      * to reverse the list when a shorter path is found.
      */
-    private void reverse(LinkedList<V> tour, int start, int end) {
+    private void reverse(LinkedList<T> tour, int start, int end) {
         int length = end - start;
 
         if (length < 0) {
@@ -231,7 +229,7 @@ public class TwoOpt<C extends Comparable<C>, V extends TreeNode<C,V,E>, E extend
         length = length / 2 + 1; //Only need to compute it in half
 
         for (int k = 0; k < length; k++) {
-            V tempVertex = tour.get(start);
+            T tempVertex = tour.get(start);
             tour.set(start, tour.get(end)); //Swap the two cities
 
             tour.set(end, tempVertex);
@@ -245,7 +243,7 @@ public class TwoOpt<C extends Comparable<C>, V extends TreeNode<C,V,E>, E extend
 
     }
 
-    public Controller<V,E> getController() {
+    public Controller<T,UndirectedEdge<T>> getController() {
         return controller;
     }
 

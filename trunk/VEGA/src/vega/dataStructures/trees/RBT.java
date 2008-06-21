@@ -1,29 +1,26 @@
 package vega.dataStructures.trees;
 
-import vega.dataStructures.trees.BinarySearchTreeImpl;
-import vega.graph.vertex.tree.RedBlackTreeNode;
-import interfaces.graph.edge.Edge;
-import interfaces.graph.edge.UndirectedEdge;
+import vega.dataStructures.trees.AbstractBinarySearchTree;
 import interfaces.graph.vertex.tree.RedBlackTreeNode;
 
 
-public class RBT<C extends Comparable<C>, V extends RedBlackTreeNode<C,V,E>, E extends Edge> extends BinarySearchTreeImpl<C,V,E>{
+public class RBT<C extends Comparable<C>> extends AbstractBinarySearchTree<C, RedBlackTreeNode<C>>{
 	
 	private final boolean RED = RedBlackTreeNode.RED;
 	private final boolean BLACK = RedBlackTreeNode.BLACK;
 	
 	@SuppressWarnings("unchecked")
 	public void insert(C key) { 
-		RedBlackTreeNode<C,V,E> newNode = new RedBlackTreeNode<C,V,E>(key, RedBlackTreeNode.RED);
-		super.insertNode((V) newNode);
-		fixUpInsert((V) newNode);
+		vega.graph.vertex.tree.RedBlackTreeNode<C> newNode = new vega.graph.vertex.tree.RedBlackTreeNode<C>(key, RedBlackTreeNode.RED);
+		insertNode(newNode);
+		fixUpInsert(newNode);
 	} // end insert()
 	
-	private void fixUpInsert(V problemChild) {
-		RedBlackTreeNode<C,V,E> problemNode = problemChild;
+	private void fixUpInsert(RedBlackTreeNode<C> problemChild) {
+		RedBlackTreeNode<C> problemNode = problemChild;
 		while(problemNode.getParentNode() != null && problemNode.getParentNode().isColor(RED)) {
-			if (problemChild.getParentNode().isLeftChild()) { 
-				RedBlackTreeNode<C,V,E> uncle = problemChild.getParentNode().getParentNode().getRightNode();
+			if (problemChild.getParentNode().isLeftChild()) {
+				RedBlackTreeNode<C> uncle = (RedBlackTreeNode<C>) problemChild.getParentNode().getParentNode().getRightNode();
 				
 				if (uncle != null && uncle.isColor(RED)) {
 					/*
@@ -58,7 +55,7 @@ public class RBT<C extends Comparable<C>, V extends RedBlackTreeNode<C,V,E>, E e
 				 */
 				System.out.println(this.toGraphViz("NullPointer"));
 				System.out.flush();
-				RedBlackTreeNode<C,V,E> uncle = problemChild.getParentNode().getParentNode().getLeftNode();
+				RedBlackTreeNode<C> uncle = problemChild.getParentNode().getParentNode().getLeftNode();
 				
 				if (uncle != null && uncle.isColor(RED)) {
 					/*
@@ -95,7 +92,7 @@ public class RBT<C extends Comparable<C>, V extends RedBlackTreeNode<C,V,E>, E e
 	
 	public static void main(String[] args) {
 		System.out.println("Testing RedBlack tree");
-		RBT t = new RBT();
+		RBT<String> t = new RBT<String>();
 		t.insert("a");
 		System.out.println(t.toGraphViz("RedBlackTree"));
 		t.insert("b");

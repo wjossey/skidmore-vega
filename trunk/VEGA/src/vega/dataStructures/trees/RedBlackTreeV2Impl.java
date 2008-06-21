@@ -12,7 +12,7 @@ import interfaces.graph.vertex.tree.BinaryTreeNode;
  *
  * @author w_jossey
  */
-public class RedBlackTreeV2Impl extends BinarySearchTreeImpl{
+public class RedBlackTreeV2Impl extends AbstractBinarySearchTree{
 
     public RedBlackTreeV2Impl(){
         super();

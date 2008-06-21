@@ -5,16 +5,21 @@
 
 package vega.algorithms.networkFlow;
 
+import java.util.ArrayList;
+
 import vega.dataStructures.queue.QueueImpl;
+import vega.helperClasses.VertexHelper;
+import interfaces.graph.edge.network.DirectedNetworkEdge;
 import interfaces.graph.edge.network.NetworkEdge;
 import interfaces.graph.vertex.Vertex;
+import interfaces.graph.vertex.network.NetworkNode;
 
 /**
  *
  * @author w_jossey
  */
-public class FordFulkerson {
-    Vertex[] vertexArray;
+public class FordFulkerson<N extends NetworkNode<N, DirectedNetworkEdge<N>>> {
+    ArrayList<N> networkNodeArray;
     /*Internal method that reverses a linked list when given a starting and ending
      * vertex.  This is particularly useful for the 2opt algorithm as we are forced
      * to reverse the list when a shorter path is found.
@@ -25,15 +30,15 @@ public class FordFulkerson {
      *  3.  	do augment flow f along p
      *  4.  return f
      */
-    public int fordFulkerson(Vertex s, Vertex t) {
+    public int fordFulkerson(N source, N sink) {
         int flow = 0;
-        for (int i = 0; i < vertexArray.length; i++) {
+        for (int i = 0; i < networkNodeArray.size(); i++) {
             /*Set flow to 0*/
-            vertexArray[i].setIncomingEdge(null);
-            vertexArray[i].setOutgoingEdge(null);
-            NetworkEdge[] tempEdgeList = (NetworkEdge[]) vertexArray[i].getEdges();
-            for (int j = 0; j < tempEdgeList.length; j++) {
-                tempEdgeList[j].setFlow(0);
+        	networkNodeArray.get(i).setIncomingEdge(null);
+        	networkNodeArray.get(i).setOutgoingEdge(null);
+            ArrayList<DirectedNetworkEdge<N>> tempEdgeList = networkNodeArray.get(i).getEdges();
+            for (int j = 0; j < tempEdgeList.size(); j++) {
+                tempEdgeList.get(j).setFlow(0);
             }
 
 
@@ -47,29 +52,29 @@ public class FordFulkerson {
         return flow;
     }
 
-    private void augmentFlow(Vertex s, Vertex t) {
-        Vertex[] path = getFoundPath(t);
+    private void augmentFlow(N source, N destination) {
+        ArrayList<N> path = getFoundPath(destination);
         double residualCapacityOfPath = Double.MAX_VALUE;
-        for (int i = 0; path[i] != t; i++) {
-            NetworkEdge tempEdge = (NetworkEdge) path[i].getEdge(path[i + 1]);
+        for (int i = 0; path.get(i) != destination; i++) {
+            NetworkEdge tempEdge = path.get(i).getEdge(path.get(i+1));
             if (tempEdge.getResidual() < residualCapacityOfPath) {
                 residualCapacityOfPath = tempEdge.getResidual();
             }
         }
 
-        for (int i = 0; path[i] != t; i++) {
-            NetworkEdge tempEdge = (NetworkEdge) path[i].getEdge(path[i + 1]);
+        for (int i = 0; path.get(i) != destination; i++) {
+            DirectedNetworkEdge<N> tempEdge = path.get(i).getEdge(path.get(i+1));
             tempEdge.augmentFlow(residualCapacityOfPath);
-            tempEdge = (NetworkEdge) path[i + 1].getEdge(path[i]);
+            tempEdge = path.get(i+1).getEdge(path.get(i));
             tempEdge.augmentFlow(-residualCapacityOfPath);
         }
     }
     /*Breadth first search*/
 
-    private boolean findPath(Vertex s, Vertex t) {
+    private boolean findPath(N s, N t) {
         /*Set all previous vertex values to null*/
-        for (int i = 0; i < vertexArray.length && vertexArray[i] != null; i++) {
-            vertexArray[i].setPreviousVertex(null);
+        for (int i = 0; i < networkNodeArray.size() && networkNodeArray.get(i) != null; i++) {
+            networkNodeArray.get(i).setPreviousVertex(null);
         }
 
         boolean pathFound = false;
@@ -77,40 +82,40 @@ public class FordFulkerson {
         if (s == t) {
             return false;
         } else {
-            Vertex[] tempVertexList = s.getNeighbors();
-            for (int i = 0; i < tempVertexList.length && tempVertexList[i] != null; i++) {
-                queue.enQueue(tempVertexList[i]);
-                tempVertexList[i].setPreviousVertex(s);
+            ArrayList<N> tempVertexList = VertexHelper.getNearestNeighbors(s);
+            for (int i = 0; i < tempVertexList.size() && tempVertexList.get(i) != null; i++) {
+                queue.enQueue(tempVertexList.get(i));
+                tempVertexList.get(i).setPreviousVertex(s);
             }
             /*While there still exists items in the queue and no path has been found*/
             while (!queue.isEmpty() && pathFound == false) {
                 /*Get the Vertex as the front of the queue*/
-                Vertex tempVertex = (Vertex) queue.deQueue();
+                N tempVertex =  queue.deQueue();
 
                 /*Get all adjacent vertices*/
-                Vertex[] adjacencyList = tempVertex.getNeighbors();
+                ArrayList<N> adjacencyList = VertexHelper.getNearestNeighbors(tempVertex);
 
                 /*Cycle through the adjacencyList and try to find the sink--- adding any
                  * non-discovered vertices to the queue
                  */
-                for (int j = 0; j < adjacencyList.length && adjacencyList[j] != null; j++) {
+                for (int j = 0; j < adjacencyList.size() && adjacencyList.get(j) != null; j++) {
                     /*Check to make sure there exists capacity to that vertex that is
                      * greater than the flow
                      */
                     //if(tempVertex.getEdge(adjacencyList[j]).getFlow() < 
                     //		tempVertex.getEdge(adjacencyList[j]).getCapacity()){
 						/*If the vertex does not already exist in the queue*/
-                    if (queue.enQueue(adjacencyList[j])) {
+                    if (queue.enQueue(adjacencyList.get(j))) {
                         /*If the vertex is the sink*/
-                        if (adjacencyList[j] == t) {
+                        if (adjacencyList.get(j) == t) {
                             /*Set the sinks parent vertex, set the pathFound bool to
                              * true, and then we'll exit out of the while loop, terminate
                              * the method, and return "true"
                              */
-                            adjacencyList[j].setPreviousVertex(tempVertex);
+                            adjacencyList.get(j).setPreviousVertex(tempVertex);
                             pathFound = true;
                         } else {
-                            adjacencyList[j].setPreviousVertex(tempVertex);
+                            adjacencyList.get(j).setPreviousVertex(tempVertex);
                         //		}
                         }
                     }
@@ -120,20 +125,20 @@ public class FordFulkerson {
         return pathFound;
     }
 
-    private Vertex[] getFoundPath(Vertex t) {
-        Vertex[] reverseList = new Vertex[vertexArray.length];
-        Vertex tempVertex = t;
+    private ArrayList<N> getFoundPath(N t) {
+        ArrayList<N> reverseList = new ArrayList<N>(networkNodeArray.size());
+        N tempVertex = t;
         int counter = 0;
         while (tempVertex != null) {
-            reverseList[counter] = t;
+            reverseList.set(counter, t);
             tempVertex = tempVertex.getPreviousVertex();
             counter++;
         }
-        reverseList[counter] = tempVertex;
-        Vertex[] returnArray = new Vertex[counter];
+        reverseList.set(counter, tempVertex);
+        ArrayList<N> returnArray = new ArrayList<N>(counter);
 
         for (int i = 0, j = counter - 1; i < counter; i++, j--) {
-            returnArray[i] = reverseList[j];
+            returnArray.set(i, reverseList.get(j));
         }
         return returnArray;
     }

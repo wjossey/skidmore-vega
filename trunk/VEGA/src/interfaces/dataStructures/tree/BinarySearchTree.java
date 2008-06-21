@@ -5,11 +5,15 @@
 
 package interfaces.dataStructures.tree;
 
+import interfaces.graph.Tree;
+import interfaces.graph.vertex.tree.BinaryTreeNode;
+import interfaces.graph.edge.UndirectedEdge;
+
 /**
  *
  * @author w_jossey
  */
-public interface BinarySearchTree<C extends Comparable<C>>{
+public interface BinarySearchTree<C extends Comparable<C>, T extends BinaryTreeNode<C,T>> extends Tree<C,T, UndirectedEdge<T>>{
 
     /**
      * Deletes a value from the tree without having to have the specific value.

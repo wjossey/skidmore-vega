@@ -1,6 +1,6 @@
 package vega.graph.vertex.tree;
 
-public class BinaryTreeNode<C extends Comparable<C>> extends AbstractBinaryTreeNode<C, BinaryTreeNode<C>>{
+public class BinaryTreeNode<C extends Comparable<C>> extends AbstractBinaryTreeNode<C, BinaryTreeNode<C>> implements interfaces.graph.vertex.tree.BinaryTreeNode<C, BinaryTreeNode<C>>{
 
 	/**
 	 * 
