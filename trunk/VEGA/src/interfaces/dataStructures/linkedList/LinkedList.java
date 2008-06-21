@@ -13,6 +13,6 @@ import interfaces.graph.vertex.Vertex;
  *
  * @author w_jossey
  */
-public interface LinkedList<V extends Vertex<E>, E extends Edge>{
+public interface LinkedList<V extends Vertex<V,E>, E extends Edge>{
     
 }
