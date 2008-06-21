@@ -12,7 +12,7 @@ import interfaces.graph.vertex.Vertex;
  * This prevents bi-directional movement by an algorithm.  
  * @author w_jossey
  */
-public class DirectedEdge<V extends Vertex<? extends interfaces.graph.edge.DirectedEdge<V>>> extends AbstractEdge<V>{
+public class DirectedEdge<V extends Vertex<V,interfaces.graph.edge.DirectedEdge<V>>> extends AbstractEdge implements interfaces.graph.edge.DirectedEdge<V>{
     V from = null; 
     V to = null;
     double weight;
@@ -44,7 +44,7 @@ public class DirectedEdge<V extends Vertex<? extends interfaces.graph.edge.Direc
      * 
      * @return
      */
-    public V getSourceVertex(){
+    public V getSource(){
         return from;
     }
     
@@ -52,7 +52,7 @@ public class DirectedEdge<V extends Vertex<? extends interfaces.graph.edge.Direc
      * 
      * @return
      */
-    public V getDestinationVertex(){
+    public V getDestination(){
         return to;
     }
     
@@ -60,5 +60,10 @@ public class DirectedEdge<V extends Vertex<? extends interfaces.graph.edge.Direc
     public String toString(){
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    public static void main(String[] args){
+    	
+    }
+    
   
 }

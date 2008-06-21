@@ -14,7 +14,7 @@ import interfaces.graph.edge.network.NetworkEdge;
  *
  * @author w_jossey
  */
-public interface Network<N extends NetworkNode<N,E>, E extends NetworkEdge>{
+public interface Network<N extends NetworkNode<N,E>, E extends NetworkEdge<N,E>>{
 	
 	/**
 	 * 

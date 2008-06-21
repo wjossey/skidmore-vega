@@ -5,7 +5,7 @@ import interfaces.graph.Graph;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 
-public interface GraphAlgorithm<G extends Graph<V,E>, V extends Vertex<E>, E extends Edge> {
+public interface GraphAlgorithm<G extends Graph<V,E>, V extends Vertex<V,E>, E extends Edge> {
 	
 	/**
 	 * Method executes the algorithm that implements the interface.

@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 import vega.dataStructures.trees.BinarySearchTreeImpl;
 
-public class Tour<V extends Vertex<V,E>, E extends Edge<V,E>> {
+public class Tour<V extends Vertex<V,E>, E extends Edge> {
 	LinkedList<V> tour;
 	Iterator<V> iter;
 	
@@ -28,7 +28,7 @@ public class Tour<V extends Vertex<V,E>, E extends Edge<V,E>> {
 		return tour.iterator();
 	}
 	
-	public static <R extends BinaryTreeNode<String,R,E>, E extends UndirectedEdge<R,E>> void main(String[] args){
-		BinarySearchTreeImpl<String, R, E> t = new BinarySearchTreeImpl<String, R, E>();
+	public static <R extends BinaryTreeNode<String,R>, E extends UndirectedEdge<R>> void main(String[] args){
+		BinarySearchTreeImpl<String> t = new BinarySearchTreeImpl<String>();
 	}
 }

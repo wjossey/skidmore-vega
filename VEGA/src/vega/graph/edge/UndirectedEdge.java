@@ -13,7 +13,7 @@ import interfaces.graph.vertex.Vertex;
  * that developers can easily distinguish if an edge is directed or undirected.
  * @author w_jossey
  */
-public class UndirectedEdge<V extends Vertex<? extends interfaces.graph.edge.UndirectedEdge<V>>> extends AbstractEdge<V> implements interfaces.graph.edge.UndirectedEdge<V>{
+public class UndirectedEdge<V extends Vertex<V,interfaces.graph.edge.UndirectedEdge<V>>> extends AbstractEdge implements interfaces.graph.edge.UndirectedEdge<V>{
     
     /**
      * See Edge class for documentation.

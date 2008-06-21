@@ -49,6 +49,7 @@ public class AbstractBinaryTreeNode<C extends Comparable<C>, T extends BinaryTre
     	super();
     	leftNode = null;
     	rightNode = null;
+    	
     }
 
     /* (non-Javadoc)

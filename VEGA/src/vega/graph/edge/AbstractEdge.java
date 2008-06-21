@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.edge.Edge;
 
-public abstract class AbstractEdge<V extends Vertex<? extends Edge>> implements Edge{
+public abstract class AbstractEdge implements Edge{
 
     /*Variable declaration*/
 	
@@ -16,6 +16,12 @@ public abstract class AbstractEdge<V extends Vertex<? extends Edge>> implements 
     private String style = "DEFAULT";
     /*End variable declaration*/
 
+    public AbstractEdge(){
+    	active = false;
+    	inUse = false;
+    	weight = 0;
+    }
+    
     /**
      * Returns the edge weight
      * @return
@@ -134,7 +140,7 @@ public abstract class AbstractEdge<V extends Vertex<? extends Edge>> implements 
      *
      * @param edgeList
      */
-    public static <V extends Vertex<E>, E extends Edge> void sortEdgesByDistance(E[] edgeList) {
+    public static <E extends Edge> void sortEdgesByDistance(E[] edgeList) {
         quicksort(edgeList, 0, edgeList.length - 1);
     }
 
@@ -144,7 +150,7 @@ public abstract class AbstractEdge<V extends Vertex<? extends Edge>> implements 
      * @param left
      * @param right
      */
-    private static <V extends Vertex<E>, E extends Edge> void quicksort(E[] edgeList, int left, int right) {
+    private static <E extends Edge> void quicksort(E[] edgeList, int left, int right) {
         if (right <= left) {
             return;
         //Else
@@ -155,7 +161,7 @@ public abstract class AbstractEdge<V extends Vertex<? extends Edge>> implements 
 
     }
 
-    private static <V extends Vertex<E>, E extends Edge> int partition(E[] edgeList, int left, int right) {
+    private static <E extends Edge> int partition(E[] edgeList, int left, int right) {
         int i = left - 1;
         int j = right;
 
@@ -192,7 +198,7 @@ public abstract class AbstractEdge<V extends Vertex<? extends Edge>> implements 
      * @param i
      * @param j
      */
-    private static <V extends Vertex<E>, E extends Edge> void swap(E[] edgeList, int i, int j) {
+    private static <E extends Edge> void swap(E[] edgeList, int i, int j) {
         //swaps++;  //We can keep track of our swaps for proof purposes.
         E temp = edgeList[i];
         edgeList[i] = edgeList[j];
@@ -204,7 +210,7 @@ public abstract class AbstractEdge<V extends Vertex<? extends Edge>> implements 
      * @param edgeList
      * @return
      */
-    private static <V extends Vertex<E>, E extends Edge> String edgeListToString(ArrayList<E> edgeList) {
+    private static <E extends Edge> String edgeListToString(ArrayList<E> edgeList) {
         String returnString = "";
         for (int i = 0; i < edgeList.size(); i++) {
             returnString += edgeList.get(i).toString() + "\n";
@@ -219,7 +225,7 @@ public abstract class AbstractEdge<V extends Vertex<? extends Edge>> implements 
      * @param index
      * @return
      */
-    public static <V extends Vertex<E>, E extends Edge> String edgeListToString(ArrayList<E> edgeList, int index) {
+    public static <V extends Vertex<V,E>, E extends Edge> String edgeListToString(ArrayList<E> edgeList, int index) {
         String returnString = "";
         for (int i = index; i < edgeList.size(); i++) {
             returnString += edgeList.get(i).toString() + "\n";
@@ -233,7 +239,7 @@ public abstract class AbstractEdge<V extends Vertex<? extends Edge>> implements 
      * @param vertexList
      * @return
      */
-    public static <V extends Vertex<E>, E extends Edge> String allEdgesToString(ArrayList<V> vertexList) {
+    public static <V extends Vertex<V,E>, E extends Edge> String allEdgesToString(ArrayList<V> vertexList) {
         String returnString = "";
         for (int i = 0; i < vertexList.size(); i++) {
             ArrayList<E> edgeList = vertexList.get(i).getEdges();
@@ -249,7 +255,7 @@ public abstract class AbstractEdge<V extends Vertex<? extends Edge>> implements 
      * @param vertexList a vertex array
      * @return returns the generated String.
      */
-    public static <V extends Vertex<E>, E extends Edge> String allEdgesWithoutRepeats(ArrayList<V> vertexList) {
+    public static <V extends Vertex<V,E>, E extends Edge> String allEdgesWithoutRepeats(ArrayList<V> vertexList) {
         String returnString = "";
         for (int i = 0; i < vertexList.size(); i++) {
             for (int j = i + 1; j < vertexList.size(); j++) {
