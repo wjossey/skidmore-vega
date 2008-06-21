@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * an algorithm manipulates the graph.
  * @author w_jossey
  */
-public class Controller<V extends Vertex<V,E>, E extends Edge<V,E>> {
+public class Controller<V extends Vertex<V,E>, E extends Edge> {
 
     int counter = 0;
     int imageCounter = 0;
