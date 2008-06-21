@@ -6,7 +6,7 @@ import interfaces.graph.vertex.GraphvizVertexProperties;
 
 public class VertexProperties implements GraphvizVertexProperties {
 	
-	Vertex<? extends Edge> parent;
+	Vertex<?,?> parent;
 	
 	private String color = "DEFAULT"; //Color of the vertex
 
@@ -16,7 +16,7 @@ public class VertexProperties implements GraphvizVertexProperties {
     
     private int sides = 0; //Used by Graphviz to draw polygons
 	
-	VertexProperties(Vertex<? extends Edge> v){
+	VertexProperties(Vertex<?,?> v){
 		parent = v;
 	}
 	
@@ -93,7 +93,7 @@ public class VertexProperties implements GraphvizVertexProperties {
 		this.style = style;
 	}
 
-	public void setParentVertex(Vertex<? extends Edge> v) {
+	public void setParentVertex(Vertex<?,? > v) {
 		parent = v;
 	}
 

@@ -5,7 +5,7 @@ import interfaces.graph.Graph;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 
-public class GraphAlgorithms<V extends Vertex<E>, E extends Edge> implements Runnable{
+public class GraphAlgorithms<V extends Vertex<V,E>, E extends Edge> implements Runnable{
 	/**
 	 * @param args
 	 */

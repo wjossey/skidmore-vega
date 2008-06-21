@@ -1,8 +1,9 @@
 package interfaces.graph.edge.network;
 
+import interfaces.graph.vertex.network.NetworkNode;
 import interfaces.graph.edge.Edge;
 
-public interface NetworkEdge extends Edge{
+public interface NetworkEdge<N extends NetworkNode<N,E>, E extends NetworkEdge<N,E>> extends Edge{
 
 	/**
 	 * Get capacity of the network edge

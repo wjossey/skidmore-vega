@@ -3,16 +3,14 @@
  * and open the template in the editor.
  */
 
-package interfaces.dataStructures;
+package interfaces.algorithms.graph;
 
 /**
  *
  * @author w_jossey
  */
-public interface RedBlackTreeV1{
+public interface BreadthFirstSearch{
+	
+	
 
-    boolean delete(Object x);
-
-    void insert(Object x);
-   
 }

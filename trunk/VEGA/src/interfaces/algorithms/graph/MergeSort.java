@@ -3,13 +3,12 @@
  * and open the template in the editor.
  */
 
-package interfaces.dataStructures;
-
+package interfaces.algorithms.graph;
 
 /**
  *
  * @author w_jossey
  */
-public interface VegaLinkedList<E>{
-    
+public interface MergeSort {
+
 }

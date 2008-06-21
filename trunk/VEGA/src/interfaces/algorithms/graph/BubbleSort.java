@@ -3,12 +3,12 @@
  * and open the template in the editor.
  */
 
-package interfaces.algorithms;
+package interfaces.algorithms.graph;
 
 /**
  *
  * @author w_jossey
  */
-public interface DepthFirstSearch {
+public interface BubbleSort  {
 
 }

@@ -20,7 +20,7 @@ import vega.graph.edge.AbstractEdge;
 //  Created by Weston Jossey on 7/10/07.
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
-public class AbstractVertex<V extends Vertex<E>, E extends Edge> implements Vertex<E>, Serializable, Cloneable{
+public class AbstractVertex<V extends Vertex<V,E>, E extends Edge> implements Vertex<V,E>, Serializable, Cloneable{
 
     /**
 	 * 
@@ -64,6 +64,12 @@ public class AbstractVertex<V extends Vertex<E>, E extends Edge> implements Vert
 		this.y = y;
 	}
 	
+	public AbstractVertex(){
+		x = 0;
+		y = 0;
+		this.edgeList = null;
+	}
+	
 
     /**
      * Set the parent graph.
@@ -77,7 +83,7 @@ public class AbstractVertex<V extends Vertex<E>, E extends Edge> implements Vert
      * 
      * @return Returns parent graph
      */
-    public Graph<? extends Vertex<E>,E> getGraph() {
+    public Graph<V,E> getGraph() {
         return g;
     }
 
@@ -188,7 +194,7 @@ public class AbstractVertex<V extends Vertex<E>, E extends Edge> implements Vert
      * @param b Destination or source vertex
      * @return Connecting edge from this vertex to Vertex b.
      */
-    public E getEdge(Vertex<E> b) {
+    public E getEdge(V b) {
         return edgeHash.get(b.getUID());
     }
 
