@@ -11,7 +11,7 @@ import interfaces.graph.Graph;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 
-public class NearestNeighbor<V extends Vertex<V,E>, E extends Edge<V,E>> implements GraphAlgorithm<Graph<V,E>,V,E> {
+public class NearestNeighbor<V extends Vertex<V,E>, E extends Edge> implements GraphAlgorithm<Graph<V,E>,V,E> {
 
     private PseudoCode pseudoCode;
     private Graph<V,E> g;
