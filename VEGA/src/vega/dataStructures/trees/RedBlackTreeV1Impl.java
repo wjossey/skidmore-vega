@@ -15,7 +15,7 @@ import interfaces.dataStructures.tree.RedBlackTreeV1;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class RedBlackTreeV1Impl <C extends Comparable<C>, V extends RedBlackTreeNode<C,V,E>, E extends Edge> extends BinarySearchTreeImpl<C,V,E> implements BinarySearchTree<C,V,E>, RedBlackTreeV1<C,V,E>{
+public class RedBlackTreeV1Impl <C extends Comparable<C>, V extends RedBlackTreeNode<C,V,E>, E extends Edge> extends AbstractBinarySearchTree<C,V,E> implements BinarySearchTree<C,V,E>, RedBlackTreeV1<C,V,E>{
 	
 	private boolean RED = RedBlackTreeNode.RED;
 	private boolean BLACK = RedBlackTreeNode.BLACK;
