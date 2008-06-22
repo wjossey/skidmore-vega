@@ -1,6 +1,5 @@
 package vega.graph.vertex;
 
-import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.vertex.GraphvizVertexProperties;
 

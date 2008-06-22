@@ -2,9 +2,9 @@ package vega.dataStructures.trees;
 
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.tree.BinaryTreeNode;
-import interfaces.graph.vertex.tree.RedBlackTreeNode;
-import vega.exceptions.InvalidTreeException;
 import vega.graph.vertex.tree.RedBlackTreeNode;
+import interfaces.graph.edge.UndirectedEdge;
+import vega.exceptions.InvalidTreeException;
 import interfaces.dataStructures.tree.BinarySearchTree;
 import interfaces.dataStructures.tree.RedBlackTreeV1;
 
@@ -15,7 +15,7 @@ import interfaces.dataStructures.tree.RedBlackTreeV1;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Generation - Code and Comments
  */
-public class RedBlackTreeV1Impl <C extends Comparable<C>, V extends RedBlackTreeNode<C,V,E>, E extends Edge> extends AbstractBinarySearchTree<C,V,E> implements BinarySearchTree<C,V,E>, RedBlackTreeV1<C,V,E>{
+public class RedBlackTreeV1Impl <C extends Comparable<C>> extends AbstractBinarySearchTree<C,interfaces.graph.vertex.tree.RedBlackTreeNode<C>> implements RedBlackTreeV1<C>{
 	
 	private boolean RED = RedBlackTreeNode.RED;
 	private boolean BLACK = RedBlackTreeNode.BLACK;
@@ -27,7 +27,7 @@ public class RedBlackTreeV1Impl <C extends Comparable<C>, V extends RedBlackTree
 
     @SuppressWarnings("unchecked")
 	public void insert(C x) {
-        RedBlackTreeNode<C,V,E> newNode = new RedBlackTreeNode<C,V,E>(x, RedBlackTreeNode.RED);
+        RedBlackTreeNode<C> newNode = new RedBlackTreeNode<C>(x, RedBlackTreeNode.RED);
         insertNode((V) newNode);
         fixupInsert((V) newNode);
     } // end insert();

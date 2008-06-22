@@ -28,7 +28,7 @@ public class VegaGUI extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -2763808486006878706L;
-	GraphAlgorithm a = null;
+	GraphAlgorithm<?,?,?> a = null;
 
     /** Creates new form VegaGUI */
     public VegaGUI() {
