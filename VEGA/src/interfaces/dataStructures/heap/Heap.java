@@ -5,11 +5,15 @@
 
 package interfaces.dataStructures.heap;
 
+import interfaces.graph.Tree;
+import interfaces.graph.edge.UndirectedEdge;
+import interfaces.graph.vertex.heap.HeapNode;
+
 /**
  *
  * @author w_jossey
  */
-public interface Heap<C extends Comparable<C>> {
+public interface Heap<C extends Comparable<C>> extends Tree<C, HeapNode<C>, UndirectedEdge<HeapNode<C>>>{
 	
 	/**
 	 * Instantiates an empty heap.
@@ -22,14 +26,30 @@ public interface Heap<C extends Comparable<C>> {
 	 */
 	public C findMin();
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean deleteMin();
 	
+	/**
+	 * 
+	 * @param arg
+	 */
 	public void insert(C arg);
 	
+	/**
+	 * 
+	 * @param value
+	 * @return
+	 */
 	public boolean decreaseKey(double value);
 	
+	/**
+	 * 
+	 * @param h
+	 * @return
+	 */
 	public boolean merge(Heap<C> h);
-	
-	
-
+		
 }
