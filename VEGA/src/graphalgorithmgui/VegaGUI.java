@@ -757,7 +757,7 @@ public class VegaGUI extends javax.swing.JFrame {
                         } else {
                             if (algorithmString.equalsIgnoreCase("Nearest Neighbor")) {
 
-                                a = new NearestNeighbor();
+                                a = new  	();
                             }
                         }
                         Runnable runnableGraphAlgorithm = new GraphAlgorithms(a, g);
