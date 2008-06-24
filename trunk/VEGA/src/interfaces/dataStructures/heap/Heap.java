@@ -18,38 +18,24 @@ public interface Heap<C extends Comparable<C>> extends Tree<C, HeapNode<C>, Undi
 	/**
 	 * Instantiates an empty heap.
 	 */
-	public void createHeap();
+	public void buildHeap();
 	
 	/**
 	 * Returns the minimum value in the heap.
 	 * @return The minimum value on the heap.
 	 */
-	public C findMin();
+	public C findMax();
 	
 	/**
 	 * 
 	 * @return
 	 */
-	public boolean deleteMin();
+	public boolean removeMax();
 	
 	/**
 	 * 
 	 * @param arg
 	 */
 	public void insert(C arg);
-	
-	/**
-	 * 
-	 * @param value
-	 * @return
-	 */
-	public boolean decreaseKey(double value);
-	
-	/**
-	 * 
-	 * @param h
-	 * @return
-	 */
-	public boolean merge(Heap<C> h);
 		
 }
