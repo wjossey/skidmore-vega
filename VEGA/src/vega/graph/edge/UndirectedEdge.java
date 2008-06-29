@@ -21,8 +21,8 @@ public class UndirectedEdge<V extends Vertex<V,interfaces.graph.edge.UndirectedE
      * @param b
      */
 	
-	V vertexA = null;
-	V vertexB = null;
+	protected V vertexA = null;
+	protected V vertexB = null;
 	
     public UndirectedEdge(V a, V b){
         vertexA = a;
@@ -31,9 +31,9 @@ public class UndirectedEdge<V extends Vertex<V,interfaces.graph.edge.UndirectedE
     
     /**
      * See Edge class for documentation.
-     * @param a
-     * @param b
-     * @param weight
+     * @param a Vertex a
+     * @param b Vertex b
+     * @param weight Edge weight
      */
     public UndirectedEdge(V a, V b, double weight){
         vertexA = a;
@@ -42,12 +42,10 @@ public class UndirectedEdge<V extends Vertex<V,interfaces.graph.edge.UndirectedE
     }
 
     
-	@SuppressWarnings("unchecked")
 	public V getVertexA() {
 		return vertexA;
 	}
-
-	@SuppressWarnings("unchecked")
+	
 	public V getVertexB() {
 		return vertexB;
 	}
