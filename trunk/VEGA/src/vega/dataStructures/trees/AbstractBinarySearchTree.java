@@ -62,6 +62,10 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
     } // end inner class BSTIterator
 
 
+    /**
+     * Returns an iterator for the comparables of the binary search tree.
+     * @return
+     */
     public Iterator<C> getIterator() {
         return new BSTIterator();
     } // end getIterator()
@@ -73,11 +77,15 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
         return root == null;
     }
 
+    /**
+     * Method to implement.  Must specify a type of treeNode to instantiate when given
+     * a generic comparable.  
+     */
 	public abstract void insert(C arg);
 	
 	/**
-	 * 
-	 * @param newNode
+	 * Insert the new node into the tree.
+	 * @param newNode Node to insert.
 	 */
 	protected void insertNode(T newNode) {
         C k = newNode.getData();
@@ -109,6 +117,11 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
     } // end insertNode();
 
 
+	/**
+	 * Returns a string that represents an in order walk of the tree.
+	 * @param curr Root sub-tree node.
+	 * @return String representation of the tree.
+	 */
     public String inOrderWalk(T curr) {
         String result = "";
         if (curr != null) {
@@ -121,6 +134,11 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
         return result;
     }
 
+    /**
+     * Return the minimum node of the binary search tree.
+     * @param subtree Root vertex of the subtree.
+     * @return Minimum node of the subtree.
+     */
 	private T minimum(T subtree) {
 		T minimum = null;
         while (subtree != null) {
@@ -132,8 +150,8 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
 
     /**
      * Returns the successor node of a subtree
-     * @param subtree
-     * @return
+     * @param subtree Subtree to get the successor from.
+     * @return Successor of the subtree.
      */
 	private T successor(T subtree) {
         if (subtree.getRightNode() != null) {
@@ -149,6 +167,12 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
         return prev;
     }
 
+	/**
+	 * Search the tree for node T.
+	 * @param subtree Root of subtree to search.
+	 * @param key Key to find.
+	 * @return Tree node of found item or null.
+	 */
 	protected T search(T subtree, C key) {
         if (subtree == null || key.compareTo(subtree.getData()) == 0) {
             return subtree;
@@ -163,7 +187,10 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
 
     } // end search()
 
-
+	/**
+	 * Search the whole tree for some comparable element.
+	 * @return Returns the comparable or else null.
+	 */
 	public C search(C arg) {
         C key = arg;
         T node = search(root, key);
@@ -381,7 +408,11 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
     } // end preOrderGraphViz()
 
 
-    //Left, right, root
+    /**
+     * Prints a post order graphViz representation of the tree.
+     * @param curr Subtree root node.
+     * @return String representation of the tree.
+     */
     public String postOrderGraphViz(T curr) {
         String result = "";
 
@@ -439,6 +470,7 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
     }
 
     /**
+     * Returns the number of elements in the tree.
      * @return Returns the numElements.
      */
     public int getNumElements() {
@@ -456,18 +488,26 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
         return numElements;
     }
 
-    @SuppressWarnings("unchecked")
+    /**
+     * Return the root vertex of the tree.
+     * @return Root node.
+     */
 	public T getRoot(){
         return root;
     }
     
+	/**
+	 * Set the root vertex of the tree.
+	 * @return Root node.
+	 */
     public void setRoot(T root){
         this.root = root;
     }
 
     /**
-     * Generic rotate takes the parent and child
-     * @param 
+     * Generic rotate takes the parent and child and rotates.
+     * @param parent Parent node to rotate.
+     * @param child Child node to rotate.
      */
     protected void rotate(T parent, T child) {
     	T transferredChild = null;

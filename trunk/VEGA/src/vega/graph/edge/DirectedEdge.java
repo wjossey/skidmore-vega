@@ -9,12 +9,14 @@ import interfaces.graph.vertex.Vertex;
 
 /**
  * A directed edge is an edge that has a source vertex and a destination vertex.
- * This prevents bi-directional movement by an algorithm.  
+ * This prevents bi-directional movement by an algorithm on the edge.  The visibility
+ * of a vertex from one to another is limited by whether it has the opposite vertex
+ * as a destination of one of its edges.  
  * @author w_jossey
  */
 public class DirectedEdge<V extends Vertex<V,interfaces.graph.edge.DirectedEdge<V>>> extends AbstractEdge implements interfaces.graph.edge.DirectedEdge<V>{
-    V from = null; 
-    V to = null;
+    protected V from = null; 
+    protected V to = null;
     double weight;
     
     /**
@@ -22,7 +24,6 @@ public class DirectedEdge<V extends Vertex<V,interfaces.graph.edge.DirectedEdge<
      * @param source Source vertex
      * @param destination Destination vertex
      */
-    
 	public DirectedEdge(V source, V destination){
         this.from = source;
         this.to = destination;
@@ -41,29 +42,22 @@ public class DirectedEdge<V extends Vertex<V,interfaces.graph.edge.DirectedEdge<
     }
     
     /**
-     * 
-     * @return
+     * Get the source vertex of the edge.
+     * @return Source vertex
      */
     public V getSource(){
         return from;
     }
     
     /**
-     * 
-     * @return
+     * Get the destination vertex of the edge.
+     * @return Destination vertex
      */
     public V getDestination(){
         return to;
     }
-    
-    @Override
+   
     public String toString(){
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
-    public static void main(String[] args){
-    	
-    }
-    
-  
 }
