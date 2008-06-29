@@ -135,9 +135,9 @@ public class Heap<C extends Comparable<C>> extends AbstractTree<C, HeapNode<C>, 
 	/**
 	 * Remove the largest item from the heap.
 	 */
-	public boolean removeMax() {
-		
-		return false;
+	public C removeMax() {
+		//TODO
+		return null;
 	}
 	
 	/**

@@ -108,14 +108,14 @@ public class NearestNeighbor<V extends Vertex<V,E>, E extends Edge> implements G
     private V NearestNeighborProcedureStepThree(V curr, E e, V next) {
         curr.setInUse(true);
         curr.setActive(true);
-        e.setInUse(true);
-        e.setActive(true);
+        e.inUse(true);
+        e.isActive(true);
         next.setActive(true);
         next.setInUse(true);
 
         controller.generateGraphInstance(3, nearestNeighborProcedure.getTitle());
 
-        e.setActive(false);
+        e.isActive(false);
         curr.setActive(false);
 
         return next;
@@ -130,8 +130,8 @@ public class NearestNeighbor<V extends Vertex<V,E>, E extends Edge> implements G
         root.setActive(true);
         E edge = root.getEdge(curr);
         if (edge != null) {
-            edge.setActive(true);
-            edge.setInUse(true);
+            edge.isActive(true);
+            edge.inUse(true);
         }
 
 
@@ -146,7 +146,7 @@ public class NearestNeighbor<V extends Vertex<V,E>, E extends Edge> implements G
      */
     private V NearestNeighborProcedureStepSix(V curr, V root) {
         curr.setActive(false);
-        curr.getEdge(root).setActive(false);
+        curr.getEdge(root).isActive(false);
         root.setActive(false);
 
         controller.generateGraphInstance(6, nearestNeighborProcedure.getTitle());

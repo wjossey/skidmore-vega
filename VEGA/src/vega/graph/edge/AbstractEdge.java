@@ -54,7 +54,7 @@ public abstract class AbstractEdge implements Edge{
      *
      * @param inUseBool
      */
-    public void setInUse(boolean inUseBool) {
+    public void inUse(boolean inUseBool) {
         inUse = inUseBool;
     }
 
@@ -62,7 +62,7 @@ public abstract class AbstractEdge implements Edge{
      *
      * @return
      */
-    public boolean isInUse() {
+    public boolean inUse() {
         return inUse;
     }
 
@@ -70,7 +70,7 @@ public abstract class AbstractEdge implements Edge{
      *
      * @param activeBool
      */
-    public void setActive(boolean activeBool) {
+    public void isActive(boolean activeBool) {
         this.active = activeBool;
     }
 
