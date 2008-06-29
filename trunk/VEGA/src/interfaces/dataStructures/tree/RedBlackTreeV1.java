@@ -11,8 +11,17 @@ package interfaces.dataStructures.tree;
  */
 public interface RedBlackTreeV1<C extends Comparable<C>>{
 
+	/**
+	 * 
+	 * @param x
+	 * @return
+	 */
     boolean delete(C x);
 
+    /**
+     * 
+     * @param x
+     */
     void insert(C x);
    
 }

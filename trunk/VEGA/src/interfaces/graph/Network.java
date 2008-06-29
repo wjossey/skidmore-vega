@@ -17,26 +17,26 @@ import interfaces.graph.edge.network.NetworkEdge;
 public interface Network<N extends NetworkNode<N,E>, E extends NetworkEdge>{
 	
 	/**
-	 * 
-	 * @param v
+	 * Sets the sources of the network.
+	 * @param v ArrayList of the sources
 	 */
 	public void setSources(ArrayList<N> v);
 	
 	/**
-	 * 
-	 * @return
+	 * Returns the sources of the network.
+	 * @return ArrayList of the sources.
 	 */
 	public ArrayList<N> getSources();
 	
 	/**
-	 * 
-	 * @param v
+	 * Sets the sinks of the network.
+	 * @param v ArrayList of the sinks.
 	 */
 	public void setSinks(ArrayList<N> v);
 	
 	/**
-	 * 
-	 * @return
+	 * Gets the sinks of the network.
+	 * @return ArrayList of the sinks.
 	 */
 	public ArrayList<N> getSinks();
 

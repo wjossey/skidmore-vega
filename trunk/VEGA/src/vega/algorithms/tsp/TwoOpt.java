@@ -59,9 +59,9 @@ public class TwoOpt<C extends Comparable<C>, T extends TreeNode<C,T,UndirectedEd
             tour.get(i).setInUse(true);
 
             if (i == tour.size() - 1) {
-                tour.get(i).getEdge(tour.get(0)).setInUse(true);
+                tour.get(i).getEdge(tour.get(0)).inUse(true);
             } else {
-                tour.get(i).getEdge(tour.get(i + 1)).setInUse(true);
+                tour.get(i).getEdge(tour.get(i + 1)).inUse(true);
             }
         }
 
@@ -152,25 +152,25 @@ public class TwoOpt<C extends Comparable<C>, T extends TreeNode<C,T,UndirectedEd
 
                     controller.generateGraphInstance(1, twoOptMove.getTitle());
 
-                    v1.getEdge(v2).setActive(true);
-                    v3.getEdge(v4).setActive(true);
+                    v1.getEdge(v2).isActive(true);
+                    v3.getEdge(v4).isActive(true);
 
                     controller.generateGraphInstance(1, twoOptMove.getTitle());
 
-                    v1.getEdge(v2).setActive(false);
-                    v3.getEdge(v4).setActive(false);
-                    v1.getEdge(v2).setInUse(false);
-                    v3.getEdge(v4).setInUse(false);
+                    v1.getEdge(v2).isActive(false);
+                    v3.getEdge(v4).isActive(false);
+                    v1.getEdge(v2).inUse(false);
+                    v3.getEdge(v4).inUse(false);
 
-                    v2.getEdge(v4).setActive(true);
-                    v2.getEdge(v4).setInUse(true);
-                    v1.getEdge(v3).setActive(true);
-                    v1.getEdge(v3).setInUse(true);
+                    v2.getEdge(v4).isActive(true);
+                    v2.getEdge(v4).inUse(true);
+                    v1.getEdge(v3).isActive(true);
+                    v1.getEdge(v3).inUse(true);
 
                     controller.generateGraphInstance(1, twoOptMove.getTitle());
 
-                    v1.getEdge(v3).setActive(false);
-                    v2.getEdge(v4).setActive(false);
+                    v1.getEdge(v3).isActive(false);
+                    v2.getEdge(v4).isActive(false);
                     v1.setActive(false);
                     v2.setActive(false);
                     v3.setActive(false);

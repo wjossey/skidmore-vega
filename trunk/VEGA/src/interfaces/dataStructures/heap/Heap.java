@@ -27,14 +27,14 @@ public interface Heap<C extends Comparable<C>> extends Tree<C, HeapNode<C>, Undi
 	public C findMax();
 	
 	/**
-	 * 
+	 * Deletes the maximum item from the heap.
 	 * @return
 	 */
-	public boolean removeMax();
+	public C removeMax();
 	
 	/**
-	 * 
-	 * @param arg
+	 * Inserts a new item into the heap.
+	 * @param arg  Comparable item to insert.
 	 */
 	public void insert(C arg);
 		
