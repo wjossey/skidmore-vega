@@ -53,6 +53,9 @@ public class AbstractVertex<V extends Vertex<V,E>, E extends Edge> implements Ve
 
     /* Variable Declarations End*/
 
+	/**
+	 * 
+	 */
 	public AbstractVertex(int x, int y){
 		this.x = x;
 		this.y = y;
