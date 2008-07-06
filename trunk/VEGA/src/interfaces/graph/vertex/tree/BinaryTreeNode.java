@@ -2,31 +2,31 @@ package interfaces.graph.vertex.tree;
 
 import interfaces.graph.edge.UndirectedEdge;
 
-public interface BinaryTreeNode<C extends Comparable<C>, T extends BinaryTreeNode<C,T>> extends TreeNode<C,T,UndirectedEdge<T>>{
+public interface BinaryTreeNode<C extends Comparable<? super C>, T extends BinaryTreeNode<? super C, ? super T>> extends TreeNode<C,T,UndirectedEdge<T>>{
 
 	/**
 	 * 
 	 * @return
 	 */
-	public T getLeftNode();
+	public T getLeftChild();
 
 	/**
 	 * 
 	 * @return
 	 */
-	public T getRightNode();
+	public T getRightChild();
 
 	/**
 	 * 
 	 * @param left
 	 */
-	public void setLeftNode(T left);
+	public void setLeftChild(T left);
 
 	/**
 	 * 
 	 * @param right
 	 */
-	public void setRightNode(T right);
+	public void setRightChild(T right);
 
 	/**
 	 * 

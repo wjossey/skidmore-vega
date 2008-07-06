@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 
-public interface Graph<V extends Vertex<V,E>, E extends Edge>{
+public interface Graph<V extends Vertex<? super E>, E extends Edge>{
 
 	public int getSize();
 

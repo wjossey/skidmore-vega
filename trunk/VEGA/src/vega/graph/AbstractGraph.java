@@ -23,7 +23,7 @@ import java.util.Random;
  * or edges)."
  * @author w_jossey
  */
-public class AbstractGraph<V extends Vertex<V,E>, E extends Edge> implements Graph<V, E>{
+public class AbstractGraph<V extends Vertex<? super E>, E extends Edge> implements Graph<V, E>{
 
     protected int size = 0;
     protected int positionInArray = 0;
@@ -299,7 +299,8 @@ public class AbstractGraph<V extends Vertex<V,E>, E extends Edge> implements Gra
             returnString += "graph G{\n;";
         //returnString += "graph G{\nsize=\"8.5,11\";";
         }
-
+        
+        
         returnString += VertexHelper.vertexListToString(vertexList) + "\n";
         returnString += AbstractEdge.allEdgesWithoutRepeats(vertexList) + "\n";
 
@@ -321,8 +322,7 @@ public class AbstractGraph<V extends Vertex<V,E>, E extends Edge> implements Gra
 		return true;
 
 	}
-
-	@SuppressWarnings("unchecked")
+	
 	public void addEdge(E e) {
 		// TODO Auto-generated method stub
 		edgeList.add(e);

@@ -6,7 +6,7 @@ import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.vertex.tree.TreeNode;
 
-public interface TreeNode<C extends Comparable<C>, T extends TreeNode<C,T,E>, E extends Edge> extends Vertex<T,E>{
+public interface TreeNode<C extends Comparable<? super C>, T extends TreeNode<? super C,? super T,? super E>, E extends Edge> extends Vertex<E>{
 
 	/**
 	 * 

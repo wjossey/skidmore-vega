@@ -7,18 +7,13 @@ package interfaces.graph.vertex;
 
 import java.util.ArrayList;
 
-import interfaces.graph.Graph;
 import interfaces.graph.edge.Edge;
 
 /**
  *
  * @author w_jossey
  */
-public interface Vertex<V extends Vertex<V,E>, E extends Edge>{
-	
-	public void setGraph(Graph<V, E> g);
-	
-	public Graph<V, E> getGraph();
+public interface Vertex<E extends Edge>{
 	
 	public void setName(String name);
 	
@@ -34,7 +29,7 @@ public interface Vertex<V extends Vertex<V,E>, E extends Edge>{
 	
 	public void addEdge(E toTempVertex);
 	
-	public E getEdge(V v);
+	public <V extends Vertex<? super E>> E getEdge(V v);
 	
 	public int getUID();
 	

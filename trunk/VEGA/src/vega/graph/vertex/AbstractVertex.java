@@ -20,7 +20,7 @@ import vega.graph.edge.AbstractEdge;
 //  Created by Weston Jossey on 7/10/07.
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
-public class AbstractVertex<V extends Vertex<V,E>, E extends Edge> implements Vertex<V,E>, Serializable, Cloneable{
+public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, Cloneable{
 
     /**
 	 * 
@@ -43,8 +43,6 @@ public class AbstractVertex<V extends Vertex<V,E>, E extends Edge> implements Ve
  
 	private boolean visited = false;  //Boolean as to whether or not the vertex has been visited
 
-	private Graph<V,E> g;  //This is the parent graph we're working with
-
 	private boolean active = false; //Is the vertex active (VEGA)
 
 	private boolean inUse = false; //Is the vertex in-use (VEGA)
@@ -54,7 +52,9 @@ public class AbstractVertex<V extends Vertex<V,E>, E extends Edge> implements Ve
     /* Variable Declarations End*/
 
 	/**
-	 * 
+	 * Constructor
+	 * @param x X coordinate
+	 * @param y Ycoordinate
 	 */
 	public AbstractVertex(int x, int y){
 		this.x = x;
@@ -72,23 +72,6 @@ public class AbstractVertex<V extends Vertex<V,E>, E extends Edge> implements Ve
 		y = 0;
 		this.edgeList = null;
 	}
-	
-
-    /**
-     * Set the parent graph.
-     * @param g Parent graph
-     */
-    public void setGraph(Graph<V,E> g) {
-        this.g = g;
-    }
-
-    /**
-     * 
-     * @return Returns parent graph
-     */
-    public Graph<V,E> getGraph() {
-        return g;
-    }
 
     /**
      * Set the name of the vertex
@@ -176,7 +159,7 @@ public class AbstractVertex<V extends Vertex<V,E>, E extends Edge> implements Ve
         /*Put it in an array for sortability (quicksorted)*/
         edgeList.add(e);
         if(e instanceof DirectedEdge){
-        	DirectedEdge<?> tempEdge = (DirectedEdge<?>) e;
+        	DirectedEdge tempEdge = (DirectedEdge) e;
         	edgeHash.put(tempEdge.getDestination().getUID(), e);
         }else{
         	if(e instanceof UndirectedEdge){
@@ -197,7 +180,7 @@ public class AbstractVertex<V extends Vertex<V,E>, E extends Edge> implements Ve
      * @param b Destination or source vertex
      * @return Connecting edge from this vertex to Vertex b.
      */
-    public E getEdge(V b) {
+    public <V extends Vertex<? super E>> E getEdge(V b) {
         return edgeHash.get(b.getUID());
     }
 
