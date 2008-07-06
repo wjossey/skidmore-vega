@@ -20,7 +20,7 @@ public class RBT<C extends Comparable<C>> extends AbstractBinarySearchTree<C, Re
 		RedBlackTreeNode<C> problemNode = problemChild;
 		while(problemNode.getParentNode() != null && problemNode.getParentNode().isColor(RED)) {
 			if (problemChild.getParentNode().isLeftChild()) {
-				RedBlackTreeNode<C> uncle = (RedBlackTreeNode<C>) problemChild.getParentNode().getParentNode().getRightNode();
+				RedBlackTreeNode<C> uncle = (RedBlackTreeNode<C>) problemChild.getParentNode().getParentNode().getRightChild();
 				
 				if (uncle != null && uncle.isColor(RED)) {
 					/*
@@ -55,7 +55,7 @@ public class RBT<C extends Comparable<C>> extends AbstractBinarySearchTree<C, Re
 				 */
 				System.out.println(this.toGraphViz("NullPointer"));
 				System.out.flush();
-				RedBlackTreeNode<C> uncle = problemChild.getParentNode().getParentNode().getLeftNode();
+				RedBlackTreeNode<C> uncle = problemChild.getParentNode().getParentNode().getLeftChild();
 				
 				if (uncle != null && uncle.isColor(RED)) {
 					/*

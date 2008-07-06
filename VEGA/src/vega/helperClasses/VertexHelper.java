@@ -17,7 +17,7 @@ public class VertexHelper {
 	 * @param g
 	 * @return
 	 */
-	public static <V extends Vertex<V,E>, E extends Edge> Graph<V,E> generateVertices(Graph<V, E> g){
+	public static <V extends Vertex<? super E>, E extends Edge> Graph<V,E> generateVertices(Graph<V, E> g){
 		Graph<V, E> graph = g;
 		graph.addVertex(null);
 	
@@ -25,7 +25,7 @@ public class VertexHelper {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <V extends Vertex<V,E>, E extends Edge> ArrayList<V> getKNearestNeighbors(V vertex, int k){
+	public static <V extends Vertex<E>, E extends Edge> ArrayList<V> getKNearestNeighbors(V vertex, int k){
 		ArrayList<V> returnArrayList = new ArrayList<V>();
 		ArrayList<E> edgeList = vertex.getEdges();
 		
@@ -62,7 +62,7 @@ public class VertexHelper {
 	 * @return The nearest neighbor
 	 */
 	@SuppressWarnings("unchecked")
-	public static <V extends Vertex<V,E>, E extends Edge> ArrayList<V> getNearestNeighbors(V vertex){
+	public static <V extends Vertex<E>, E extends Edge> ArrayList<V> getNearestNeighbors(V vertex){
 		
 		ArrayList<V> returnArrayList = new ArrayList<V>();
 		ArrayList<E> edgeList = vertex.getEdges();
@@ -92,7 +92,7 @@ public class VertexHelper {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <V extends Vertex<V,E>, E extends Edge> V getNearestNeighbor(V vertex){
+	public static <V extends Vertex<E>, E extends Edge> V getNearestNeighbor(V vertex){
 	
 		ArrayList<E> edgeList = vertex.getEdges();
 		
@@ -132,7 +132,7 @@ public class VertexHelper {
      * @param vertexList
      * @return
      */
-    public static <V extends Vertex<V,E>, E extends Edge> String vertexListToString(ArrayList<V> vertexList) {
+    public static <V extends Vertex<? super E>, E extends Edge>String vertexListToString(ArrayList<V> vertexList) {
         String returnString = "";
         for (int i = 0; i < vertexList.size(); i++) {
             returnString += vertexList.get(i).toString() + "\n";

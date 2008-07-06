@@ -49,7 +49,7 @@ public class Heap<C extends Comparable<C>> extends AbstractTree<C, HeapNode<C>, 
     	System.out.println("Array Length: " + array.length);
         for(int i = 0; i < array.length; i++){
         	System.out.println("i: " + i);
-        	a.add(new vega.graph.vertex.heap.HeapNode<C>(array[i]));
+        	a.add(new vega.graph.vertex.heap.BinaryHeapNode<C>(array[i]));
         }
         arrayLength = a.size();
         heapSort();
@@ -94,7 +94,7 @@ public class Heap<C extends Comparable<C>> extends AbstractTree<C, HeapNode<C>, 
             	}
             }
                 
-            if (a.get(v).getData().compareTo(a.get(w).getData()) >= 0){
+            if (w+1 < arrayLength && a.get(v).getData().compareTo(a.get(w).getData()) >= 0){
             	return;  // v has heap property
             }
             // otherwise

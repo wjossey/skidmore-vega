@@ -11,7 +11,7 @@ import interfaces.graph.vertex.Vertex;
  *
  * @author w_jossey
  */
-public interface UndirectedEdge<V extends Vertex<V,? extends UndirectedEdge<V>>> extends Edge{
+public interface UndirectedEdge<V extends Vertex<UndirectedEdge<? super V>>> extends Edge{
 	
 	public V getVertexA();
 	

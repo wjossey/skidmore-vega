@@ -14,7 +14,7 @@ import interfaces.graph.vertex.Vertex;
  * as a destination of one of its edges.  
  * @author w_jossey
  */
-public class DirectedEdge<V extends Vertex<V,interfaces.graph.edge.DirectedEdge<V>>> extends AbstractEdge implements interfaces.graph.edge.DirectedEdge<V>{
+public class DirectedEdge<V extends Vertex<? super interfaces.graph.edge.DirectedEdge<? super V>>> extends AbstractEdge implements interfaces.graph.edge.DirectedEdge<V>{
     protected V from = null; 
     protected V to = null;
     double weight;
@@ -51,6 +51,7 @@ public class DirectedEdge<V extends Vertex<V,interfaces.graph.edge.DirectedEdge<
     
     /**
      * Get the destination vertex of the edge.
+     * @return 
      * @return Destination vertex
      */
     public V getDestination(){
@@ -59,5 +60,7 @@ public class DirectedEdge<V extends Vertex<V,interfaces.graph.edge.DirectedEdge<
    
     public String toString(){
         throw new UnsupportedOperationException("Not supported yet.");
+       
     }
+ 
 }

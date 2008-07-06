@@ -11,7 +11,7 @@ import interfaces.graph.vertex.Vertex;
  *
  * @author w_jossey
  */
-public interface DirectedEdge<V extends Vertex<V, ? extends DirectedEdge<V>>> extends Edge{
+public interface DirectedEdge<V extends Vertex<? super DirectedEdge<? super V>>> extends Edge{
 	
 	/**
 	 * Gets the source vertex of the edge.

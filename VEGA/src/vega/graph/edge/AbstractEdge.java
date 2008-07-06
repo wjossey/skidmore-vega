@@ -16,6 +16,9 @@ public abstract class AbstractEdge implements Edge{
     private String style = "DEFAULT";
     /*End variable declaration*/
 
+    /**
+     * Empty constructor.  Instantiates the edge.
+     */
     public AbstractEdge(){
     	active = false;
     	inUse = false;
@@ -24,19 +27,23 @@ public abstract class AbstractEdge implements Edge{
     
     /**
      * Returns the edge weight
-     * @return
+     * @return Edge weight
      */
     public double getWeight() {
         return weight;
     }
     
+    /**
+     * Sets the edge weight
+     * @param d Edge Weight
+     */
     public void setWeight(double d){
     	weight = d;
     }
 
     /**
      * Returns the edge weight in a formatted string.  Useful for DOT
-     * @return
+     * @return String formatted weight
      */
     public String getFormattedWeight() {
         if (weight != Double.NaN) {
@@ -51,7 +58,7 @@ public abstract class AbstractEdge implements Edge{
     }
     
     /**
-     *
+     * Sets the edge to in use.
      * @param inUseBool
      */
     public void inUse(boolean inUseBool) {
@@ -225,7 +232,7 @@ public abstract class AbstractEdge implements Edge{
      * @param index
      * @return
      */
-    public static <V extends Vertex<V,E>, E extends Edge> String edgeListToString(ArrayList<E> edgeList, int index) {
+    public static <V extends Vertex<E>, E extends Edge> String edgeListToString(ArrayList<E> edgeList, int index) {
         String returnString = "";
         for (int i = index; i < edgeList.size(); i++) {
             returnString += edgeList.get(i).toString() + "\n";
@@ -239,7 +246,7 @@ public abstract class AbstractEdge implements Edge{
      * @param vertexList
      * @return
      */
-    public static <V extends Vertex<V,E>, E extends Edge> String allEdgesToString(ArrayList<V> vertexList) {
+    public static <V extends Vertex<E>, E extends Edge> String allEdgesToString(ArrayList<V> vertexList) {
         String returnString = "";
         for (int i = 0; i < vertexList.size(); i++) {
             ArrayList<E> edgeList = vertexList.get(i).getEdges();
@@ -255,11 +262,11 @@ public abstract class AbstractEdge implements Edge{
      * @param vertexList a vertex array
      * @return returns the generated String.
      */
-    public static <V extends Vertex<V,E>, E extends Edge> String allEdgesWithoutRepeats(ArrayList<V> vertexList) {
+    public static <V extends Vertex<? super E>, E extends Edge> String allEdgesWithoutRepeats(ArrayList<V> vertexList) {
         String returnString = "";
         for (int i = 0; i < vertexList.size(); i++) {
             for (int j = i + 1; j < vertexList.size(); j++) {
-                E e = vertexList.get(i).getEdge(vertexList.get(j));
+                E e = (E) vertexList.get(i).getEdge(vertexList.get(j));
                 if (e != null) {
                     returnString += e.toString() + "\n";
                 }

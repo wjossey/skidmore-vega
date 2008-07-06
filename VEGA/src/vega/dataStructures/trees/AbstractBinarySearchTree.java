@@ -94,9 +94,9 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
         while (curr != null) {
             prev = curr;
             if (k.compareTo(curr.getData()) < 0) {
-                curr = curr.getLeftNode();
+                curr = curr.getLeftChild();
             } else {
-                curr = curr.getRightNode();
+                curr = curr.getRightChild();
             } // end if
 
         } // end while
@@ -106,9 +106,9 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
             root = newNode;
         } else {
             if (k.compareTo(prev.getData()) < 0) {
-                prev.setLeftNode(newNode);
+                prev.setLeftChild(newNode);
             } else {
-                prev.setRightNode(newNode);
+                prev.setRightChild(newNode);
             } // end if
 
         } // end if
@@ -125,8 +125,8 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
     public String inOrderWalk(T curr) {
         String result = "";
         if (curr != null) {
-        	T leftNode = curr.getLeftNode();
-        	T rightNode = curr.getRightNode();
+        	T leftNode = curr.getLeftChild();
+        	T rightNode = curr.getRightChild();
             result = inOrderWalk(leftNode);
             result += " " + curr.getData();
             result += inOrderWalk(rightNode);
@@ -143,7 +143,7 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
 		T minimum = null;
         while (subtree != null) {
             minimum = subtree;
-            subtree = subtree.getLeftNode();
+            subtree = subtree.getLeftChild();
         }
         return minimum;
     }
@@ -154,12 +154,12 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
      * @return Successor of the subtree.
      */
 	private T successor(T subtree) {
-        if (subtree.getRightNode() != null) {
-        	T rightNode = subtree.getRightNode();
+        if (subtree.getRightChild() != null) {
+        	T rightNode = subtree.getRightChild();
             return minimum(rightNode);
         }
         T prev = subtree.getParentNode();
-        while (prev != null && subtree == prev.getRightNode()) {
+        while (prev != null && subtree == prev.getRightChild()) {
             subtree = prev;
             prev = subtree.getParentNode();
         } // end while
@@ -178,10 +178,10 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
             return subtree;
         }
         if (key.compareTo(subtree.getData()) < 0) {
-        	T leftNode = subtree.getLeftNode();
+        	T leftNode = subtree.getLeftChild();
             return search(leftNode, key);
         } else {
-        	T rightNode = subtree.getRightNode();
+        	T rightNode = subtree.getRightChild();
             return search(rightNode, key);
         } // end if
 
@@ -209,9 +209,9 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
             if (key.compareTo(subtree.getData()) == 0) {
                 found = true;
             } else if (key.compareTo(subtree.getData()) < 0) {
-                subtree = subtree.getLeftNode();
+                subtree = subtree.getLeftChild();
             } else {
-                subtree = subtree.getRightNode();
+                subtree = subtree.getRightChild();
             }
         } // end while
 
@@ -282,7 +282,7 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
          */
 		T nodeToDelete;
 
-        if (node.getLeftNode() == null || node.getRightNode() == null) {
+        if (node.getLeftChild() == null || node.getRightChild() == null) {
             nodeToDelete = node;
         } else {
             nodeToDelete = successor(node);
@@ -291,10 +291,10 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
 
         T nodeToUpdate;
 
-        if (nodeToDelete.getLeftNode() != null) {
-            nodeToUpdate = nodeToDelete.getLeftNode();
+        if (nodeToDelete.getLeftChild() != null) {
+            nodeToUpdate = nodeToDelete.getLeftChild();
         } else {
-            nodeToUpdate = nodeToDelete.getRightNode();
+            nodeToUpdate = nodeToDelete.getRightChild();
         } // end if
 
         if (nodeToUpdate != null) {
@@ -307,10 +307,10 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
         } else {
 
             par = nodeToDelete.getParentNode();
-            if (nodeToDelete == par.getLeftNode()) {
-                par.setLeftNode(nodeToUpdate);
+            if (nodeToDelete == par.getLeftChild()) {
+                par.setLeftChild(nodeToUpdate);
             } else {
-                par.setRightNode(nodeToUpdate);
+                par.setRightChild(nodeToUpdate);
             }
         } // end if 
 
@@ -331,7 +331,7 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
 
         //Debug.println("getNodeToDelete(): node passed in is " + node);
         //Debug.println("getNodeToDelete(): node's parent is " + node.getParentNode());
-        if (node.getLeftNode() == null || node.getRightNode() == null) {
+        if (node.getLeftChild() == null || node.getRightChild() == null) {
 
             nodeToDelete = node;
             //Debug.println("getNodeToDelete(): left and right are null");
@@ -348,10 +348,10 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
 	protected T spliceOutNode(T nodeToDelete) {
 		T nodeToUpdate;
 
-        if (nodeToDelete.getLeftNode() != null) {
-            nodeToUpdate = nodeToDelete.getLeftNode();
+        if (nodeToDelete.getLeftChild() != null) {
+            nodeToUpdate = nodeToDelete.getLeftChild();
         } else {
-            nodeToUpdate = nodeToDelete.getRightNode();
+            nodeToUpdate = nodeToDelete.getRightChild();
         } // end if
 
         if (nodeToUpdate != null) {
@@ -364,10 +364,10 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
         } else {
 
             par = nodeToDelete.getParentNode();
-            if (nodeToDelete == par.getLeftNode()) {
-                par.setLeftNode(nodeToUpdate);
+            if (nodeToDelete == par.getLeftChild()) {
+                par.setLeftChild(nodeToUpdate);
             } else {
-                par.setRightNode(nodeToUpdate);
+                par.setRightChild(nodeToUpdate);
             }
         } // end if 
 
@@ -385,8 +385,8 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
         if (curr != null) {
 
             //Try to go to the left
-            if (curr.getLeftNode() != null) {
-            	T leftNode = curr.getLeftNode();
+            if (curr.getLeftChild() != null) {
+            	T leftNode = curr.getLeftChild();
                 result += preOrderGraphViz(leftNode);
             } else {
                 //No node to the left
@@ -394,8 +394,8 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
             } // end if
 
             //Try to go to the right
-            if (curr.getRightNode() != null) {
-            	T rightNode = curr.getRightNode();
+            if (curr.getRightChild() != null) {
+            	T rightNode = curr.getRightChild();
                 result += preOrderGraphViz(rightNode);
             } else {
                 //No node to the right
@@ -427,8 +427,8 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
              * Now check the left, output the whole left subtree before 
              * outputting the edge between the current node and its left child 
              */
-            if (curr.getLeftNode() != null) {
-            	T leftNode = curr.getLeftNode();
+            if (curr.getLeftChild() != null) {
+            	T leftNode = curr.getLeftChild();
                 result += postOrderGraphViz(leftNode);
 
             } else {
@@ -438,8 +438,8 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
             /*
              * Now output the right subtree
              */
-            if (curr.getRightNode() != null) {
-            	T rightNode = curr.getRightNode();
+            if (curr.getRightChild() != null) {
+            	T rightNode = curr.getRightChild();
                 result += postOrderGraphViz(rightNode);
 
             } else {
@@ -517,16 +517,16 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
         //Debug.println("rotate(): called with parent = " + parent + " child = " + child);
         if (child.isLeftChild()) {
             //Debug.println("rotate(): child is a left child");
-            transferredChild = child.getRightNode();
+            transferredChild = child.getRightChild();
             //Debug.println("rotate(): transferred child is " + transferredChild);
-            parent.setLeftNode(transferredChild);
-            child.setRightNode(parent);
+            parent.setLeftChild(transferredChild);
+            child.setRightChild(parent);
         } else {
             //Debug.println("rotate(): child is a right child");
-            transferredChild = child.getLeftNode();
-            parent.setRightNode(transferredChild);
+            transferredChild = child.getLeftChild();
+            parent.setRightChild(transferredChild);
             //Debug.println("rotate(): transferred child is " + transferredChild);
-            child.setLeftNode(parent);
+            child.setLeftChild(parent);
         } // end if 
 
         /*
@@ -546,9 +546,9 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
             root = child;
         } else {
             if (parentWasLeftChild) {
-                grandParent.setLeftNode(child);
+                grandParent.setLeftChild(child);
             } else {
-                grandParent.setRightNode(child);
+                grandParent.setRightChild(child);
             } // end if 
 
         } // end if 
@@ -569,14 +569,14 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
      * CLRS calls this Left-Rotate
      */
     protected void rotateWithRightChild(T problemNode) {
-    	T oldRight = problemNode.getRightNode();
-    	T newRight = oldRight.getLeftNode();
+    	T oldRight = problemNode.getRightChild();
+    	T newRight = oldRight.getLeftChild();
     	T parentOfProblem = problemNode.getParentNode();
 
 
-        oldRight.setLeftNode(problemNode);
+        oldRight.setLeftChild(problemNode);
         oldRight.setParentNode(problemNode.getParentNode());
-        problemNode.setRightNode(newRight);
+        problemNode.setRightChild(newRight);
         problemNode.setParentNode(oldRight);
         /*
          * update the heights -- must be in this order
@@ -588,10 +588,10 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
             root = oldRight;
             //Debug.println("rotateWithRight(): root set to " + oldRight.graphVizName());
         } else {
-            if (parentOfProblem.getLeftNode() == problemNode) {
-                parentOfProblem.setLeftNode(oldRight);
+            if (parentOfProblem.getLeftChild() == problemNode) {
+                parentOfProblem.setLeftChild(oldRight);
             } else {
-                parentOfProblem.setRightNode(oldRight);
+                parentOfProblem.setRightChild(oldRight);
             } // end if 
 
             updateHeight(parentOfProblem);
@@ -606,14 +606,14 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
      * @param problemNode
      */
     protected void rotateWithLeftChild(T problemNode) {
-    	T oldLeft = problemNode.getLeftNode();
-    	T newLeft = oldLeft.getRightNode();
+    	T oldLeft = problemNode.getLeftChild();
+    	T newLeft = oldLeft.getRightChild();
     	T parentOfProblem = problemNode.getParentNode();
 
 
-        oldLeft.setRightNode(problemNode);
+        oldLeft.setRightChild(problemNode);
         oldLeft.setParentNode(problemNode.getParentNode());
-        problemNode.setLeftNode(newLeft);
+        problemNode.setLeftChild(newLeft);
         problemNode.setParentNode(oldLeft);
         /*
          * update the heights -- must be in this order
@@ -624,10 +624,10 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
         if (parentOfProblem == null) {
             root = oldLeft;
         } else {
-            if (parentOfProblem.getLeftNode() == problemNode) {
-                parentOfProblem.setLeftNode(oldLeft);
+            if (parentOfProblem.getLeftChild() == problemNode) {
+                parentOfProblem.setLeftChild(oldLeft);
             } else {
-                parentOfProblem.setRightNode(oldLeft);
+                parentOfProblem.setRightChild(oldLeft);
             } // end if 
 
             updateHeight(parentOfProblem);
@@ -647,12 +647,12 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
         int heightRight = -1;
         boolean balanced = false;
 
-        if (parent.getLeftNode() != null) {
-            heightLeft = parent.getLeftNode().getHeight();
+        if (parent.getLeftChild() != null) {
+            heightLeft = parent.getLeftChild().getHeight();
         }
 
-        if (parent.getRightNode() != null) {
-            heightRight = parent.getRightNode().getHeight();
+        if (parent.getRightChild() != null) {
+            heightRight = parent.getRightChild().getHeight();
         } // end if
 
         /* Update the height of the node*/
@@ -693,27 +693,27 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
         if (sub == null) {
             return true;
         } else {
-            if (sub.getLeftNode() != null) {
-            	T leftNode = sub.getLeftNode();
+            if (sub.getLeftChild() != null) {
+            	T leftNode = sub.getLeftChild();
                 valid = validateTree(leftNode);
 
-                if (sub.getLeftNode().getParentNode() != sub) {
+                if (sub.getLeftChild().getParentNode() != sub) {
                     valid = false;
                     //Debug.println("validate(): exception on tree " + this.toGraphViz("BadTree"));
-                    throw new InvalidTreeException("bad parent pointer at " + sub.getLeftNode());
+                    throw new InvalidTreeException("bad parent pointer at " + sub.getLeftChild());
 
                 } // end if 
 
             } // end if 
 
-            if (sub.getRightNode() != null) {
-            	T rightNode = sub.getRightNode();
+            if (sub.getRightChild() != null) {
+            	T rightNode = sub.getRightChild();
                 valid = validateTree(rightNode);
 
-                if (sub.getRightNode().getParentNode() != sub) {
+                if (sub.getRightChild().getParentNode() != sub) {
                     valid = false;
                     //Debug.println("validate(): exception on tree " + this.toGraphViz("BadTree"));
-                    throw new InvalidTreeException("bad parent pointer at " + sub.getRightNode());
+                    throw new InvalidTreeException("bad parent pointer at " + sub.getRightChild());
 
                 } // end if 
 

@@ -14,15 +14,16 @@ import java.util.ArrayList;
  * @author w_jossey
  */
 
-public class AbstractTreeNode<C extends Comparable<C>, T extends interfaces.graph.vertex.tree.TreeNode<C,T,E>, E extends Edge> extends AbstractVertex<T,E> implements interfaces.graph.vertex.tree.TreeNode<C,T,E>{
+public abstract class AbstractTreeNode<C extends Comparable<? super C>, T extends AbstractTreeNode<? super C,? super T,? super E>, E extends Edge> extends AbstractVertex<E> implements interfaces.graph.vertex.tree.TreeNode<C,T,E>{
 
     /**
 	 * 
 	 */
 	
+	
 	private static final long serialVersionUID = 1L;
 	private static int idCounter = 0;
-    private int id; // unique identifier for the node for graphViz data
+    private int uid; // unique identifier for the node for graphViz data
     private T parent;
     private C data;
     private int height; // for AVL trees
@@ -36,7 +37,7 @@ public class AbstractTreeNode<C extends Comparable<C>, T extends interfaces.grap
     	super();
     	data = k;
         parent = null;
-        id = idCounter;
+        uid = idCounter;
         idCounter++;
     }
     
@@ -44,7 +45,7 @@ public class AbstractTreeNode<C extends Comparable<C>, T extends interfaces.grap
     	super();
     	data = k;
     	parent = null;
-    	id = idCounter++;
+    	uid = idCounter++;
     }
 
     /**
@@ -55,7 +56,7 @@ public class AbstractTreeNode<C extends Comparable<C>, T extends interfaces.grap
     	data = null;
         parent = null;
         height = -1;
-        id = idCounter;
+        uid = idCounter;
         idCounter++;
     }
 
@@ -117,7 +118,7 @@ public class AbstractTreeNode<C extends Comparable<C>, T extends interfaces.grap
     
     
     public int getID(){
-    	return id;
+    	return uid;
     }
 
     @Override
@@ -129,6 +130,16 @@ public class AbstractTreeNode<C extends Comparable<C>, T extends interfaces.grap
 	public E getEdge(T child) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public String getGraphvizString(){
+		String returnString = "";
+    	returnString += uid;
+    	returnString += " [";
+    	returnString += "label = \"" + uid + "\"";
+    	returnString += "];";
+    	
+    	return returnString;
 	}
 
 } // end class TreeNode
