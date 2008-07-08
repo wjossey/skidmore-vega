@@ -11,17 +11,24 @@ import interfaces.graph.Graph;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 
-public class NearestNeighbor<V extends Vertex<V,E>, E extends Edge> implements GraphAlgorithm<Graph<V,E>,V,E> {
+/**
+ * 
+ * @author w_jossey
+ *
+ * @param <V>
+ * @param <E>
+ */
+public class NearestNeighbor<V extends Vertex<E>, E extends Edge> implements GraphAlgorithm<Graph<V,E>,V,E> {
 
     private PseudoCode pseudoCode;
     private Graph<V,E> g;
     private ArrayList<V> vertexArray;
-    Controller<V,E> controller;
+    private Controller<V,E> controller;
     private String FILENAME = "nearestNeighbor";
     private static int instanceCounter = 0;
     private int instanceID = 0;
     private boolean running = false;
-    Procedure nearestNeighborProcedure;
+    private Procedure nearestNeighborProcedure;
 
     /**
      * Contructor instantiates the pseudo code for the algorithm.

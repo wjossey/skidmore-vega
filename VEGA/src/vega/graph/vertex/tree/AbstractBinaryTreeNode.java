@@ -4,22 +4,30 @@
  */
 package vega.graph.vertex.tree;
 
-import interfaces.graph.vertex.tree.BinaryTreeNode;
 import interfaces.graph.edge.UndirectedEdge;
 
 /**
- *
+ * 
  * @author w_jossey
+ *
+ * @param <C>
+ * @param <T>
  */
-public class AbstractBinaryTreeNode<C extends Comparable<C>, T extends BinaryTreeNode<C,T>> extends AbstractTreeNode<C,T,UndirectedEdge<T>> implements BinaryTreeNode<C,T>{
+public class AbstractBinaryTreeNode<C extends Comparable<? super C>, T extends interfaces.graph.vertex.tree.BinaryTreeNode<C,T>> extends AbstractTreeNode<C,T,UndirectedEdge> implements interfaces.graph.vertex.tree.BinaryTreeNode<C,T>{
 
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1808529175569579047L;
 	
+	private static int nodeCounter = 0;
+	
+	
+	
 	private T leftNode;
     private T rightNode;
+    
+    private int uid;
 
     /**
      * 
@@ -29,6 +37,7 @@ public class AbstractBinaryTreeNode<C extends Comparable<C>, T extends BinaryTre
         super(c);
         leftNode = null;
         rightNode = null;
+        uid = nodeCounter++;
 
     }
 
@@ -42,57 +51,57 @@ public class AbstractBinaryTreeNode<C extends Comparable<C>, T extends BinaryTre
         super(c);
         leftNode = left;
         rightNode = right;
+        uid = nodeCounter++;
 
     }
     
+    /**
+     * 
+     */
     public AbstractBinaryTreeNode(){
     	super();
     	leftNode = null;
     	rightNode = null;
+    	uid = nodeCounter++;
     	
     }
 
-    /* (non-Javadoc)
-	 * @see vega.graph.vertex.tree.BinaryTreeNode#getLeftNode()
-	 */
-	public T getLeftNode() {
+    /**
+     * Return the left child of the node.
+     */
+	public T getLeftChild() {
 		return leftNode;
        
     }
 
-    /* (non-Javadoc)
-	 * @see vega.graph.vertex.tree.BinaryTreeNode#getRightNode()
+	/**
+	 * 
 	 */
-
-	@SuppressWarnings("unchecked")
-	public T getRightNode() {
+	public T getRightChild() {
         return rightNode;
     }
 
     /* (non-Javadoc)
 	 * @see vega.graph.vertex.tree.BinaryTreeNode#setLeftNode(interfaces.graph.vertex.tree.BinaryTreeNode)
 	 */
-    public void setLeftNode(T left) {
+    public void setLeftChild(T left) {
        leftNode = left;
     }
 
-    /* (non-Javadoc)
-	 * @see vega.graph.vertex.tree.BinaryTreeNode#setRightNode(interfaces.graph.vertex.tree.BinaryTreeNode)
-	 */
-    public void setRightNode(T right) {
+    /**
+     * Sets the right node.
+     * @param right Right child.
+     */
+    public void setRightChild(T right) {
         rightNode = right;
     }
 
     /**
-     * 
-     * @return
+     * Check to see if the node is a right node.
+     * @return Returns true if the node is a right child.  Otherwise returns false.
      */
-
-    /* (non-Javadoc)
-	 * @see vega.graph.vertex.tree.BinaryTreeNode#isRightChild()
-	 */
     public boolean isRightChild() {
-        if (getParentNode() != null && getParentNode().getRightNode() == this) {
+        if (getParentNode() != null && getParentNode().getRightChild() == this) {
             return true;
         } else {
             return false;
@@ -101,11 +110,12 @@ public class AbstractBinaryTreeNode<C extends Comparable<C>, T extends BinaryTre
     } // end isRightChild()
 
 
-    /* (non-Javadoc)
-	 * @see vega.graph.vertex.tree.BinaryTreeNode#isLeftChild()
-	 */
+    /**
+     * Check to see if the node is a left node.
+     * @return Returns true if the node is a left child.  Otherwise returns false.
+     */
     public boolean isLeftChild() {
-        if (getParentNode() != null && getParentNode().getLeftNode() == this) {
+        if (getParentNode() != null && getParentNode().getLeftChild() == this) {
             return true;
         } else {
             return false;
@@ -114,5 +124,25 @@ public class AbstractBinaryTreeNode<C extends Comparable<C>, T extends BinaryTre
     } // end isLeftChild()
     
     
+    public String toString(){
+    	String returnString = "";
+    	
+    	
+    	return returnString;
+    }
+    
+    public String getGraphvizString(){
+    	String returnString = "";
+    	returnString += uid;
+    	returnString += " [";
+    	returnString += "label = \"" + uid + "\"";
+    	returnString += "];";
+    	
+    	return returnString;
+    }
+    
+    public int getPK(){
+    	return uid;
+    }
 
 }

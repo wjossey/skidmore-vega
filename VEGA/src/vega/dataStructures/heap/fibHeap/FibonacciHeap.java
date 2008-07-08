@@ -50,13 +50,13 @@
  */
 package vega.dataStructures.heap.fibHeap;
 
-import java.util.*;
-
 import vega.graph.vertex.heap.FibonacciHeapNode;
+
+import java.util.*;
 
 
 /**
- * This class implements a Fibonacci heap data structure. Much of the code in
+ *  * This class implements a Fibonacci heap data structure. Much of the code in
  * this class is based on the algorithms in the "Introduction to Algorithms"by
  * Cormen, Leiserson, and Rivest in Chapter 21. The amortized running time of
  * most of these methods is O(1), making it a very fast data structure. Several
@@ -82,8 +82,11 @@ import vega.graph.vertex.heap.FibonacciHeapNode;
  * non-internal variables.<p>
  *
  * @author Nathan Fiedler
+ * @author w_jossey
+ *
+ * @param <C>
  */
-public class FibonacciHeap<C extends Comparable<C>> implements interfaces.dataStructures.heap.FibonacciHeap<C>
+public class FibonacciHeap<C> implements interfaces.dataStructures.heap.FibonacciHeap<C,FibonacciHeapNode<C>>
 {
     //~ Instance fields --------------------------------------------------------
 
@@ -139,11 +142,11 @@ public class FibonacciHeap<C extends Comparable<C>> implements interfaces.dataSt
 
         x.setKey(k);
 
-        FibonacciHeapNode<C> y = x.getParent();
+        FibonacciHeapNode<C> parent = x.getParent();
 
-        if ((y != null) && (x.getKey() < y.getKey())) {
-            cut(x, y);
-            cascadingCut(y);
+        if ((parent != null) && (x.getKey() < parent.getKey())) {
+            cut(x, parent);
+            cascadingCut(parent);
         }
 
         if (x.getKey() < minNode.getKey()) {
@@ -325,7 +328,11 @@ public class FibonacciHeap<C extends Comparable<C>> implements interfaces.dataSt
         // do a simple breadth-first traversal on the tree
         while (!stack.empty()) {
             FibonacciHeapNode<C> curr = stack.pop();
-            buf.append(curr);
+            if(curr.getKey() == Double.MAX_VALUE){
+        		buf.append("+Inf");
+        	}else{
+        		buf.append(curr);
+        	}
             buf.append(", ");
 
             if (curr.getChild() != null) {
@@ -336,7 +343,11 @@ public class FibonacciHeap<C extends Comparable<C>> implements interfaces.dataSt
             curr = curr.getRight();
 
             while (curr != start) {
-                buf.append(curr);
+            	if(curr.getKey() == Double.MAX_VALUE){
+            		buf.append("+Inf");
+            	}else{
+            		buf.append(curr);
+            	}
                 buf.append(", ");
 
                 if (curr.getChild() != null) {
@@ -609,7 +620,7 @@ public class FibonacciHeap<C extends Comparable<C>> implements interfaces.dataSt
             	buf.append("{ rank = same; ");
             	while(!rank.contains(tempRankCurr)){
             		rank.add(tempRankCurr);
-            		buf.append(tempRankCurr.getPk() + "; ");
+            		buf.append(tempRankCurr.getPK() + "; ");
             		tempRankCurr = tempRankCurr.getRight();
             		
             	}
@@ -617,20 +628,20 @@ public class FibonacciHeap<C extends Comparable<C>> implements interfaces.dataSt
             	buf.append(curr.toGraphViz() + "\n");
                 
             	if(curr.getParent() != null && curr.getParent() != curr && !list.contains(curr.getParent())){
-                	buf.append(curr.getPk() + " -> " + curr.getParent().getPk() + ";\n");
-                	buf.append(curr.getParent().getPk() + " -> " + curr.getPk() + ";\n");
+                	buf.append(curr.getPK() + " -> " + curr.getParent().getPK() + ";\n");
+                	buf.append(curr.getParent().getPK() + " -> " + curr.getPK() + ";\n");
                 }
                 if(curr.getRight() != null && curr.getRight() != curr && !list.contains(curr.getRight())){
-                	buf.append(curr.getPk() + " -> " + curr.getRight().getPk() + ";\n");
-                	buf.append(curr.getRight().getPk() + " -> " + curr.getPk() + ";\n");
+                	buf.append(curr.getPK() + " -> " + curr.getRight().getPK() + ";\n");
+                	buf.append(curr.getRight().getPK() + " -> " + curr.getPK() + ";\n");
                 }
                 if(curr.getLeft() != null && curr.getLeft() != curr && curr.getLeft() != curr.getRight() && !list.contains(curr.getLeft())){
-                	buf.append(curr.getPk() + " -> " + curr.getLeft().getPk() + ";\n");
-                	buf.append(curr.getLeft().getPk() + " -> " + curr.getPk() + ";\n");
+                	buf.append(curr.getPK() + " -> " + curr.getLeft().getPK() + ";\n");
+                	buf.append(curr.getLeft().getPK() + " -> " + curr.getPK() + ";\n");
                 }
                 if(curr.getChild() != null && curr.getChild() != curr && !list.contains(curr.getChild())){
-                	buf.append(curr.getPk() + " -> " + curr.getChild().getPk() + ";\n");
-                	buf.append(curr.getChild().getPk() + " -> " + curr.getPk() + ";\n");
+                	buf.append(curr.getPK() + " -> " + curr.getChild().getPK() + ";\n");
+                	buf.append(curr.getChild().getPK() + " -> " + curr.getPK() + ";\n");
                 }
             }
             
@@ -647,20 +658,20 @@ public class FibonacciHeap<C extends Comparable<C>> implements interfaces.dataSt
                 	buf.append(curr.toGraphViz() + "\n");
                     
                     if(curr.getParent() != null && curr.getParent() != curr && !list.contains(curr.getParent())){
-                    	buf.append(curr.getPk() + " -> " + curr.getParent().getPk() + ";\n");
-                    	buf.append(curr.getParent().getPk() + " -> " + curr.getPk() + ";\n");
+                    	buf.append(curr.getPK() + " -> " + curr.getParent().getPK() + ";\n");
+                    	buf.append(curr.getParent().getPK() + " -> " + curr.getPK() + ";\n");
                     }
                     if(curr.getRight() != null && curr.getRight() != curr && !list.contains(curr.getRight())){
-                    	buf.append(curr.getPk() + " -> " + curr.getRight().getPk() + ";\n");
-                    	buf.append(curr.getRight().getPk() + " -> " + curr.getPk() + ";\n");
+                    	buf.append(curr.getPK() + " -> " + curr.getRight().getPK() + ";\n");
+                    	buf.append(curr.getRight().getPK() + " -> " + curr.getPK() + ";\n");
                     }
                     if(curr.getLeft() != null && curr.getLeft() != curr && curr.getLeft() != curr.getRight() && !list.contains(curr.getLeft())){
-                    	buf.append(curr.getPk() + " -> " + curr.getLeft().getPk() + ";\n");
-                    	buf.append(curr.getLeft().getPk() + " -> " + curr.getPk() + ";\n");
+                    	buf.append(curr.getPK() + " -> " + curr.getLeft().getPK() + ";\n");
+                    	buf.append(curr.getLeft().getPK() + " -> " + curr.getPK() + ";\n");
                     }
                     if(curr.getChild() != null && curr.getChild() != curr && !list.contains(curr.getChild())){
-                    	buf.append(curr.getPk() + " -> " + curr.getChild().getPk() + ";\n");
-                    	buf.append(curr.getChild().getPk() + " -> " + curr.getPk() + ";\n");
+                    	buf.append(curr.getPK() + " -> " + curr.getChild().getPK() + ";\n");
+                    	buf.append(curr.getChild().getPK() + " -> " + curr.getPK() + ";\n");
                     }
             	}
 

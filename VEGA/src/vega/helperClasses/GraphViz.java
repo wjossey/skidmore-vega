@@ -28,7 +28,7 @@ package vega.helperClasses;
 import java.io.*;
 
 /**
- * <dl>
+ * * <dl>
  * <dt>Purpose: GraphViz Java API
  * <dd>
  *
@@ -54,6 +54,7 @@ import java.io.*;
  *
  * @version v0.1, 2003/12/04 (Decembre)
  * @author  Laszlo Szathmary (<a href="szathml@delfin.unideb.hu">szathml@delfin.unideb.hu</a>)
+ *
  */
 public class GraphViz
 {

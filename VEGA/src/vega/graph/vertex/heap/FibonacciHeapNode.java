@@ -51,15 +51,24 @@
  */
 package vega.graph.vertex.heap;
 
+import interfaces.graph.edge.UndirectedEdge;
+import vega.graph.vertex.Vertex;
+
 /**
  * Implements a node of the Fibonacci heap. It holds the information necessary
  * for maintaining the structure of the heap. It also holds the reference to the
  * key value (which is used to determine the heap structure).
  *
  * @author Nathan Fiedler
+ * @author Weston Jossey
+ * @param <C>
  */
-public class FibonacciHeapNode<T>
+public class FibonacciHeapNode<C> extends Vertex<UndirectedEdge> implements interfaces.graph.vertex.heap.FibonacciHeapNode<C,FibonacciHeapNode<C>>
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5491698292411214685L;
 	private static int uid = 0;
 	private int pk;
 	
@@ -68,27 +77,27 @@ public class FibonacciHeapNode<T>
     /**
      * Node data.
      */
-    private T data;
+    private C data;
 
     /**
      * first child node
      */
-    private FibonacciHeapNode<T> child;
+    private FibonacciHeapNode<C> child;
 
     /**
      * left sibling node
      */
-    private FibonacciHeapNode<T> left;
+    private FibonacciHeapNode<C> left;
 
     /**
      * parent node
      */
-    private FibonacciHeapNode<T> parent;
+    private FibonacciHeapNode<C> parent;
 
     /**
      * right sibling node
      */
-    private FibonacciHeapNode<T> right;
+    private FibonacciHeapNode<C> right;
 
     /**
      * true if this node has had a child removed since this node was added to
@@ -115,7 +124,7 @@ public class FibonacciHeapNode<T>
      * @param data data for this node
      * @param key initial key for node
      */
-    public FibonacciHeapNode(T data, double key)
+    public FibonacciHeapNode(C data, double key)
     {
     	pk = uid++;
         right = this;
@@ -126,131 +135,109 @@ public class FibonacciHeapNode<T>
 
     //~ Methods ----------------------------------------------------------------
 
-    /**
-     * Obtain the key for this node.
-     *
-     * @return the key
-     */
-    public final double getKey()
+    /* (non-Javadoc)
+	 * @see vega.graph.vertex.heap.FibonacciHeapN#getKey()
+	 */
+    public double getKey()
     {
         return key;
     }
     
-    /**
-     * 
-     * @param key
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see vega.graph.vertex.heap.FibonacciHeapN#setKey(double)
+	 */
     public double setKey(double key){
     	return this.key = key;
     }
 
-    /**
-     * Obtain the data for this node.
-     */
-    public final T getData()
+    /* (non-Javadoc)
+	 * @see vega.graph.vertex.heap.FibonacciHeapN#getData()
+	 */
+    public final C getData()
     {
         return data;
     }
     
-    /**
-     * Return the node to the left.
-     * @return Node to the left
-     */
-    public FibonacciHeapNode<T> getLeft(){
+    /* (non-Javadoc)
+	 * @see vega.graph.vertex.heap.FibonacciHeapN#getLeft()
+	 */
+    public FibonacciHeapNode<C> getLeft(){
     	return left;
     }
     
-    /**
-     * Return the node to the right
-     * @return Node to the right
-     */
-    public FibonacciHeapNode<T> getRight(){
+    /* (non-Javadoc)
+	 * @see vega.graph.vertex.heap.FibonacciHeapN#getRight()
+	 */
+    public FibonacciHeapNode<C> getRight(){
     	return right;
     }
     
-    /**
-     * Returns the parent node.
-     * @return Parent node
-     */
-    public FibonacciHeapNode<T> getParent(){
+    /* (non-Javadoc)
+	 * @see vega.graph.vertex.heap.FibonacciHeapN#getParent()
+	 */
+    public FibonacciHeapNode<C> getParent(){
     	return parent;
     }
     
-    /**
-     * Returns the child node.
-     * @return Child node
-     */
-    public FibonacciHeapNode<T> getChild(){
+    /* (non-Javadoc)
+	 * @see vega.graph.vertex.heap.FibonacciHeapN#getChild()
+	 */
+    public FibonacciHeapNode<C> getChild(){
     	return child;
     }
     
-    /**
-     * Sets the left node of the FibHeapNode
-     * @param left New left node.
-     * @return The left node.
-     */
-    public FibonacciHeapNode<T> setLeft(FibonacciHeapNode<T> left){
+    /* (non-Javadoc)
+	 * @see vega.graph.vertex.heap.FibonacciHeapN#setLeft(vega.graph.vertex.heap.FibonacciHeapNode)
+	 */
+    public FibonacciHeapNode<C> setLeft(FibonacciHeapNode<C> left){
     	return this.left = left;
     }
     
-    /**
-     * Sets the right node.
-     * @param right New right node.
-     * @return New right node.
-     */
-    public FibonacciHeapNode<T> setRight(FibonacciHeapNode<T> right){
+    /* (non-Javadoc)
+	 * @see vega.graph.vertex.heap.FibonacciHeapN#setRight(vega.graph.vertex.heap.FibonacciHeapNode)
+	 */
+    public FibonacciHeapNode<C> setRight(FibonacciHeapNode<C> right){
     	return this.right = right;
     }
     
-    /**
-     * Sets the parent node.
-     * @param parent New parent node.
-     * @return The parent node
-     */
-    public FibonacciHeapNode<T> setParent(FibonacciHeapNode<T> parent){
+    /* (non-Javadoc)
+	 * @see vega.graph.vertex.heap.FibonacciHeapN#setParent(vega.graph.vertex.heap.FibonacciHeapNode)
+	 */
+    public FibonacciHeapNode<C> setParent(FibonacciHeapNode<C> parent){
     	return this.parent = parent;
     }
     
-    /**
-     * Sets the child node.
-     * @param child New child node.
-     * @return The child node
-     */
-    public FibonacciHeapNode<T> setChild(FibonacciHeapNode<T> child){
+    /* (non-Javadoc)
+	 * @see vega.graph.vertex.heap.FibonacciHeapN#setChild(vega.graph.vertex.heap.FibonacciHeapNode)
+	 */
+    public FibonacciHeapNode<C> setChild(FibonacciHeapNode<C> child){
     	return this.child = child;
     }
     
-    /**
-     * 
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see vega.graph.vertex.heap.FibonacciHeapN#degree()
+	 */
     public int degree(){
     	return degree;
     }
     
-    /**
-     * 
-     * @param degree
-     * @return
-     */
+    /* (non-Javadoc)
+	 * @see vega.graph.vertex.heap.FibonacciHeapN#degree(int)
+	 */
     public int degree(int degree){
     	return this.degree = degree;
     }
     
-    /**
-     * Set whether or not the node is marked.
-     * @param mark True if marked, false if not marked.
-     * @return Value of mark
-     */
+    /* (non-Javadoc)
+	 * @see vega.graph.vertex.heap.FibonacciHeapN#mark(boolean)
+	 */
     public boolean mark(boolean mark){
     	return this.mark = mark;
     }
     
-    /**
-     * Gets the boolean status of whether or not the node is marked.
-     * @return True if marked, false if not marked.
-     */
+    /* (non-Javadoc)
+	 * @see vega.graph.vertex.heap.FibonacciHeapN#mark()
+	 */
     public boolean mark(){
     	return mark;
     }
@@ -259,7 +246,7 @@ public class FibonacciHeapNode<T>
      * Returns the primary key value of the node.  
      * @return Primary key value of the node.
      */
-    public int getPk(){
+    public int getPK(){
     	return pk;
     }
 

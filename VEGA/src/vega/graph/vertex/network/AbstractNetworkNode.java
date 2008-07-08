@@ -4,7 +4,14 @@ import interfaces.graph.vertex.network.NetworkNode;
 import interfaces.graph.edge.network.NetworkEdge;
 import vega.graph.vertex.AbstractVertex;
 
-public class AbstractNetworkNode<N extends NetworkNode<N,E>, E extends NetworkEdge> extends AbstractVertex<N,E> implements NetworkNode<N,E>{
+/**
+ * 
+ * @author Weston Jossey
+ *
+ * @param <N>
+ * @param <E>
+ */
+public class AbstractNetworkNode<N extends NetworkNode<E>, E extends NetworkEdge> extends AbstractVertex<E> implements NetworkNode<E>{
 
 	/**
 	 * 

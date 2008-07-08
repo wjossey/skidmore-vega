@@ -7,7 +7,7 @@ package vega.graph.edge.network;
 import vega.graph.edge.AbstractEdge;
 /**
  *
- * @author w_jossey
+ * @author Weston Jossey
  */
 public abstract class AbstractNetworkEdge extends AbstractEdge implements interfaces.graph.edge.network.NetworkEdge {
 

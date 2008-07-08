@@ -12,22 +12,24 @@ import interfaces.graph.vertex.Vertex;
  * This prevents bi-directional movement by an algorithm on the edge.  The visibility
  * of a vertex from one to another is limited by whether it has the opposite vertex
  * as a destination of one of its edges.  
- * @author w_jossey
+ * @author Weston Jossey
  */
-public class DirectedEdge<V extends Vertex<? super interfaces.graph.edge.DirectedEdge<? super V>>> extends AbstractEdge implements interfaces.graph.edge.DirectedEdge<V>{
-    protected V from = null; 
-    protected V to = null;
-    double weight;
+public class DirectedEdge extends AbstractEdge implements interfaces.graph.edge.DirectedEdge{
+    protected Vertex<DirectedEdge> from = null; 
+    protected Vertex<DirectedEdge> to = null;
     
     /**
      * Creates a directed edge with no edge-weight.
      * @param source Source vertex
      * @param destination Destination vertex
      */
-	public DirectedEdge(V source, V destination){
-        this.from = source;
-        this.to = destination;
-        weight = Double.NaN;
+	public DirectedEdge(Vertex<DirectedEdge> source, Vertex<DirectedEdge> destination){
+        if(source != null && destination != null){
+        	this.from = source;
+            this.to = destination;
+            from.addEdge(this);
+            super.setWeight(Double.NaN);
+        }
     }
     
     /**
@@ -36,16 +38,18 @@ public class DirectedEdge<V extends Vertex<? super interfaces.graph.edge.Directe
      * @param destination Destinatino vertex
      * @param weight The weight of the edge
      */
-    public DirectedEdge(V source, V destination, double weight){
-        this.from = source;
+    public DirectedEdge(Vertex<DirectedEdge> source, Vertex<DirectedEdge> destination, double weight){
+    	super.setWeight(weight);
+    	this.from = source;
         this.to = destination;
+        from.addEdge(this);
     }
     
     /**
      * Get the source vertex of the edge.
      * @return Source vertex
      */
-    public V getSource(){
+    public Vertex<DirectedEdge> getSource(){
         return from;
     }
     
@@ -54,7 +58,7 @@ public class DirectedEdge<V extends Vertex<? super interfaces.graph.edge.Directe
      * @return 
      * @return Destination vertex
      */
-    public V getDestination(){
+    public Vertex<DirectedEdge> getDestination(){
         return to;
     }
    

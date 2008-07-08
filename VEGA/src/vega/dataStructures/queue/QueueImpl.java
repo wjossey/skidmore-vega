@@ -2,8 +2,13 @@ package vega.dataStructures.queue;
 
 import java.util.LinkedList;
 
+/**
+ * 
+ * @author w_jossey
+ *
+ */
 public class QueueImpl {
-	LinkedList<Object> list;
+	private LinkedList<Object> list;
 	
 	public QueueImpl(){
 		list = new LinkedList<Object>();

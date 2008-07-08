@@ -2,7 +2,13 @@ package vega.graph.edge.network;
 
 import interfaces.graph.vertex.network.NetworkNode;
 
-public class UndirectedNetworkEdge<N extends NetworkNode<N, interfaces.graph.edge.network.UndirectedNetworkEdge<N>>> extends AbstractNetworkEdge implements interfaces.graph.edge.UndirectedEdge<N>{
+/**
+ * 
+ * @author Weston Jossey
+ *
+ * @param <N>
+ */
+public class UndirectedNetworkEdge<N extends NetworkNode<? super interfaces.graph.edge.network.UndirectedNetworkEdge<? super N>>> extends AbstractNetworkEdge implements interfaces.graph.edge.network.UndirectedNetworkEdge<N>{
 	N a;
 	N b;
 	

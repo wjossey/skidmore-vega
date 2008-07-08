@@ -15,10 +15,13 @@ import vega.graph.edge.AbstractEdge;
 import vega.helperClasses.VertexHelper;
 
 /**
- *
+ * 
  * @author w_jossey
+ *
+ * @param <N>
+ * @param <E>
  */
-public class AbstractNetwork<N extends NetworkNode<N,E>, E extends NetworkEdge> extends AbstractGraph<N,E> implements Network<N,E>{
+public class AbstractNetwork<N extends NetworkNode<E>, E extends NetworkEdge> extends AbstractGraph<N,E> implements Network<N,E>{
 
     /**
      * The constructor method for the Graph class.  Takes in a pre-set vertex

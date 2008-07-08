@@ -2,15 +2,13 @@ package vega.graph;
 
 import vega.graph.edge.AbstractEdge;
 import vega.helperClasses.VertexHelper;
-import vega.graph.edge.UndirectedEdge;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.Graph;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
- * The graph class is built off the mathematical structure of the same name.  As 
+ *The graph class is built off the mathematical structure of the same name.  As 
  * stated on wikipedia:  "In mathematics and computer science, a graph 
  * is the basic object of study in graph theory. Informally speaking, 
  * a graph is a set of objects called points, nodes, or vertices connected 
@@ -21,14 +19,16 @@ import java.util.Random;
  * edges. Typically, a graph is depicted in diagrammatic form as a set of 
  * dots (for the points, vertices, or nodes), joined by curves (for the lines 
  * or edges)."
- * @author w_jossey
+ * @author Weston Jossey
+ * @param <V> Must be a class that implements the Vertex interface.
+ * @param <E> Must be a class that implements the Edge interface.
  */
 public class AbstractGraph<V extends Vertex<? super E>, E extends Edge> implements Graph<V, E>{
 
     protected int size = 0;
     protected int positionInArray = 0;
-    protected ArrayList<V> vertexList;
-    protected ArrayList<E> edgeList;
+    protected ArrayList<V> vertexList = new ArrayList<V>();
+    protected ArrayList<E> edgeList = new ArrayList<E>();
     protected boolean digraph;
 
     /**
@@ -50,7 +50,8 @@ public class AbstractGraph<V extends Vertex<? super E>, E extends Edge> implemen
 
             //TODO We probably want to have some option in here to create a graph that is
             //strongly connected but not complete.  
-            computeDistances();
+            /*(computeDistances();*/ //Commented out so the class compiles.  Randomly generating
+        							 //distances should be handled outside of the class.
         } else {
             generateEdges();
         }
@@ -96,7 +97,7 @@ public class AbstractGraph<V extends Vertex<? super E>, E extends Edge> implemen
     /* (non-Javadoc)
 	 * @see vega.graph.Graph#getVertexArray()
 	 */
-	@SuppressWarnings("unchecked")
+    
 	public ArrayList<V> getVertexArray() {
         return vertexList;
     }
@@ -148,9 +149,9 @@ public class AbstractGraph<V extends Vertex<? super E>, E extends Edge> implemen
      * vertex.  By guaranteeing that there is always a flow in and out of the vertex, we
      * are guaranteed a strongly connected graph.
      */
-    @SuppressWarnings("unchecked")
+ 
 	private void generateEdges() {
-        for (int i = 0; i < vertexList.size(); i++) {
+        /*for (int i = 0; i < vertexList.size(); i++) {
             V tempVertex = vertexList.get(i);;
             Random generator = new Random();
             int fromVertex, toVertex;
@@ -165,6 +166,7 @@ public class AbstractGraph<V extends Vertex<? super E>, E extends Edge> implemen
             } while (fromVertex != i && toVertex != i);
 
 
+            
             UndirectedEdge toTempVertex = new UndirectedEdge(vertexList.get(fromVertex), tempVertex, capacity1);
             UndirectedEdge fromTempVertex = new UndirectedEdge(tempVertex, vertexList.get(toVertex), capacity2);
 
@@ -174,7 +176,8 @@ public class AbstractGraph<V extends Vertex<? super E>, E extends Edge> implemen
             edgeList.add((E) toTempVertex);
             vertexList.get(fromVertex).addEdge((E) toTempVertex);
             vertexList.get(toVertex).addEdge((E) fromTempVertex);
-        }
+            
+        }*/
     }
 
     /**
@@ -190,48 +193,48 @@ public class AbstractGraph<V extends Vertex<? super E>, E extends Edge> implemen
      * are dealing with some complete Graph and want it to auto-generate the edges for us
      */
     @SuppressWarnings("unchecked")
-	private void computeDistances() {
-
-        /*For all of the vertices in the array...*/
-        for (int i = 0; i < vertexList.size(); i++) {
-            /*Get the x1 and y1 values*/
-            int x1 = vertexList.get(i).getX();
-            int y1 = vertexList.get(i).getY();
-
-            /*For all other vertices that have not already had their distances computed...*/
-            for (int j = i + 1; j < vertexList.size(); j++) {
-
-                /*Get x2 and y2*/
-                int x2 = vertexList.get(j).getX();
-                int y2 = vertexList.get(j).getY();
-
-                double xSquared;
-                double ySquared;
-
-                if (x1 > x2) {
-                    xSquared = Math.pow((x1 - x2), 2);
-                } else {
-                    xSquared = Math.pow((x2 - x1), 2);
-                }
-                if (y1 > y2) {
-                    ySquared = Math.pow((y1 - y2), 2);
-                } else {
-                    ySquared = Math.pow((y2 - y1), 2);
-                }
-
-                /*Distance formula!*/
-                double distanceSquared = (xSquared + ySquared);
-                double dist = Math.sqrt(distanceSquared);
-
-                /*Create the edge and add it to both vertices*/
-                UndirectedEdge e = new UndirectedEdge(vertexList.get(i), vertexList.get(j), dist);
-                vertexList.get(i).addEdge((E) e);
-                vertexList.get(j).addEdge((E) e);
-                edgeList.add((E) e);
-            }
-        }
-
-    }
+//	private void computeDistances() {
+//    	
+//        /*For all of the vertices in the array...*/
+//        for (int i = 0; i < vertexList.size(); i++) {
+//            /*Get the x1 and y1 values*/
+//            int x1 = vertexList.get(i).getX();
+//            int y1 = vertexList.get(i).getY();
+//
+//            /*For all other vertices that have not already had their distances computed...*/
+//            for (int j = i + 1; j < vertexList.size(); j++) {
+//
+//                /*Get x2 and y2*/
+//                int x2 = vertexList.get(j).getX();
+//                int y2 = vertexList.get(j).getY();
+//
+//                double xSquared;
+//                double ySquared;
+//
+//                if (x1 > x2) {
+//                    xSquared = Math.pow((x1 - x2), 2);
+//                } else {
+//                    xSquared = Math.pow((x2 - x1), 2);
+//                }
+//                if (y1 > y2) {
+//                    ySquared = Math.pow((y1 - y2), 2);
+//                } else {
+//                    ySquared = Math.pow((y2 - y1), 2);
+//                }
+//
+//                /*Distance formula!*/
+//                double distanceSquared = (xSquared + ySquared);
+//                double dist = Math.sqrt(distanceSquared);
+//
+//                /*Create the edge and add it to both vertices*/
+//                UndirectedEdge e = new UndirectedEdge(vertexList.get(i), vertexList.get(j), dist);
+//                vertexList.get(i).addEdge((E) e);
+//                vertexList.get(j).addEdge((E) e);
+//                edgeList.add((E) e);
+//            }
+//        }
+//
+//    }
 
     /**
      * 
@@ -324,7 +327,14 @@ public class AbstractGraph<V extends Vertex<? super E>, E extends Edge> implemen
 	}
 	
 	public void addEdge(E e) {
-		// TODO Auto-generated method stub
 		edgeList.add(e);
+	}
+
+	public void addEdges(ArrayList<E> e) {
+		edgeList.addAll(e);
+	}
+
+	public void addVertices(ArrayList<V> v) {
+		vertexList.addAll(v);
 	}
 }

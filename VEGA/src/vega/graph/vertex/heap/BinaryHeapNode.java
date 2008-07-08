@@ -2,6 +2,12 @@ package vega.graph.vertex.heap;
 
 import vega.graph.vertex.tree.AbstractBinaryTreeNode;
 
+/**
+ * 
+ * @author Weston Jossey
+ *
+ * @param <C>
+ */
 public class BinaryHeapNode<C extends Comparable<C>> extends AbstractBinaryTreeNode<C, interfaces.graph.vertex.heap.HeapNode<C>> implements interfaces.graph.vertex.heap.HeapNode<C>{
 
 	/**
