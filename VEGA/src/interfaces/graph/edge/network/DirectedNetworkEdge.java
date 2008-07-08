@@ -1,8 +1,25 @@
 package interfaces.graph.edge.network;
 
 import interfaces.graph.vertex.network.NetworkNode;
-import interfaces.graph.edge.DirectedEdge;
 
-public interface DirectedNetworkEdge<N extends NetworkNode<N, DirectedNetworkEdge<N>>> extends DirectedEdge<N>, NetworkEdge{
+/**
+ * 
+ * @author w_jossey
+ *
+ * @param <N>
+ */
+public interface DirectedNetworkEdge<N extends NetworkNode<? super DirectedNetworkEdge<? super N>>> extends NetworkEdge{
 
+	/**
+	 * Gets the source vertex of the edge.
+	 * @return Source vertex of the edge.
+	 */
+	public N getSource();
+	
+	/**
+	 * Gets the destination vertex of the edge.
+	 * @return Destination vertex of the edge.
+	 */
+	public N getDestination();
+	
 }

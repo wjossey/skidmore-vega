@@ -1,8 +1,15 @@
 package interfaces.graph.vertex;
 
+import interfaces.graph.edge.Edge;
+
+/**
+ * 
+ * @author w_jossey
+ *
+ */
 public interface GraphvizVertexProperties {
 	
-	void setParentVertex(Vertex<?,?> v);
+	void setParentVertex(Vertex<? super Edge> v);
 	
 	void setSides(int sides);
 	

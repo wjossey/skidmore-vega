@@ -2,6 +2,11 @@ package interfaces.graph.edge.network;
 
 import interfaces.graph.edge.Edge;
 
+/**
+ * 
+ * @author w_jossey
+ *
+ */
 public interface NetworkEdge extends Edge{
 
 	/**

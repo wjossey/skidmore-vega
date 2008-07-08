@@ -3,7 +3,13 @@ package interfaces.graph.vertex.network;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.edge.network.NetworkEdge;
 
-public interface NetworkNode<N extends NetworkNode<N,E>, E extends NetworkEdge> extends Vertex<N,E>{
+/**
+ * 
+ * @author w_jossey
+ *
+ * @param <E>
+ */
+public interface NetworkNode<E extends NetworkEdge> extends Vertex<E>{
 	
 	public boolean isSource();
 	

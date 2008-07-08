@@ -5,6 +5,13 @@ import java.util.ArrayList;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 
+/**
+ * 
+ * @author w_jossey
+ *
+ * @param <V>
+ * @param <E>
+ */
 public interface Graph<V extends Vertex<? super E>, E extends Edge>{
 
 	public int getSize();
@@ -64,5 +71,17 @@ public interface Graph<V extends Vertex<? super E>, E extends Edge>{
 	 * @param edge Edge to add to the graph
 	 */
 	public void addEdge(E e);
+	
+	/**
+	 * Adds an array of edges
+	 * @param e ArrayList of edges to add.
+	 */
+	public void addEdges(ArrayList<E> e);
+	
+	/**
+	 * Adds an array of vertices
+	 * @param v ArrayList of vertices to add.
+	 */
+	public void addVertices(ArrayList<V> v);
 
 }

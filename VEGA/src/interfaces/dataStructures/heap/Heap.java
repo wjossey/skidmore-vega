@@ -10,10 +10,12 @@ import interfaces.graph.edge.UndirectedEdge;
 import interfaces.graph.vertex.heap.HeapNode;
 
 /**
- *
+ * 
  * @author w_jossey
+ *
+ * @param <C>
  */
-public interface Heap<C extends Comparable<C>> extends Tree<C, HeapNode<C>, UndirectedEdge<HeapNode<C>>>{
+public interface Heap<C extends Comparable<C>> extends Tree<C, HeapNode<C>, UndirectedEdge>{
 	
 	/**
 	 * Instantiates an empty heap.
