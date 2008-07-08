@@ -7,11 +7,11 @@ import interfaces.graph.vertex.Vertex;
 
 /**
  * 
- * @author w_jossey
+ * @author Weston Jossey
  *
- * @param <G>
- * @param <V>
- * @param <E>
+ * @param <G> Class implements Graph
+ * @param <V> Class implements Vertex
+ * @param <E> Class implements Edge
  */
 public interface GraphAlgorithm<G extends Graph<V,E>, V extends Vertex<E>, E extends Edge> {
 	

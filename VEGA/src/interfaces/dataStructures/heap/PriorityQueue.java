@@ -29,9 +29,9 @@ package interfaces.dataStructures.heap;
    one cannot clone them, 2 is just plain awkward).
 
    we have our own priority queue interface.
- * @author w_jossey
+ * @author Weston Jossey
  *
- * @param <C>
+ * @param <C> Class implements Comparable
  */
 public interface PriorityQueue<C extends Comparable<C>> extends Iterable<C>
 {

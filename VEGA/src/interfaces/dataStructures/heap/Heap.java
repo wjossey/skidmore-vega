@@ -11,9 +11,9 @@ import interfaces.graph.vertex.heap.HeapNode;
 
 /**
  * 
- * @author w_jossey
+ * @author Weston Jossey
  *
- * @param <C>
+ * @param <C> Class that implements Comparable
  */
 public interface Heap<C extends Comparable<C>> extends Tree<C, HeapNode<C>, UndirectedEdge>{
 	
