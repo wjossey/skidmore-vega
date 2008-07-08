@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.edge.Edge;
 
+/**
+ * 
+ * @author Weston Jossey
+ *
+ */
 public abstract class AbstractEdge implements Edge{
 
     /*Variable declaration*/

@@ -11,9 +11,9 @@ import interfaces.graph.vertex.Vertex;
  * The UndirectedEdge class is actually just a repeat of the Edge class.  By default
  * an edge is said to be undirected, so this class is actually just a placeholder so
  * that developers can easily distinguish if an edge is directed or undirected.
- * @author w_jossey
+ * @author Weston Jossey
  */
-public class UndirectedEdge<V extends Vertex<interfaces.graph.edge.UndirectedEdge<? super V>>> extends AbstractEdge implements interfaces.graph.edge.UndirectedEdge<V>{
+public class UndirectedEdge extends AbstractEdge implements interfaces.graph.edge.UndirectedEdge{
     
     /**
      * See Edge class for documentation.
@@ -21,12 +21,15 @@ public class UndirectedEdge<V extends Vertex<interfaces.graph.edge.UndirectedEdg
      * @param b
      */
 	
-	protected V vertexA = null;
-	protected V vertexB = null;
+	protected Vertex<UndirectedEdge> vertexA = null;
+	protected Vertex<UndirectedEdge> vertexB = null;
 	
-    public UndirectedEdge(V a, V b){
+    public UndirectedEdge(Vertex<UndirectedEdge> a, Vertex<UndirectedEdge> b){
         vertexA = a;
         vertexB = b;
+        a.addEdge(this);
+        b.addEdge(this);
+        
     }
     
     /**
@@ -35,18 +38,20 @@ public class UndirectedEdge<V extends Vertex<interfaces.graph.edge.UndirectedEdg
      * @param b Vertex b
      * @param weight Edge weight
      */
-    public UndirectedEdge(V a, V b, double weight){
+    public UndirectedEdge(Vertex<UndirectedEdge> a, Vertex<UndirectedEdge> b, double weight){
         vertexA = a;
         vertexB = b;
-        setWeight(weight);
+        a.addEdge(this);
+        b.addEdge(this);
+        super.setWeight(weight);
     }
 
     
-	public V getVertexA() {
+	public Vertex<UndirectedEdge> getVertexA() {
 		return vertexA;
 	}
 	
-	public V getVertexB() {
+	public Vertex<UndirectedEdge> getVertexB() {
 		return vertexB;
 	}
     

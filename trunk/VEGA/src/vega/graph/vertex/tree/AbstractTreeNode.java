@@ -10,11 +10,14 @@ import vega.graph.vertex.AbstractVertex;
 import java.util.ArrayList;
 
 /**
+ * 
+ * @author Weston Jossey
  *
- * @author w_jossey
+ * @param <C>
+ * @param <T>
+ * @param <E>
  */
-
-public abstract class AbstractTreeNode<C extends Comparable<? super C>, T extends AbstractTreeNode<? super C,? super T,? super E>, E extends Edge> extends AbstractVertex<E> implements interfaces.graph.vertex.tree.TreeNode<C,T,E>{
+public abstract class AbstractTreeNode<C extends Comparable<? super C>, T extends interfaces.graph.vertex.tree.TreeNode<C,? super T,E>, E extends Edge> extends AbstractVertex<E> implements interfaces.graph.vertex.tree.TreeNode<C,T,E>{
 
     /**
 	 * 

@@ -1,6 +1,11 @@
 package vega.graph.vertex.tree;
 
-
+/**
+ * 
+ * @author Weston Jossey
+ *
+ * @param <C>
+ */
 public class RedBlackTreeNode<C extends Comparable<C>> extends AbstractBinaryTreeNode<C, interfaces.graph.vertex.tree.RedBlackTreeNode<C>> implements interfaces.graph.vertex.tree.RedBlackTreeNode<C>{
 	private static final long serialVersionUID = -379091460216646444L;
 	boolean color;

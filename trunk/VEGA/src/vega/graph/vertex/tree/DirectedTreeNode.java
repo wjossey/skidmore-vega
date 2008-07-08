@@ -2,7 +2,13 @@ package vega.graph.vertex.tree;
 
 import interfaces.graph.edge.UndirectedEdge;
 
-public class DirectedTreeNode <C extends Comparable<? super C>> extends AbstractTreeNode<C, DirectedTreeNode<C>, UndirectedEdge<DirectedTreeNode<C>>>{
+/**
+ * 
+ * @author Weston Jossey
+ *
+ * @param <C>
+ */
+public class DirectedTreeNode <C extends Comparable<? super C>> extends AbstractTreeNode<C, DirectedTreeNode<C>, UndirectedEdge>{
 
 	/**
 	 * 

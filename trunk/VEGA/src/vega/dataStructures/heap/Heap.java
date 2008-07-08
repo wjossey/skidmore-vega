@@ -8,7 +8,13 @@ import interfaces.graph.vertex.heap.HeapNode;
 
 import vega.graph.AbstractTree;
 
-public class Heap<C extends Comparable<C>> extends AbstractTree<C, HeapNode<C>, UndirectedEdge<HeapNode<C>>> implements interfaces.dataStructures.heap.Heap<C>{
+/**
+ * 
+ * @author w_jossey
+ *
+ * @param <C>
+ */
+public class Heap<C extends Comparable<C>> extends AbstractTree<C, HeapNode<C>, UndirectedEdge> implements interfaces.dataStructures.heap.Heap<C>{
 	private ArrayList<HeapNode<C>> a;
     private int arrayLength;
 

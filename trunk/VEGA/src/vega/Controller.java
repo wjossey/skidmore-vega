@@ -11,19 +11,22 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * The controller class is the plug-point that a developer uses to interface with
+ *  * The controller class is the plug-point that a developer uses to interface with
  * VEGA.  The controller class is used to generate the "snapshots" of the graph as
  * an algorithm manipulates the graph.
  * @author w_jossey
+ *
+ * @param <V>
+ * @param <E>
  */
-public class Controller<V extends Vertex<V,E>, E extends Edge> {
+public class Controller<V extends Vertex<E>, E extends Edge> {
 
-    int counter = 0;
-    int imageCounter = 0;
-    ArrayList<AlgorithmStep> stepTracker = new ArrayList<AlgorithmStep>();
-    PseudoCode pseudoCode;
-    Graph<V, E> g;
-    GraphAlgorithm<? extends Graph<V,E>, V, E> a;
+    private int counter = 0;
+    private int imageCounter = 0;
+    private ArrayList<AlgorithmStep> stepTracker = new ArrayList<AlgorithmStep>();
+    private PseudoCode pseudoCode;
+    private Graph<V, E> g;
+    private GraphAlgorithm<? extends Graph<V,E>, V, E> a;
 
     public <G extends Graph<V,E>> Controller(G g, PseudoCode pseudoCode, GraphAlgorithm<G,V,E> a) {
         this.g = g;
@@ -42,11 +45,8 @@ public class Controller<V extends Vertex<V,E>, E extends Edge> {
         //3.  Take the returned byte array (image) and pass it off to the UI.
         //NOTE:  UI has a buffer which contains the graphs as they are processed.
         GraphViz graph = new GraphViz();
-        //System.out.println("G.tostring(): " + g.toString());
         graph.add(g.toString());
         stepTracker.add(new AlgorithmStep(line, procedure));
-        //System.out.println(g.toString());
-        //System.out.println("Printing iteration: " + counter);
         File out = new File(a.getInstanceID() + a.getFileName() + counter++ + ".png");
         byte[] image = graph.getGraph(graph.getDotSource());
         if (graph.writeGraphToFile(image, out) == -1) {

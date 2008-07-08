@@ -4,17 +4,21 @@ import interfaces.graph.edge.UndirectedEdge;
 
 import java.util.Iterator;
 
+import interfaces.graph.vertex.tree.BinaryTreeNode;
+import interfaces.graph.vertex.tree.RedBlackTreeNode;
 import vega.exceptions.InvalidTreeException;
 import vega.graph.AbstractTree;
 
 /**
- * Binary search tree class.  Moved the InvaliTreeException subclass to it's own class in the
+ *  * Binary search tree class.  Moved the InvaliTreeException subclass to it's own class in the
  * exception package.
  * @author Tom O'Connell
  * @author Weston Jossey-  April 21, 2008
- *  
+ *
+ * @param <C>
+ * @param <T>
  */
-public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extends interfaces.graph.vertex.tree.BinaryTreeNode<C,T>> extends AbstractTree<C, T, UndirectedEdge<T>> implements interfaces.dataStructures.tree.BinarySearchTree<C,T>{
+public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extends BinaryTreeNode<C,T>> extends AbstractTree<C,T, UndirectedEdge> implements interfaces.dataStructures.tree.BinarySearchTree<C>{
 
     private class BSTIterator implements Iterator<C> {
 
@@ -456,12 +460,59 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
      * 
      * @return a String representing the graphViz tree.
      */
-    public String toGraphViz(String title) {
-        String result = "digraph " + title + "  {\n";
-        result += postOrderGraphViz(root);
+    public String toGraphviz(String title) {
+        String result = "graph " + title + "  {\n";
+        BinaryTreeNode<C,T> root = this.getRoot();
+        result += printNodes(root);
         result += "}";
         return result;
     } // end toGraphViz()
+    
+    private static int NILcounter = 0;
+    private static String NIL = "NIL";
+    @SuppressWarnings("unchecked")
+	private String printNodes(BinaryTreeNode<C,T> root){
+    	String returnString = "";
+    	
+    	if(root.getLeftChild() != null){
+    		returnString += printNodes(root.getLeftChild());
+    		returnString += root.getUID() + " -- " + root.getLeftChild().getUID() + ";\n";
+    	}else{
+    		returnString += root.getUID() + " -- " + NIL + NILcounter + ";\n";
+    		returnString += NIL + NILcounter++ + "[label=\"NIL\"";
+    		if(root instanceof RedBlackTreeNode){
+    			returnString += ", color=black, style=filled, fontcolor=white";
+    		}
+    		returnString += "];\n";
+    	}
+    	
+    	if(root.getRightChild() != null){
+    		returnString += printNodes(root.getRightChild());
+    		returnString += root.getUID() + " -- " + root.getRightChild().getUID() + ";\n";
+    	}else{
+    		returnString += root.getUID() + " -- " + NIL + NILcounter + ";\n";
+    		returnString += NIL + NILcounter++ + "[label=\"NIL\"";
+    		if(root instanceof RedBlackTreeNode){
+    			returnString += ", color=black, style=filled, fontcolor=white";
+    		}
+    		returnString += "];\n";
+    	}
+    	
+    	returnString += root.getUID() + " [label=\"" + root.getData().toString() + "\"";
+    	
+    	if(root instanceof RedBlackTreeNode){
+    		if(((RedBlackTreeNode<C>) root).getColor() == RedBlackTreeNode.BLACK){
+    			//BLACK
+    			returnString += ", color=black, style=filled, fontcolor=white";
+    		}else{
+    			//RED
+    			returnString += ", color=red, style=filled, fontcolor=white";
+    		}
+    	}
+    	returnString += "];\n";
+    	
+    	return returnString;
+    }
 
 
     public String toString() {
@@ -723,6 +774,7 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
 
         return valid;
     } // end validateTree()
+    
     
 }
 	

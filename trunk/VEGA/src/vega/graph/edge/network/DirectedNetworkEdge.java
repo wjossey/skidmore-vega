@@ -2,7 +2,13 @@ package vega.graph.edge.network;
 
 import interfaces.graph.vertex.network.NetworkNode;
 
-public class DirectedNetworkEdge<N extends NetworkNode<N, interfaces.graph.edge.network.DirectedNetworkEdge<N>>> extends AbstractNetworkEdge implements interfaces.graph.edge.network.DirectedNetworkEdge<N>{
+/**
+ * 
+ * @author Weston Jossey
+ *
+ * @param <N>
+ */
+public class DirectedNetworkEdge<N extends NetworkNode<? super interfaces.graph.edge.network.DirectedNetworkEdge<? super N>>> extends AbstractNetworkEdge implements interfaces.graph.edge.network.DirectedNetworkEdge<N>{
 
 	N source;
 	N destination;

@@ -8,6 +8,11 @@ import interfaces.graph.edge.DirectedEdge;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.edge.UndirectedEdge;
 
+/**
+ * 
+ * @author Weston Jossey
+ *
+ */
 public class VertexHelper {
 	
 	/**

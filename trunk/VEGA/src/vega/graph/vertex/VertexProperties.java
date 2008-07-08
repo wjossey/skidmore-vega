@@ -1,11 +1,17 @@
 package vega.graph.vertex;
 
+import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.vertex.GraphvizVertexProperties;
 
+/**
+ * 
+ * @author Weston Jossey
+ *
+ */
 public class VertexProperties implements GraphvizVertexProperties {
 	
-	Vertex<?,?> parent;
+	Vertex<? super Edge> parent;
 	
 	private String color = "DEFAULT"; //Color of the vertex
 
@@ -15,7 +21,7 @@ public class VertexProperties implements GraphvizVertexProperties {
     
     private int sides = 0; //Used by Graphviz to draw polygons
 	
-	VertexProperties(Vertex<?,?> v){
+	VertexProperties(Vertex<? super Edge> v){
 		parent = v;
 	}
 	
@@ -92,7 +98,7 @@ public class VertexProperties implements GraphvizVertexProperties {
 		this.style = style;
 	}
 
-	public void setParentVertex(Vertex<?,? > v) {
+	public void setParentVertex(Vertex<? super Edge> v) {
 		parent = v;
 	}
 

@@ -1,6 +1,5 @@
 package vega.graph.vertex;
 
-import interfaces.graph.Graph;
 import interfaces.graph.edge.DirectedEdge;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.edge.UndirectedEdge;
@@ -13,13 +12,12 @@ import java.util.HashMap;
 
 import vega.graph.edge.AbstractEdge;
 
-//
-//  Vertex.java
-//  Traveling Salesman Java
-//
-//  Created by Weston Jossey on 7/10/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
-//
+/**
+ * 
+ * @author Weston Jossey
+ *
+ * @param <E>
+ */
 public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, Cloneable{
 
     /**
@@ -30,16 +28,18 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
 	/* Variable Declarations Start*/
     
 	private GraphvizVertexProperties properties;
-
-	private int uid;  //UID of the vertex.  Equal to a primary key in a database.  Must be unique!
+	
+	private static int pk = 0;
+	
+	int uid;  //UID of the vertex.  Equal to a primary key in a database.  Must be unique!
 
 	private int x = 0;    //If the vertex needs coordinates, this is the "x" value.
 
 	private int y = 0;    //If the vertex needs coordinates, this is the "y" value.
 
-	private ArrayList<E> edgeList;  //Keeps track of all the edges for the vertex.
+	private ArrayList<E> edgeList = new ArrayList<E>();  //Keeps track of all the edges for the vertex.
 	
-	private HashMap<Integer, E> edgeHash;
+	private HashMap<Integer, E> edgeHash = new HashMap<Integer, E>();
  
 	private boolean visited = false;  //Boolean as to whether or not the vertex has been visited
 
@@ -48,6 +48,8 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
 	private boolean inUse = false; //Is the vertex in-use (VEGA)
 
 	private String name = ""; //This does not have to be unique, but typically is the UID.
+	
+	private Vertex<E> previousVertex;
 
     /* Variable Declarations End*/
 
@@ -59,18 +61,27 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
 	public AbstractVertex(int x, int y){
 		this.x = x;
 		this.y = y;
+		this.uid = pk++;
 	}
 	
 	public AbstractVertex(int x, int y, ArrayList<E> edgeList){
 		this.edgeList = edgeList;
 		this.x = x;
 		this.y = y;
+		this.uid = pk++;
 	}
 	
 	public AbstractVertex(){
 		x = 0;
 		y = 0;
-		this.edgeList = null;
+		this.uid = pk++;
+	}
+	
+	public AbstractVertex(String name){
+		x = 0;
+		y = 0;
+		this.uid = pk++;
+		this.name = name;
 	}
 
     /**
@@ -120,7 +131,6 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
      * Returns all of the edges that are adjacent to the vertex
      * @return
      */
-    @SuppressWarnings("unchecked")
 	public ArrayList<E> getEdges() {
         return edgeList;
     }
@@ -163,7 +173,7 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
         	edgeHash.put(tempEdge.getDestination().getUID(), e);
         }else{
         	if(e instanceof UndirectedEdge){
-        		UndirectedEdge<?> tempEdge = (UndirectedEdge<?>) e;
+        		UndirectedEdge tempEdge = (UndirectedEdge) e;
         		if(tempEdge.getVertexA().getUID() == this.getUID()){
         			edgeHash.put(tempEdge.getVertexB().getUID(), e);
         		}else{
@@ -180,7 +190,7 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
      * @param b Destination or source vertex
      * @return Connecting edge from this vertex to Vertex b.
      */
-    public <V extends Vertex<? super E>> E getEdge(V b) {
+    public <V extends Vertex<? extends E>> E getEdge(V b) {
         return edgeHash.get(b.getUID());
     }
 
@@ -262,6 +272,13 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
 		
 		return properties;
 	}
-
+	
+	public Vertex<E> getPreviousVertex(){
+		return previousVertex;
+	}
+	
+	public Vertex<E> setPreviousVertex(Vertex<E> previousVertex){
+		return this.previousVertex = previousVertex;
+	}
 }
 

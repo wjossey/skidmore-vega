@@ -7,8 +7,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-
-public class Tour<V extends Vertex<V,E>, E extends Edge> {
+/**
+ * 
+ * @author Weston Jossey
+ *
+ * @param <V>
+ * @param <E>
+ */
+public class Tour<V extends Vertex<E>, E extends Edge> {
 	LinkedList<V> tour;
 	Iterator<V> iter;
 	
