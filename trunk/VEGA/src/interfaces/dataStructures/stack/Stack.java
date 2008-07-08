@@ -11,25 +11,27 @@ package interfaces.dataStructures.stack;
  * iteratively traversed. 
  * @author w_jossey
  *
- * @param <E>
+ * @param <E> Creates a stack of class E objects.
  */
 public interface Stack<E> {
 	
 	/**
 	 * Add an object to the stack.
-	 * @param obj
+	 * @param e element to add to the stack.
 	 */
-    void push(E obj);
+    void push(E e);
     
     /**
      * Return the object last added to the stack and remove it from the stack.
-     * @return
+     * @return returns the element at the top of the stack.  This operation 
+     * removes the element from the stack.
      */
     E pop();
     
     /**
      * Returns the top element on the stack without removing it.
-     * @return 
+     * @return returns the element at the top of the stack without
+     * removing it.
      */
     E peek();
     
