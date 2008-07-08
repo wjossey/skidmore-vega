@@ -1,8 +1,15 @@
 package interfaces.dataStructures.heap;
 
-import vega.graph.vertex.heap.FibonacciHeapNode;
+import interfaces.graph.vertex.heap.FibonacciHeapNode;
 
-public interface FibonacciHeap<C extends Comparable<C>> {
+/**
+ * 
+ * @author w_jossey
+ *
+ * @param <C>
+ * @param <T>
+ */
+public interface FibonacciHeap<C, T extends FibonacciHeapNode<C, ? super T>>{
 
 	/**
 	 * Tests if the Fibonacci heap is empty or not. Returns true if the heap is
@@ -31,7 +38,7 @@ public interface FibonacciHeap<C extends Comparable<C>> {
 	 * @exception IllegalArgumentException Thrown if k is larger than x.key
 	 * value.
 	 */
-	public void decreaseKey(FibonacciHeapNode<C> x, double k);
+	public void decreaseKey(T x, double k);
 
 	/**
 	 * Deletes a node from the heap given the reference to the node. The trees
@@ -43,7 +50,7 @@ public interface FibonacciHeap<C extends Comparable<C>> {
 	 *
 	 * @param x node to remove from heap
 	 */
-	public void delete(FibonacciHeapNode<C> x);
+	public void delete(T x);
 
 	/**
 	 * Inserts a new data element into the heap. No heap consolidation is
@@ -55,7 +62,7 @@ public interface FibonacciHeap<C extends Comparable<C>> {
 	 * @param node new node to insert into heap
 	 * @param key key value associated with data object
 	 */
-	public void insert(FibonacciHeapNode<C> node, double key);
+	public void insert(T node, double key);
 
 	/**
 	 * Returns the smallest element in the heap. This smallest element is the
@@ -65,7 +72,7 @@ public interface FibonacciHeap<C extends Comparable<C>> {
 	 *
 	 * @return heap node with the smallest key
 	 */
-	public FibonacciHeapNode<C> min();
+	public T min();
 
 	/**
 	 * Removes the smallest element from the heap. This will cause the trees in
@@ -75,7 +82,7 @@ public interface FibonacciHeap<C extends Comparable<C>> {
 	 *
 	 * @return node with the smallest key
 	 */
-	public FibonacciHeapNode<C> removeMin();
+	public T removeMin();
 
 	/**
 	 * Returns the size of the heap which is measured in the number of elements

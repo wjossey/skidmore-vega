@@ -1,7 +1,7 @@
 package interfaces.dataStructures.heap;
 
 /**
-   Interface for a priority queue.
+ *    Interface for a priority queue.
    <p>
    This interface differs from the standard Jata<sup>TM</sup> one because
    we find it unintuitive to work without something resembling C's 
@@ -29,7 +29,10 @@ package interfaces.dataStructures.heap;
    one cannot clone them, 2 is just plain awkward).
 
    we have our own priority queue interface.
-*/
+ * @author w_jossey
+ *
+ * @param <C>
+ */
 public interface PriorityQueue<C extends Comparable<C>> extends Iterable<C>
 {
     /**

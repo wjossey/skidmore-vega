@@ -6,8 +6,10 @@
 package interfaces.dataStructures.queue;
 
 /**
- *
+ * 
  * @author w_jossey
+ *
+ * @param <E>
  */
 public interface Queue<E> {
 	

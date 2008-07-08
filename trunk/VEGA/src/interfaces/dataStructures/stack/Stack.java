@@ -6,10 +6,12 @@
 package interfaces.dataStructures.stack;
 
 /**
- * A stack is a First In Last Out (FILO) data-structure. Items can either be pushed
+ *  * A stack is a First In Last Out (FILO) data-structure. Items can either be pushed
  * onto the stack, popped off the stack, or examined using peek.  A stack can not be
  * iteratively traversed. 
  * @author w_jossey
+ *
+ * @param <E>
  */
 public interface Stack<E> {
 	

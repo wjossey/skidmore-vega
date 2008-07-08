@@ -11,18 +11,18 @@ import interfaces.graph.vertex.Vertex;
  *
  * @author w_jossey
  */
-public interface DirectedEdge<V extends Vertex<? super DirectedEdge<? super V>>> extends Edge{
+public interface DirectedEdge extends Edge{
 	
 	/**
 	 * Gets the source vertex of the edge.
 	 * @return Source vertex of the edge.
 	 */
-	public V getSource();
+	public Vertex<? extends DirectedEdge> getSource();
 	
 	/**
 	 * Gets the destination vertex of the edge.
 	 * @return Destination vertex of the edge.
 	 */
-	public V getDestination();
+	public Vertex<? extends DirectedEdge> getDestination();
 
 }

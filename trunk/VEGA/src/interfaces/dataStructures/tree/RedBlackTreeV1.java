@@ -6,8 +6,10 @@
 package interfaces.dataStructures.tree;
 
 /**
- *
+ * 
  * @author w_jossey
+ *
+ * @param <C>
  */
 public interface RedBlackTreeV1<C extends Comparable<C>>{
 

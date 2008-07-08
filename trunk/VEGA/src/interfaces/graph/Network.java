@@ -11,10 +11,13 @@ import interfaces.graph.vertex.network.NetworkNode;
 import interfaces.graph.edge.network.NetworkEdge;
 
 /**
- *
+ * 
  * @author w_jossey
+ *
+ * @param <N>
+ * @param <E>
  */
-public interface Network<N extends NetworkNode<N,E>, E extends NetworkEdge>{
+public interface Network<N extends NetworkNode<? extends E>, E extends NetworkEdge>{
 	
 	/**
 	 * Sets the sources of the network.

@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import interfaces.graph.edge.Edge;
 
 /**
- *
+ * 
  * @author w_jossey
+ *
+ * @param <E>
  */
 public interface Vertex<E extends Edge>{
 	
@@ -29,7 +31,7 @@ public interface Vertex<E extends Edge>{
 	
 	public void addEdge(E toTempVertex);
 	
-	public <V extends Vertex<? super E>> E getEdge(V v);
+	public <V extends Vertex<? extends E>> E getEdge(V v);
 	
 	public int getUID();
 	
@@ -50,5 +52,9 @@ public interface Vertex<E extends Edge>{
 	public boolean isActive();
 	
 	public void setActive(boolean active);
+	
+	public Vertex<E> getPreviousVertex();
+	
+	public Vertex<E> setPreviousVertex(Vertex<E> previousVertex);
 	
 }
