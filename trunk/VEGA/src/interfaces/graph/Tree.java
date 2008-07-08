@@ -16,7 +16,7 @@ import interfaces.graph.vertex.tree.TreeNode;
  * @param <T>
  * @param <E>
  */
-public interface Tree<C extends Comparable<? super C>, T extends TreeNode<C,? super T,E>, E extends Edge> extends Graph<T,E>{
+public interface Tree<C extends Comparable<? super C>, T extends TreeNode<C,? extends T,? extends E>, E extends Edge> extends Graph<T,E>{
 	
 	/**
 	 * Sets the root node of the graph.

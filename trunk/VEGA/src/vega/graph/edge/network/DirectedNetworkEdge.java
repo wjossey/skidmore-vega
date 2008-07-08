@@ -8,7 +8,7 @@ import interfaces.graph.vertex.network.NetworkNode;
  *
  * @param <N>
  */
-public class DirectedNetworkEdge<N extends NetworkNode<? super interfaces.graph.edge.network.DirectedNetworkEdge<? super N>>> extends AbstractNetworkEdge implements interfaces.graph.edge.network.DirectedNetworkEdge<N>{
+public class DirectedNetworkEdge<N extends NetworkNode<? extends interfaces.graph.edge.network.DirectedNetworkEdge<? extends N>>> extends AbstractNetworkEdge implements interfaces.graph.edge.network.DirectedNetworkEdge<N>{
 
 	N source;
 	N destination;

@@ -9,7 +9,7 @@ import interfaces.graph.vertex.heap.FibonacciHeapNode;
  * @param <C> Class that implements comparable
  * @param <T> Class that implements Tree Node
  */
-public interface FibonacciHeap<C, T extends FibonacciHeapNode<C, ? super T>>{
+public interface FibonacciHeap<C, T extends FibonacciHeapNode<? super C, ? extends T>>{
 
 	/**
 	 * Tests if the Fibonacci heap is empty or not. Returns true if the heap is

@@ -8,7 +8,7 @@ import interfaces.graph.vertex.network.NetworkNode;
  *
  * @param <N>
  */
-public interface DirectedNetworkEdge<N extends NetworkNode<? super DirectedNetworkEdge<? super N>>> extends NetworkEdge{
+public interface DirectedNetworkEdge<N extends NetworkNode<? extends DirectedNetworkEdge<? extends N>>> extends NetworkEdge{
 
 	/**
 	 * Gets the source vertex of the edge.

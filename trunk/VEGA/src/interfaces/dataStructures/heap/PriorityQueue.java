@@ -33,7 +33,7 @@ package interfaces.dataStructures.heap;
  *
  * @param <C> Class implements Comparable
  */
-public interface PriorityQueue<C extends Comparable<C>> extends Iterable<C>
+public interface PriorityQueue<C extends Comparable<? super C>> extends Iterable<C>
 {
     /**
        Insert an element into the priority queue.

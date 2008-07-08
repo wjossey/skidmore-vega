@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * @param <V> Must be a class that implements the Vertex interface.
  * @param <E> Must be a class that implements the Edge interface.
  */
-public class AbstractGraph<V extends Vertex<? super E>, E extends Edge> implements Graph<V, E>{
+public class AbstractGraph<V extends Vertex<? extends E>, E extends Edge> implements Graph<V, E>{
 
     protected int size = 0;
     protected int positionInArray = 0;
@@ -304,8 +304,8 @@ public class AbstractGraph<V extends Vertex<? super E>, E extends Edge> implemen
         }
         
         
-        returnString += VertexHelper.vertexListToString(vertexList) + "\n";
-        returnString += AbstractEdge.allEdgesWithoutRepeats(vertexList) + "\n";
+        //returnString += VertexHelper.vertexListToString(vertexList) + "\n";
+        //returnString += AbstractEdge.allEdgesWithoutRepeats(vertexList) + "\n";
 
         returnString += "}\n";
 

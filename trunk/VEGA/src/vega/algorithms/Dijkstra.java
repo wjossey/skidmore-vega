@@ -14,7 +14,7 @@ import vega.graph.vertex.heap.FibonacciHeapNode;
  * @author w_jossey
  *
  */
-public class Dijkstra{
+public class Dijkstra<C extends Comparable<? super C>>{
 	
 	/*Graph*/
 	private Graph<Vertex<DirectedEdge>, DirectedEdge> graph;
@@ -69,8 +69,7 @@ public class Dijkstra{
 				/*Get the vertex, create a new FibHeapNode*/
 				Vertex<DirectedEdge> tempVertex = (Vertex<DirectedEdge>) arrayList.get(i);
 				
-				FibonacciHeapNode<Vertex<DirectedEdge>> node = new 
-								FibonacciHeapNode<Vertex<DirectedEdge>>(tempVertex, Double.MAX_VALUE);
+				FibonacciHeapNode<Vertex<DirectedEdge>> node = new FibonacciHeapNode<Vertex<DirectedEdge>>(tempVertex, Double.MAX_VALUE);
 				
 				/*Put the node in the hash and the fibHeap*/
 				nodeHash.put(node.getData().getUID(), node);
