@@ -14,6 +14,10 @@ import interfaces.graph.vertex.Vertex;
  */
 public interface Graph<V extends Vertex<? super E>, E extends Edge>{
 
+	/**
+	 * Returns the number of vertices in the graph.
+	 * @return number of vertices in the graph
+	 */
 	public int getSize();
 
 	/**

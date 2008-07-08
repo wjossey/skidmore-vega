@@ -11,7 +11,7 @@ package interfaces.dataStructures.tree;
  *
  * @param <C>
  */
-public interface BinarySearchTree<C extends Comparable<? super C>>{ //extends Tree<C, BinaryTreeNode<C>, UndirectedEdge>{
+public interface BinarySearchTree<C extends Comparable<? super C>>{
 
     /**
      * Deletes a value from the tree without having to have the specific value.
