@@ -2,7 +2,7 @@ package interfaces.graph.vertex.tree;
 
 import interfaces.graph.edge.UndirectedEdge;
 
-public interface BinaryTreeNode<C extends Comparable<? super C>, T extends BinaryTreeNode<? super C, ? super T>> extends TreeNode<C,T,UndirectedEdge<T>>{
+public interface BinaryTreeNode<C extends Comparable<? super C>, T extends BinaryTreeNode<? super C, ? super T>> extends TreeNode<C,T,UndirectedEdge>{
 
 	/**
 	 * 

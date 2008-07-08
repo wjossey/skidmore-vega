@@ -5,13 +5,13 @@ import interfaces.graph.vertex.tree.RedBlackTreeNode;
 
 /**
  * 
- * @author w_jossey
+ * @author Weston Jossey
  *
  * @param <C>
  */
 public class RedBlackTree<C extends Comparable<C>> extends AbstractBinarySearchTree<C, interfaces.graph.vertex.tree.RedBlackTreeNode<C>>{
 	
-	private final boolean RED = RedBlackTreeNode.RED;
+	private final boolean RED = RedBlackTreeNode.RED;;;;;
 	private final boolean BLACK = RedBlackTreeNode.BLACK;
 	
 	/**
