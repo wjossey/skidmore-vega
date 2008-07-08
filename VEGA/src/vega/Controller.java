@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * @param <V>
  * @param <E>
  */
-public class Controller<V extends Vertex<E>, E extends Edge> {
+public class Controller<V extends Vertex<? extends E>, E extends Edge> {
 
     private int counter = 0;
     private int imageCounter = 0;

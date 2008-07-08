@@ -8,7 +8,7 @@ import interfaces.graph.vertex.network.NetworkNode;
  *
  * @param <N>
  */
-public interface UndirectedNetworkEdge<N extends NetworkNode<? super UndirectedNetworkEdge<? super N>>> extends NetworkEdge{
+public interface UndirectedNetworkEdge<N extends NetworkNode<? extends UndirectedNetworkEdge<? extends N>>> extends NetworkEdge{
 
 	public N getVertexA();
 	

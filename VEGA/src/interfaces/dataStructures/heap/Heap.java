@@ -15,7 +15,7 @@ import interfaces.graph.vertex.heap.HeapNode;
  *
  * @param <C> Class that implements Comparable
  */
-public interface Heap<C extends Comparable<C>> extends Tree<C, HeapNode<C>, UndirectedEdge>{
+public interface Heap<C extends Comparable<? super C>> extends Tree<C, HeapNode<C>, UndirectedEdge>{
 	
 	/**
 	 * Instantiates an empty heap.

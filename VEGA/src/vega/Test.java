@@ -3,16 +3,15 @@ package vega;
 import java.util.Random;
 
 import vega.algorithms.Dijkstra;
-import vega.dataStructures.trees.BinarySearchTree;
 import vega.dataStructures.trees.RedBlackTree;
-import vega.graph.Graph;
+import vega.graph.DiGraph;
 import vega.graph.edge.DirectedEdge;
 import vega.graph.vertex.Vertex;
 
 public class Test {
 
 	public static  void main(String[] args){
-		Graph<Vertex<DirectedEdge>, DirectedEdge> g = new Graph<Vertex<DirectedEdge>, DirectedEdge>();
+		DiGraph<Vertex<DirectedEdge>> g = new DiGraph<Vertex<DirectedEdge>>();
 		
 		Vertex<DirectedEdge> s = new Vertex<DirectedEdge>("S");
 		Vertex<DirectedEdge> t = new Vertex<DirectedEdge>("T");

@@ -12,7 +12,7 @@ import interfaces.graph.vertex.Vertex;
  * @param <V>
  * @param <E>
  */
-public interface Graph<V extends Vertex<? super E>, E extends Edge>{
+public interface Graph<V extends Vertex<? extends E>, E extends Edge>{
 
 	/**
 	 * Returns the number of vertices in the graph.

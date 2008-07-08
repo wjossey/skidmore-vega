@@ -8,7 +8,7 @@ package interfaces.graph;
 import java.util.ArrayList;
 
 import interfaces.graph.vertex.network.NetworkNode;
-import interfaces.graph.edge.network.NetworkEdge;
+import interfaces.graph.edge.Edge;
 
 /**
  * 
@@ -17,7 +17,7 @@ import interfaces.graph.edge.network.NetworkEdge;
  * @param <N>
  * @param <E>
  */
-public interface Network<N extends NetworkNode<? extends E>, E extends NetworkEdge>{
+public interface Network<N extends NetworkNode<? extends Edge>>{
 	
 	/**
 	 * Sets the sources of the network.

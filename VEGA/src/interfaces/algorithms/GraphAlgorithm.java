@@ -13,7 +13,7 @@ import interfaces.graph.vertex.Vertex;
  * @param <V> Class implements Vertex
  * @param <E> Class implements Edge
  */
-public interface GraphAlgorithm<G extends Graph<V,E>, V extends Vertex<E>, E extends Edge> {
+public interface GraphAlgorithm<G extends Graph<V,E>, V extends Vertex<? extends E>, E extends Edge> {
 	
 	/**
 	 * Method executes the algorithm that implements the interface.

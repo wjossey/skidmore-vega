@@ -22,7 +22,7 @@ public class VertexHelper {
 	 * @param g
 	 * @return
 	 */
-	public static <V extends Vertex<? super E>, E extends Edge> Graph<V,E> generateVertices(Graph<V, E> g){
+	public static <V extends Vertex<? extends E>, E extends Edge> Graph<V,E> generateVertices(Graph<V, E> g){
 		Graph<V, E> graph = g;
 		graph.addVertex(null);
 	
