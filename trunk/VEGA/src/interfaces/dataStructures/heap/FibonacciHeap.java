@@ -4,10 +4,10 @@ import interfaces.graph.vertex.heap.FibonacciHeapNode;
 
 /**
  * 
- * @author w_jossey
+ * @author Weston Jossey
  *
- * @param <C>
- * @param <T>
+ * @param <C> Class that implements comparable
+ * @param <T> Class that implements Tree Node
  */
 public interface FibonacciHeap<C, T extends FibonacciHeapNode<C, ? super T>>{
 

@@ -2,9 +2,9 @@ package interfaces.dataStructures.heap;
 
 /**
  * 
- * @author w_jossey
+ * @author Weston Jossey
  *
- * @param <C>
+ * @param <C> Class implements Comparable 
  */
 public interface BinomialHeap<C extends Comparable<C>> extends Heap<C>{
 

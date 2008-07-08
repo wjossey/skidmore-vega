@@ -2,7 +2,7 @@ package interfaces.algorithms.graph;
 
 /**
  * 
- * @author w_jossey
+ * @author Weston Jossey
  *
  */
 public interface BellmanFord {

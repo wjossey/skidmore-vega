@@ -2,7 +2,7 @@ package interfaces.algorithms.graph.network;
 
 /**
  * 
- * @author w_jossey
+ * @author Weston Jossey
  *
  */
 public interface PushRelabel {
