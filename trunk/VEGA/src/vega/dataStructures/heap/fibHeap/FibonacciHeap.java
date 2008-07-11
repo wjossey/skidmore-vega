@@ -595,7 +595,7 @@ public class FibonacciHeap<C> implements interfaces.dataStructures.heap.Fibonacc
      * Returns the heap as a String that can be passed to GraphViz.
      * @return Generated string representation of the heap.
      */
-    private String toGraphViz(){
+    public String toGraphViz(){
     	if (minNode == null) {
             return "FibonacciHeap=[]";
         }

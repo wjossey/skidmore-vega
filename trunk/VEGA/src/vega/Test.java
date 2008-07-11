@@ -3,10 +3,12 @@ package vega;
 import java.util.Random;
 
 import vega.algorithms.Dijkstra;
+import vega.dataStructures.heap.fibHeap.FibonacciHeap;
 import vega.dataStructures.trees.RedBlackTree;
 import vega.graph.DiGraph;
 import vega.graph.edge.DirectedEdge;
 import vega.graph.vertex.Vertex;
+import vega.graph.vertex.heap.FibonacciHeapNode;
 
 public class Test {
 
@@ -80,8 +82,21 @@ public class Test {
 			redBlackTree.insert(socialSecurity);
 		}
 		
-		System.out.println(redBlackTree.toGraphviz("G"));
+	//	System.out.println(redBlackTree.toGraphviz("G"));
 		
+		FibonacciHeap<Integer> heap = new FibonacciHeap<Integer>();
+		Random fibRand = new Random();
+		
+		for(int i = 0; i< 300; i++){
+			int first = 100 + fibRand.nextInt(899);
+			heap.insert(new FibonacciHeapNode<Integer>(new Integer(first), first), first);
+		}
+		
+		//System.out.println(heap.toGraphViz());
+		
+		heap.removeMin();
+		
+		System.out.println(heap.toGraphViz());
 		
 	}
 }

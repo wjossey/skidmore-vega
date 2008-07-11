@@ -501,7 +501,9 @@ public abstract class AbstractBinarySearchTree<C extends Comparable<C>, T extend
     	returnString += root.getUID() + " [label=\"" + root.getData().toString() + "\"";
     	
     	if(root instanceof RedBlackTreeNode){
-    		if(((RedBlackTreeNode<C>) root).getColor() == RedBlackTreeNode.BLACK){
+            RedBlackTreeNode<C> tempRoot;
+            tempRoot = (RedBlackTreeNode<C>) root;
+            if(tempRoot.getColor() == RedBlackTreeNode.BLACK){
     			//BLACK
     			returnString += ", color=black, style=filled, fontcolor=white";
     		}else{

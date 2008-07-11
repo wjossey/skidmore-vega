@@ -1,7 +1,5 @@
 package vega.graph;
 
-import vega.graph.edge.AbstractEdge;
-import vega.helperClasses.VertexHelper;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
 import interfaces.graph.Graph;

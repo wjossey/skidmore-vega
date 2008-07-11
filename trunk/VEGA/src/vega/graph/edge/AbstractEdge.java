@@ -267,6 +267,7 @@ public abstract class AbstractEdge implements Edge{
      * @param vertexList a vertex array
      * @return returns the generated String.
      */
+    
     public static <V extends Vertex<? super E>, E extends Edge> String allEdgesWithoutRepeats(ArrayList<V> vertexList) {
         String returnString = "";
         for (int i = 0; i < vertexList.size(); i++) {

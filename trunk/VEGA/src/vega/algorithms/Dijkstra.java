@@ -17,7 +17,7 @@ import vega.graph.vertex.heap.FibonacciHeapNode;
 public class Dijkstra<C extends Comparable<? super C>>{
 	
 	/*Graph*/
-	private Graph<Vertex<DirectedEdge>, DirectedEdge> graph;
+	private Graph<? extends Vertex<? extends DirectedEdge>, ? extends DirectedEdge> graph;
 	/*Source*/ 
 	private Vertex<DirectedEdge> source;
 	/*Fibonacci Heap*/
@@ -33,11 +33,10 @@ public class Dijkstra<C extends Comparable<? super C>>{
 	 * @param graph
 	 * @param source
 	 */
-	@SuppressWarnings("unchecked")
 	public Dijkstra(Graph<? extends Vertex<? extends DirectedEdge>, ? extends DirectedEdge> graph, 
 			Vertex<? extends DirectedEdge> source){
 		
-		this.graph = (Graph<Vertex<DirectedEdge>, DirectedEdge>) graph;
+		this.graph =  graph;
 		initializeNodes(source, graph.getVertexArray());
 		
 	}
@@ -76,7 +75,7 @@ public class Dijkstra<C extends Comparable<? super C>>{
 				heap.insert(node, node.getKey());
 				
 				/*For debugging*/
-				System.out.println(heap.toString());
+				//System.out.println(heap.toString());
 					
 			}else{
 				/*Create new FibHeapNode and insert it in the hash and the FibHeap*/
@@ -101,7 +100,7 @@ public class Dijkstra<C extends Comparable<? super C>>{
 			FibonacciHeapNode<Vertex<DirectedEdge>> minNode = heap.removeMin();
 			
 			/*For debugging*/
-			System.out.println(heap.toString());
+			//System.out.println(heap.toString());
 			
 			/*Get the vertex and the edgeList from the minNode*/
 			Vertex<DirectedEdge> minVertex = minNode.getData();
@@ -137,11 +136,12 @@ public class Dijkstra<C extends Comparable<? super C>>{
 		}		
 	}
 	
+        
 	public String printShortestPaths(){
 		String returnString = "";
 		if(completed){
 			/*Get the vertexList from the graph, and index of the source vertex in the list*/
-			ArrayList<Vertex<DirectedEdge>> vertexList = (ArrayList<Vertex<DirectedEdge>>) graph.getVertexArray();
+			ArrayList<? extends Vertex<? extends DirectedEdge>> vertexList = graph.getVertexArray();
 			int indexOfSource = vertexList.indexOf(source);
 			
 			/*For each node that is not the source, print the path from the source to it*/
