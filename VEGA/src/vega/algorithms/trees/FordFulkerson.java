@@ -1,24 +1,24 @@
-///*
-// * To change this template, choose Tools | Templates
-// * and open the template in the editor.
-// */
-//
-//package vega.algorithms.networkFlow;
-//
-//import java.util.ArrayList;
-//
-//import vega.dataStructures.queue.QueueImpl;
-//import vega.helperClasses.VertexHelper;
-//import interfaces.graph.edge.network.DirectedNetworkEdge;
-//import interfaces.graph.edge.network.NetworkEdge;
-//import interfaces.graph.vertex.Vertex;
-//import interfaces.graph.vertex.network.NetworkNode;
+/*
+  To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package vega.algorithms.trees;
+
+import java.util.ArrayList;
+
+import vega.dataStructures.queue.QueueImpl;
+import vega.helperClasses.VertexHelper;
+import interfaces.graph.edge.network.DirectedNetworkEdge;
+import interfaces.graph.edge.network.NetworkEdge;
+import interfaces.graph.vertex.Vertex;
+import interfaces.graph.vertex.network.NetworkNode;
 //
 ///**
 // *
 // * @author w_jossey
 // */
-//public class FordFulkerson<N extends NetworkNode<N, DirectedNetworkEdge<N>>> {
+public class FordFulkerson<N extends NetworkNode<DirectedNetworkEdge<N>>> {
 //    ArrayList<N> networkNodeArray;
 //    /*Internal method that reverses a linked list when given a starting and ending
 //     * vertex.  This is particularly useful for the 2opt algorithm as we are forced
@@ -142,4 +142,4 @@
 //        }
 //        return returnArray;
 //    }
-//}
+}

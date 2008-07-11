@@ -3,7 +3,7 @@
 // * and open the template in the editor.
 // */
 //
-//package vega.dataStructures.trees;
+package vega.dataStructures.trees;
 //
 //import vega.graph.vertex.tree.AbstractBinaryTreeNode;
 //import interfaces.graph.vertex.tree.BinaryTreeNode;
@@ -12,7 +12,13 @@
 // *
 // * @author w_jossey
 // */
-//public class RedBlackTreeV2Impl extends AbstractBinarySearchTree{
+public class RedBlackTreeV2Impl extends AbstractBinarySearchTree{
+
+	@Override
+	public void insert(Comparable arg) {
+		// TODO Auto-generated method stub
+		
+	}
 //
 //    public RedBlackTreeV2Impl(){
 //        super();
@@ -275,4 +281,4 @@
 //        
 //    }
 //    
-//}
+}
