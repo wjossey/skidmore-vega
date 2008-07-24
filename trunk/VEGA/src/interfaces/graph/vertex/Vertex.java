@@ -31,7 +31,7 @@ public interface Vertex<E extends Edge>{
 	
 	public void addEdge(E toTempVertex);
 	
-	public <V extends Vertex<? extends E>> E getEdge(V v);
+	public E getEdge(Vertex<?> v);
 	
 	public int getUID();
 	

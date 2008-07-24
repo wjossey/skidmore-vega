@@ -15,24 +15,10 @@ import interfaces.graph.edge.UndirectedEdge;
  */
 public class VertexHelper {
 	
-	/**
-	 * 
-	 * @param <V>
-	 * @param <E>
-	 * @param g
-	 * @return
-	 */
-	public static <V extends Vertex<? extends E>, E extends Edge> Graph<V,E> generateVertices(Graph<V, E> g){
-		Graph<V, E> graph = g;
-		graph.addVertex(null);
-	
-		return null;
-	}
-	
 	@SuppressWarnings("unchecked")
-	public static <V extends Vertex<E>, E extends Edge> ArrayList<V> getKNearestNeighbors(V vertex, int k){
+	public static <V extends Vertex<? extends E>, E extends Edge> ArrayList<V> getKNearestNeighbors(V vertex, int k){
 		ArrayList<V> returnArrayList = new ArrayList<V>();
-		ArrayList<E> edgeList = vertex.getEdges();
+		ArrayList<E> edgeList = (ArrayList<E>) vertex.getEdges();
 		
 		if (k <= edgeList.size()) {
 	        EdgeHelper.sortEdges
@@ -137,13 +123,41 @@ public class VertexHelper {
      * @param vertexList
      * @return
      */
-    public static <V extends Vertex<? super E>, E extends Edge>String vertexListToString(ArrayList<V> vertexList) {
+    public static String vertexListToString(ArrayList<? extends Vertex<? extends Edge>> vertexList) {
         String returnString = "";
         for (int i = 0; i < vertexList.size(); i++) {
             returnString += vertexList.get(i).toString() + "\n";
         }
 
         return returnString;
+    }
+    
+    /**
+     * 
+     * @param tour Array of vertices in the tour.  
+     * @return
+     */
+    public static double computeDistanceOfCycle(Vertex<? extends Edge>[] cycle) {
+        double distance = 0;
+        if(cycle[0] == cycle[cycle.length - 1]){
+            /*
+               We have a tour that has the root vertex
+               at the start and end of the tour
+            */
+            for(int i = 0; i < cycle.length - 1; i++){
+                distance += cycle[i].getEdge(cycle[i+1]).getWeight();
+            }
+            
+            
+        }else{
+            for(int i = 0; i < cycle.length - 1; i++){
+                distance += cycle[i].getEdge(cycle[i+1]).getWeight();
+            }
+            
+            distance += cycle[cycle.length - 1].getEdge(cycle[0]).getWeight();
+        }
+
+        return distance;
     }
 
 }

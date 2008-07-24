@@ -27,7 +27,7 @@ public class DiGraph<V extends Vertex<? extends DirectedEdge>> extends AbstractG
 	}
 	
 	public DiGraph(ArrayList<V> vertexList, ArrayList<DirectedEdge> edgeList){
-		super(vertexList, edgeList);
+		super(vertexList, edgeList, true);
 	}
 	
 	public DiGraph(int vertexSize, int edgeSize){

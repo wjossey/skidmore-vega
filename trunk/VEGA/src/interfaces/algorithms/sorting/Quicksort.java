@@ -1,4 +1,4 @@
-package interfaces.algorithms.graph;
+package interfaces.algorithms.sorting;
 
 /**
  * 

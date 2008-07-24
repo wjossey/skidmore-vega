@@ -62,9 +62,18 @@ public class DirectedEdge extends AbstractEdge implements interfaces.graph.edge.
         return to;
     }
    
-    public String toString(){
-        throw new UnsupportedOperationException("Not supported yet.");
-       
+    public String toString() {
+        String returnString = "";
+        returnString += from.getName(); //a -- b [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled];
+
+        returnString += " -> ";
+
+        returnString += to.getName() + " ";
+        returnString += "[ " + getStyle() + getFormattedWeight() +
+                getColor() + "];";
+
+
+        return returnString;
     }
  
 }

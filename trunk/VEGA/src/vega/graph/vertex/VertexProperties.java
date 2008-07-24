@@ -11,7 +11,7 @@ import interfaces.graph.vertex.GraphvizVertexProperties;
  */
 public class VertexProperties implements GraphvizVertexProperties {
 	
-	Vertex<? super Edge> parent;
+	Vertex<?> vertex;
 	
 	private String color = "DEFAULT"; //Color of the vertex
 
@@ -21,8 +21,8 @@ public class VertexProperties implements GraphvizVertexProperties {
     
     private int sides = 0; //Used by Graphviz to draw polygons
 	
-	VertexProperties(Vertex<? super Edge> v){
-		parent = v;
+	VertexProperties(Vertex<?> v){
+		vertex = v;
 	}
 	
 	 /**
@@ -32,14 +32,14 @@ public class VertexProperties implements GraphvizVertexProperties {
     public String getColor() {
         String returnString = "";
 
-        if (parent.isActive()) {
+        if (vertex.isActive()) {
             returnString = "red";
         } else {
-            if (parent.inUse()) {
+            if (vertex.inUse()) {
                 returnString = "gray";
             } else {
                 if (color.equalsIgnoreCase("DEFAULT")) {
-                    returnString = "white";
+                    returnString = "green";
                 } else {
                     returnString = color;
                 }
@@ -71,7 +71,7 @@ public class VertexProperties implements GraphvizVertexProperties {
      * @return
      */
     public String getStyle() {
-        if (parent.isActive() || parent.inUse()) {
+        if (vertex.isActive() || vertex.inUse()) {
             return "filled";
         } else {
             if (style.equalsIgnoreCase("DEFAULT")) {
@@ -99,7 +99,7 @@ public class VertexProperties implements GraphvizVertexProperties {
 	}
 
 	public void setParentVertex(Vertex<? super Edge> v) {
-		parent = v;
+		vertex = v;
 	}
 
 }

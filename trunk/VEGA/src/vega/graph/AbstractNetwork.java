@@ -11,7 +11,7 @@ import interfaces.graph.vertex.network.NetworkNode;
 
 import java.util.ArrayList;
 
-import vega.graph.edge.AbstractEdge;
+import vega.helperClasses.EdgeHelper;
 import vega.helperClasses.VertexHelper;
 
 /**
@@ -43,8 +43,8 @@ public class AbstractNetwork<N extends NetworkNode<E>, E extends NetworkEdge> ex
         super(vertexArray, edgeArray);
     }
     
-    public AbstractNetwork(ArrayList<N> vertexList, ArrayList<E> edgeList){
-        super(vertexList, edgeList);
+    public AbstractNetwork(ArrayList<N> vertexList, ArrayList<E> edgeList, boolean isDigraph){
+        super(vertexList, edgeList, isDigraph);
     }
 
     /**
@@ -99,7 +99,7 @@ public class AbstractNetwork<N extends NetworkNode<E>, E extends NetworkEdge> ex
         }
 
         returnString += VertexHelper.vertexListToString(vertexList) + "\n";
-        returnString += AbstractEdge.allEdgesWithoutRepeats(vertexList) + "\n";
+        returnString += EdgeHelper.allEdgesWithoutRepeats(vertexList) + "\n";
 
         returnString += "}\n";
 

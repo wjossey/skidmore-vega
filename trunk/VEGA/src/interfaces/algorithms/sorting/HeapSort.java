@@ -3,12 +3,12 @@
  * and open the template in the editor.
  */
 
-package interfaces.algorithms.graph;
+package interfaces.algorithms.sorting;
 
 /**
  *
  * @author Weston Jossey
  */
-public interface BubbleSort  {
+public interface HeapSort {
 
 }
