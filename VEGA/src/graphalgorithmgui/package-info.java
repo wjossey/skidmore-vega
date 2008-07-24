@@ -1,0 +1,4 @@
+/**
+ * GUI Package
+ */
+package graphalgorithmgui;

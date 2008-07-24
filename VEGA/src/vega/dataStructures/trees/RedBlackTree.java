@@ -15,7 +15,8 @@ public class RedBlackTree<C extends Comparable<C>> extends AbstractBinarySearchT
 	private final boolean BLACK = RedBlackTreeNode.BLACK;
 	
 	/**
-	 * 
+	 * Insert a comparable into the tree
+	 * @param key key to insert
 	 */
 	public void insert(C key) { 
 		vega.graph.vertex.tree.RedBlackTreeNode<C> newNode = new vega.graph.vertex.tree.RedBlackTreeNode<C>(key, RedBlackTreeNode.RED);
@@ -172,6 +173,139 @@ public class RedBlackTree<C extends Comparable<C>> extends AbstractBinarySearchT
 	        newNode.setParentNode(oldNode.getParentNode());
 	    }
 	}
+	
+	/**
+	 * 
+	 */
+    public boolean delete(C arg) {
+        boolean result = false;
+        C key = arg;
+        RedBlackTreeNode<C> node = search(getRoot(), key);
+        if (node != null) {
+            deleteNode(node);
+            numElements--;
+            result = true;
+        }
+        return result;
+    }
+   
+    private RedBlackTreeNode<C> deleteNode(RedBlackTreeNode<C> node){
+    	RedBlackTreeNode<C> child;
+        if(isLeaf(node.getLeftChild())){
+            child = node.getLeftChild();
+        }else{
+            child = node.getRightChild();
+        }
+        
+        node.setData(child.getData());
+        if(node.getColor() == BLACK){
+            if(child.getColor() == RED){
+                child.setColor(BLACK);
+            }else{
+                delete_case1(child);
+            }
+        }
+        
+        return node;
+        
+    }
+    
+    private boolean isLeaf(RedBlackTreeNode<C> node) {
+		if(node.getLeftChild() == null && node.getRightChild() == null){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	private void delete_case1(RedBlackTreeNode<C> node){
+        if(node.getParentNode() != null){
+            delete_case2(node);
+        }
+    }
+    
+    private void delete_case2(RedBlackTreeNode<C> node){
+    	RedBlackTreeNode<C> sibling = getSibling(node);
+        
+        if(sibling.getColor() == RED){
+            node.getParentNode().setColor(RED);
+            sibling.setColor(BLACK);
+            if(node == node.getParentNode().getLeftChild()){
+                rotateWithLeftChild(node.getParentNode());
+            }else{
+                rotateWithRightChild(node.getParentNode());
+            }
+        }
+        
+        delete_case3(node);
+    }
+    
+    private void delete_case3(RedBlackTreeNode<C> node){
+    	RedBlackTreeNode<C> sibling = getSibling(node);
+        
+        if((node.getParentNode().getColor() == BLACK) && 
+                (sibling.getColor() == BLACK) &&
+                (sibling.getLeftChild().getColor() == BLACK) &&
+                (sibling.getRightChild().getColor() == RED)){
+            sibling.setColor(RED);
+            delete_case1(node.getParentNode());
+        }else{
+            delete_case4(node);
+        }
+                
+    }
+    
+    private void delete_case4(RedBlackTreeNode<C> node){
+    	RedBlackTreeNode<C> sibling = getSibling(node);
+        
+        if((node.getParentNode().getColor() == RED) &&
+                (sibling.getColor() == BLACK) && 
+                (sibling.getLeftChild().getColor() == BLACK) &&
+                (sibling.getRightChild().getColor() == BLACK)){
+            sibling.setColor(RED);
+            node.getParentNode().setColor(BLACK);
+        }else{
+            delete_case5(node);
+        }
+    }
+    
+    private void delete_case5(RedBlackTreeNode<C> node){
+    	RedBlackTreeNode<C> sibling = getSibling(node);
+        
+        if((node == node.getParentNode().getLeftChild()) &&
+                (sibling.getColor() == BLACK) && 
+                (sibling.getLeftChild().getColor() == RED) &&
+                (sibling.getRightChild().getColor() == BLACK)){
+            sibling.setColor(RED);
+            sibling.getLeftChild().setColor(BLACK);
+            rotateWithRightChild(sibling);
+        }else{
+            if((node == node.getParentNode().getRightChild()) &&
+                    (sibling.getColor() == BLACK) && 
+                    (sibling.getRightChild().getColor() == RED) &&
+                    (sibling.getLeftChild().getColor() == BLACK)){
+                sibling.setColor(RED);
+                sibling.getRightChild().setColor(BLACK);
+                rotateWithLeftChild(sibling);
+            }
+        }
+        
+        delete_case6(node);
+    }
+    
+    private void delete_case6(RedBlackTreeNode<C> node){
+    	RedBlackTreeNode<C> sibling = getSibling(node);
+        
+        sibling.setColor(node.getParentNode().getColor());
+        node.getParentNode().setColor(BLACK);
+        if(node == node.getParentNode().getLeftChild()){
+            sibling.getRightChild().setColor(BLACK);
+            rotateWithLeftChild(node.getParentNode());
+        }else{
+            sibling.getLeftChild().setColor(BLACK);
+            rotateWithRightChild(node.getParentNode());
+        }
+    }
 }
 
 

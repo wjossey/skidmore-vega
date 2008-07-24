@@ -6,8 +6,8 @@ import vega.pseudoCode.PseudoCode;
 import vega.helperClasses.*;
 import interfaces.algorithms.GraphAlgorithm;
 import interfaces.graph.Graph;
-import interfaces.graph.edge.Edge;
 import interfaces.graph.vertex.Vertex;
+import interfaces.graph.edge.UndirectedEdge;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -20,12 +20,11 @@ import java.util.LinkedList;
  * @param <V>
  * @param <E>
  */
-public class TwoOpt<C extends Comparable<C>, V extends Vertex<E>, E extends Edge> implements GraphAlgorithm<Graph<V,E>,V,E> {
+public class TwoOpt<V extends Vertex<? extends E>, E extends UndirectedEdge> implements GraphAlgorithm<Graph<V,E>,V,E> {
 
     private Graph<V,E> g;
     private PseudoCode pseudoCode;
     private Controller<V,E> controller;
-    private int imageCounter = 0;
     private String FILENAME = "twoOpt";
     private static int instanceCounter = 0;
     private int instanceID = 0;
@@ -48,20 +47,6 @@ public class TwoOpt<C extends Comparable<C>, V extends Vertex<E>, E extends Edge
         executeTwoOpt(this.g.getVertexArray()); //Let's assume we don't assign a starting vertex
 
         running = false;
-    }
-
-    /**
-     * 
-     */
-    public String getFileName() {
-        return FILENAME;
-    }
-
-    /**
-     * 
-     */
-    public boolean isRunning() {
-        return running;
     }
 
     /**
@@ -212,7 +197,7 @@ public class TwoOpt<C extends Comparable<C>, V extends Vertex<E>, E extends Edge
     private ArrayList<V> linkedListToArray(LinkedList<V> linkedList) {
         ArrayList<V> returnArray = new ArrayList<V>(linkedList.size());
         for (int i = 0; i < linkedList.size(); i++) {
-            returnArray.set(i, linkedList.get(i));
+            returnArray.add(linkedList.get(i));
         }
 
         return returnArray;
@@ -270,6 +255,20 @@ public class TwoOpt<C extends Comparable<C>, V extends Vertex<E>, E extends Edge
 
     public String getPseudoCodeText(int line, String procedure) {
         return pseudoCode.getPseudoCodeWithLineMarker(line, procedure);
+    }
+    
+    /**
+     * 
+     */
+    public String getFileName() {
+        return FILENAME;
+    }
+
+    /**
+     * 
+     */
+    public boolean isRunning() {
+        return running;
     }
 
 }

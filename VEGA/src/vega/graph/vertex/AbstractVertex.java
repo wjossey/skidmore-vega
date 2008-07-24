@@ -4,13 +4,13 @@ import interfaces.graph.edge.DirectedEdge;
 import interfaces.graph.edge.Edge;
 import interfaces.graph.edge.UndirectedEdge;
 import interfaces.graph.vertex.Vertex;
-import interfaces.graph.vertex.GraphvizVertexProperties;
+import vega.graph.vertex.VertexProperties;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import vega.graph.edge.AbstractEdge;
+import vega.helperClasses.EdgeHelper;
 
 /**
  * 
@@ -27,7 +27,7 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
 
 	/* Variable Declarations Start*/
     
-	private GraphvizVertexProperties properties;
+	private VertexProperties properties;
 	
 	private static int pk = 0;
 	
@@ -62,6 +62,7 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
 		this.x = x;
 		this.y = y;
 		this.uid = pk++;
+		properties = new VertexProperties(this);
 	}
 	
 	public AbstractVertex(int x, int y, ArrayList<E> edgeList){
@@ -69,12 +70,14 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
 		this.x = x;
 		this.y = y;
 		this.uid = pk++;
+		properties = new VertexProperties(this);
 	}
 	
 	public AbstractVertex(){
 		x = 0;
 		y = 0;
 		this.uid = pk++;
+		properties = new VertexProperties(this);
 	}
 	
 	public AbstractVertex(String name){
@@ -82,6 +85,7 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
 		y = 0;
 		this.uid = pk++;
 		this.name = name;
+		properties = new VertexProperties(this);
 	}
 
     /**
@@ -190,7 +194,7 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
      * @param b Destination or source vertex
      * @return Connecting edge from this vertex to Vertex b.
      */
-    public <V extends Vertex<? extends E>> E getEdge(V b) {
+    public E getEdge(Vertex<?> b) {
         return edgeHash.get(b.getUID());
     }
 
@@ -228,7 +232,7 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
     public void sortEdges() {
         Edge[] edgeArray = (Edge[]) edgeList.toArray();
         
-        AbstractEdge.sortEdgesByDistance(edgeArray);
+        EdgeHelper.sortEdgesByDistance(edgeArray);
     }
   
     /**
@@ -268,7 +272,7 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
 
     }
 
-	public GraphvizVertexProperties getProperties() {
+	public VertexProperties getProperties() {
 		
 		return properties;
 	}

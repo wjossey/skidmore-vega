@@ -1,5 +1,6 @@
 package vega;
 
+import vega.exceptions.ImageWriteException;
 import vega.helperClasses.GraphViz;
 import vega.pseudoCode.PseudoCode;
 import interfaces.algorithms.GraphAlgorithm;
@@ -25,10 +26,10 @@ public class Controller<V extends Vertex<? extends E>, E extends Edge> {
     private int imageCounter = 0;
     private ArrayList<AlgorithmStep> stepTracker = new ArrayList<AlgorithmStep>();
     private PseudoCode pseudoCode;
-    private Graph<V, E> g;
+    private Graph<? extends V, ? extends E> g;
     private GraphAlgorithm<? extends Graph<V,E>, V, E> a;
 
-    public <G extends Graph<V,E>> Controller(G g, PseudoCode pseudoCode, GraphAlgorithm<G,V,E> a) {
+    public Controller(Graph<V, E> g, PseudoCode pseudoCode, GraphAlgorithm<? extends Graph<V,E>,V,E> a) {
         this.g = g;
         this.a = a;
         this.pseudoCode = pseudoCode;
@@ -46,11 +47,13 @@ public class Controller<V extends Vertex<? extends E>, E extends Edge> {
         //NOTE:  UI has a buffer which contains the graphs as they are processed.
         GraphViz graph = new GraphViz();
         graph.add(g.toString());
+        System.out.println(g.toString());
         stepTracker.add(new AlgorithmStep(line, procedure));
         File out = new File(a.getInstanceID() + a.getFileName() + counter++ + ".png");
         byte[] image = graph.getGraph(graph.getDotSource());
         if (graph.writeGraphToFile(image, out) == -1) {
-            System.out.println("Failed!");
+            throw new ImageWriteException("Error message: -1\n  Error caused in" +
+            		" Graphviz object");
         }
 
     }
@@ -87,13 +90,13 @@ public class Controller<V extends Vertex<? extends E>, E extends Edge> {
     public String[] getPreviousGraphImage() {
         String[] returnStringTuple = new String[2];
         if (imageCounter > 1) {
-            returnStringTuple[0] = a.getInstanceID() + a.getFileName() + (imageCounter - 2) + ".jpeg";
+            returnStringTuple[0] = a.getInstanceID() + a.getFileName() + (imageCounter - 2) + ".png";
             returnStringTuple[1] = getPseudoCodeWithLineMarker(stepTracker.get(imageCounter - 2).getLine(),
                     stepTracker.get(imageCounter-- - 2).getProcedure());
             return returnStringTuple;
         } else {
             if (imageCounter == 1) {
-                returnStringTuple[0] = a.getInstanceID() + a.getFileName() + (--imageCounter) + ".jpeg";
+                returnStringTuple[0] = a.getInstanceID() + a.getFileName() + (--imageCounter) + ".png";
                 returnStringTuple[1] = pseudoCode.getPseudoCodeWithLineMarker(stepTracker.get(imageCounter).getLine(),
                         stepTracker.get(imageCounter).getProcedure());
                 return returnStringTuple;

@@ -11,6 +11,47 @@ import vega.graph.vertex.Vertex;
 import vega.graph.vertex.heap.FibonacciHeapNode;
 
 public class Test {
+	
+	public static DiGraph<Vertex<DirectedEdge>> demoGraph(){
+		DiGraph<Vertex<DirectedEdge>> g = new DiGraph<Vertex<DirectedEdge>>(5);
+		
+		Vertex<DirectedEdge> s = new Vertex<DirectedEdge>("S");
+		Vertex<DirectedEdge> t = new Vertex<DirectedEdge>("T");
+		Vertex<DirectedEdge> y = new Vertex<DirectedEdge>("Y");
+		Vertex<DirectedEdge> x = new Vertex<DirectedEdge>("X");
+		Vertex<DirectedEdge> z = new Vertex<DirectedEdge>("Z");
+		
+		
+		DirectedEdge e1 = new DirectedEdge(s, t, 10);
+		DirectedEdge e2 = new DirectedEdge(s, y, 5);
+		DirectedEdge e3 = new DirectedEdge(t, x, 1);
+		DirectedEdge e4 = new DirectedEdge(t, y, 2);
+		DirectedEdge e5 = new DirectedEdge(y, z, 2);
+		DirectedEdge e6 = new DirectedEdge(y, x, 9);
+		DirectedEdge e7 = new DirectedEdge(y, t, 3);
+		DirectedEdge e8 = new DirectedEdge(x, z, 4);
+		DirectedEdge e9 = new DirectedEdge(z, s, 7);
+		DirectedEdge e10 = new DirectedEdge(z, x, 6);
+		
+		g.addEdge(e1);
+		g.addEdge(e2);
+		g.addEdge(e3);
+		g.addEdge(e4);
+		g.addEdge(e5);
+		g.addEdge(e6);
+		g.addEdge(e7);
+		g.addEdge(e8);
+		g.addEdge(e9);
+		g.addEdge(e10);
+		
+		g.addVertex(s);
+		g.addVertex(t);
+		g.addVertex(x);
+		g.addVertex(y);
+		g.addVertex(z);
+		
+		return g;
+	}
 
 	public static  void main(String[] args){
 		DiGraph<Vertex<DirectedEdge>> g = new DiGraph<Vertex<DirectedEdge>>();
