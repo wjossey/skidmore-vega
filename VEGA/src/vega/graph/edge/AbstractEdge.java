@@ -66,8 +66,8 @@ public abstract class AbstractEdge implements Edge{
      * Sets the edge to in use.
      * @param inUseBool
      */
-    public void inUse(boolean inUseBool) {
-        inUse = inUseBool;
+    public boolean inUse(boolean inUseBool) {
+        return this.inUse = inUseBool;
     }
 
     /**
@@ -82,15 +82,15 @@ public abstract class AbstractEdge implements Edge{
      *
      * @param activeBool
      */
-    public void isActive(boolean activeBool) {
-        this.active = activeBool;
+    public boolean active(boolean activeBool) {
+        return this.active = activeBool;
     }
 
     /**
      *
      * @return
      */
-    public boolean isActive() {
+    public boolean active() {
         return active;
     }
     
@@ -145,13 +145,13 @@ public abstract class AbstractEdge implements Edge{
         String returnString = "";
 
         if (active) {
-            returnString = "style=bold, ";
+            returnString = "style=bold, arrowsize=2.0";
         } else {
             if (inUse) {
                 returnString = "style=filled, ";
             } else {
                 if (style.equalsIgnoreCase("DEFAULT")) {
-                    returnString = "style=dotted, ";
+                    returnString = "style=filled, ";
                 } else {
                     returnString = style;
                 }

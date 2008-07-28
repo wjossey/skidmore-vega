@@ -258,7 +258,7 @@ public class AbstractGraph<V extends Vertex<? extends E>, E extends Edge>
 	 */
 	public void resetVerticiesVisited() {
 		for (int i = 0; i < vertexList.size(); i++) {
-			vertexList.get(i).setInUse(false);
+			vertexList.get(i).inUse(false);
 		}
 	}
 
@@ -274,6 +274,7 @@ public class AbstractGraph<V extends Vertex<? extends E>, E extends Edge>
 
 		if (digraph) {
 			returnString = "digraph G{\n";
+			returnString += "nodesep=.5;\n";
 			returnString += VertexHelper.vertexListToString(vertexList) + "\n";
 			returnString += EdgeHelper
 					.allEdgesDirectedGraph((ArrayList<? extends Vertex<? extends DirectedEdge>>) vertexList)
@@ -290,11 +291,9 @@ public class AbstractGraph<V extends Vertex<? extends E>, E extends Edge>
 		returnString += "color=lightgrey;\n";
 		returnString += "rank=\"sink\"; // put nodes in this subgraph on a separate, lower rank.\n";
 		returnString += "label=\"Legend\";\n";
-		returnString += "final [shape=circle, fillcolor=red, style=filled, label=\"Finalized\"];";
-		returnString += "unfinal [shape=circle, fillcolor=green, style=filled, label=\"Unfinalized\"];\n";
-		returnString += "e -> f [arrowhead=normal, label=\"Neighbor Edge\", labelfloat=true];";
-		returnString += "c -> d [style=bold, color=red, label=\"Path Edge\", labelfloat=true];";
-		returnString += "a -> b [style=dotted, label=\"Edge\", labelfloat=true];";
+		returnString += "current [shape=ellipse, width=3, fontsize=20, fillcolor=red, style=filled, label=\"Current\"];";
+		returnString += "unfinal [shape=ellipse, width=3, fontsize=20, fillcolor=green, style=filled, label=\"Unfinalized\"];\n";
+		returnString += "final [shape=ellipse, width=3, fontsize=20, fillcolor=blue, style=filled, label=\"Finalized\"];";
 
 		returnString += "}\n";
 

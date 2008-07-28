@@ -99,8 +99,8 @@ public class NearestNeighbor<V extends Vertex<E>, E extends Edge> implements Gra
      * @return
      */
     private V NearestNeighborProcedureStepTwo(V curr) {
-        curr.setActive(true);
-        curr.setInUse(true);
+        curr.active(true);
+        curr.inUse(true);
         controller.generateGraphInstance(2, nearestNeighborProcedure.getTitle());
         return curr;
     }
@@ -113,17 +113,17 @@ public class NearestNeighbor<V extends Vertex<E>, E extends Edge> implements Gra
      * @return
      */
     private V NearestNeighborProcedureStepThree(V curr, E e, V next) {
-        curr.setInUse(true);
-        curr.setActive(true);
+        curr.inUse(true);
+        curr.active(true);
         e.inUse(true);
-        e.isActive(true);
-        next.setActive(true);
-        next.setInUse(true);
+        e.active(true);
+        next.active(true);
+        next.inUse(true);
 
         controller.generateGraphInstance(3, nearestNeighborProcedure.getTitle());
 
-        e.isActive(false);
-        curr.setActive(false);
+        e.active(false);
+        curr.active(false);
 
         return next;
     }
@@ -134,10 +134,10 @@ public class NearestNeighbor<V extends Vertex<E>, E extends Edge> implements Gra
      * @param root
      */
     private void NearestNeighborProcedureStepFive(V curr, V root) {
-        root.setActive(true);
+        root.active(true);
         E edge = root.getEdge(curr);
         if (edge != null) {
-            edge.isActive(true);
+            edge.active(true);
             edge.inUse(true);
         }
 
@@ -152,9 +152,9 @@ public class NearestNeighbor<V extends Vertex<E>, E extends Edge> implements Gra
      * @return
      */
     private V NearestNeighborProcedureStepSix(V curr, V root) {
-        curr.setActive(false);
-        curr.getEdge(root).isActive(false);
-        root.setActive(false);
+        curr.active(false);
+        curr.getEdge(root).active(false);
+        root.active(false);
 
         controller.generateGraphInstance(6, nearestNeighborProcedure.getTitle());
 

@@ -27,7 +27,7 @@ public interface Edge{
      * Sets a boolean that marks whether the edge is in use.  Used by VEGA.
      * @param inUseBool True if in use, false if not in use.
      */
-    public void inUse(boolean inUseBool);
+    public boolean inUse(boolean inUseBool);
     
     /**
      * Returns the value of the inUse boolean.
@@ -39,13 +39,13 @@ public interface Edge{
      * Sets the boolean value of whether or not the edge is active.  Used by VEGA.
      * @param activeBool Set to true if the edge is active, else false.
      */
-    public void isActive(boolean activeBool);
+    public boolean active(boolean active);
     
     /**
      * Gets the boolean value of whether or not the edge is active.
      * @return Returns true if the edge is active, else false.
      */
-    public boolean isActive();
+    public boolean active();
     
     /**
      * Sets the color of the edge.
@@ -89,5 +89,6 @@ public interface Edge{
      * @return
      */
     public boolean onPath(boolean isOnPath);
+    
     
 }

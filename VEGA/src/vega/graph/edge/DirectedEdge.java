@@ -64,11 +64,11 @@ public class DirectedEdge extends AbstractEdge implements interfaces.graph.edge.
    
     public String toString() {
         String returnString = "";
-        returnString += from.getName(); //a -- b [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled];
+        returnString += from.getUID(); //a -- b [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled];
 
         returnString += " -> ";
 
-        returnString += to.getName() + " ";
+        returnString += to.getUID() + " ";
         returnString += "[ " + getStyle() + getFormattedWeight() +
                 getColor() + "];";
 

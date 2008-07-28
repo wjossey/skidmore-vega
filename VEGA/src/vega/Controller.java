@@ -47,7 +47,6 @@ public class Controller<V extends Vertex<? extends E>, E extends Edge> {
         //NOTE:  UI has a buffer which contains the graphs as they are processed.
         GraphViz graph = new GraphViz();
         graph.add(g.toString());
-        System.out.println(g.toString());
         stepTracker.add(new AlgorithmStep(line, procedure));
         File out = new File(a.getInstanceID() + a.getFileName() + counter++ + ".png");
         byte[] image = graph.getGraph(graph.getDotSource());

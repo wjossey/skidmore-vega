@@ -21,6 +21,14 @@ public class SortingAlgorithms {
 	
 	}
 
+	/**
+	 * Private internal method used for quicksort.
+	 * @param <E>
+	 * @param edgeList
+	 * @param left
+	 * @param right
+	 * @return
+	 */
 	private static <E extends Edge> int partition(E[] edgeList, int left, int right) {
 	    int i = left - 1;
 	    int j = right;

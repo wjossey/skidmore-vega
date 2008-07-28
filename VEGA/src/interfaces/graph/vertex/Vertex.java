@@ -35,26 +35,38 @@ public interface Vertex<E extends Edge>{
 	
 	public int getUID();
 	
-	public boolean visited();
-	
 	public String getName();
 	
 	public void sortEdges();
 	
 	public GraphvizVertexProperties getProperties();
 	
-	public void setVisited(boolean visited);
-	
-	public void setInUse(boolean inUse);
-	
-	public boolean inUse();
-	
-	public boolean isActive();
-	
-	public void setActive(boolean active);
-	
 	public Vertex<E> getPreviousVertex();
 	
 	public Vertex<E> setPreviousVertex(Vertex<E> previousVertex);
+	
+	public String setLabel(String label);
+	
+	public String getLabel();
+	
+	public boolean visited(boolean visited);
+	
+	public boolean visited();
+	
+	public boolean inUse(boolean inUse);
+	
+	public boolean inUse();
+	
+	public boolean active();
+	
+	public boolean active(boolean active);
+	
+	public boolean currentVertex(boolean isCurrentVertex);
+	
+	public boolean currentVertex();
+	
+	public boolean finalized(boolean isFinalized);
+	
+	public boolean finalized();
 	
 }

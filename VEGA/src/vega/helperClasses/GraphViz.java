@@ -177,7 +177,7 @@ public class GraphViz
          //String temp = img.getAbsolutePath();
 
          Runtime rt = Runtime.getRuntime();
-         String cmd = DOT + " -Tgif "+dot.getAbsolutePath()+" -o"+img.getAbsolutePath();
+         String cmd = DOT + " -Tpng "+dot.getAbsolutePath()+" -o"+img.getAbsolutePath();
          Process p = rt.exec(cmd);
          p.waitFor();
 

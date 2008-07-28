@@ -58,7 +58,7 @@ public class TwoOpt<V extends Vertex<? extends E>, E extends UndirectedEdge> imp
 
         /*Start of the twoOpt algorithm.  First, let's connect our tour*/
         for (int i = 0; i < tour.size(); i++) {
-            tour.get(i).setInUse(true);
+            tour.get(i).inUse(true);
 
             if (i == tour.size() - 1) {
                 tour.get(i).getEdge(tour.get(0)).inUse(true);
@@ -147,36 +147,36 @@ public class TwoOpt<V extends Vertex<? extends E>, E extends UndirectedEdge> imp
                     moveMade = true;
                     int indexV3 = tourLinked.indexOf(v3);
 
-                    v1.setActive(true);
-                    v2.setActive(true);
-                    v3.setActive(true);
-                    v4.setActive(true);
+                    v1.active(true);
+                    v2.active(true);
+                    v3.active(true);
+                    v4.active(true);
 
                     controller.generateGraphInstance(1, twoOptMove.getTitle());
 
-                    v1.getEdge(v2).isActive(true);
-                    v3.getEdge(v4).isActive(true);
+                    v1.getEdge(v2).active(true);
+                    v3.getEdge(v4).active(true);
 
                     controller.generateGraphInstance(1, twoOptMove.getTitle());
 
-                    v1.getEdge(v2).isActive(false);
-                    v3.getEdge(v4).isActive(false);
+                    v1.getEdge(v2).active(false);
+                    v3.getEdge(v4).active(false);
                     v1.getEdge(v2).inUse(false);
                     v3.getEdge(v4).inUse(false);
 
-                    v2.getEdge(v4).isActive(true);
+                    v2.getEdge(v4).active(true);
                     v2.getEdge(v4).inUse(true);
-                    v1.getEdge(v3).isActive(true);
+                    v1.getEdge(v3).active(true);
                     v1.getEdge(v3).inUse(true);
 
                     controller.generateGraphInstance(1, twoOptMove.getTitle());
 
-                    v1.getEdge(v3).isActive(false);
-                    v2.getEdge(v4).isActive(false);
-                    v1.setActive(false);
-                    v2.setActive(false);
-                    v3.setActive(false);
-                    v4.setActive(false);
+                    v1.getEdge(v3).active(false);
+                    v2.getEdge(v4).active(false);
+                    v1.active(false);
+                    v2.active(false);
+                    v3.active(false);
+                    v4.active(false);
 
                     reverse(tourLinked, indexV2, indexV3);
                 //System.out.println("Iteration: " + i + "\n" + "Distance= " + 
