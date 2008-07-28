@@ -1048,7 +1048,6 @@ public class VegaGUI extends javax.swing.JFrame {
 								if (algorithmString
 										.equalsIgnoreCase("Dijkstra")) {
 									g = Test.demoGraph();
-									System.out.println("Graph to string:\n" + g.toString());
 									a = new Dijkstra();
 								}
 							}

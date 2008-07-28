@@ -13,25 +13,30 @@ import vega.graph.vertex.heap.FibonacciHeapNode;
 public class Test {
 	
 	public static DiGraph<Vertex<DirectedEdge>> demoGraph(){
-		DiGraph<Vertex<DirectedEdge>> g = new DiGraph<Vertex<DirectedEdge>>(5);
+		DiGraph<Vertex<DirectedEdge>> g = new DiGraph<Vertex<DirectedEdge>>(6);
 		
-		Vertex<DirectedEdge> s = new Vertex<DirectedEdge>("S");
-		Vertex<DirectedEdge> t = new Vertex<DirectedEdge>("T");
-		Vertex<DirectedEdge> y = new Vertex<DirectedEdge>("Y");
-		Vertex<DirectedEdge> x = new Vertex<DirectedEdge>("X");
-		Vertex<DirectedEdge> z = new Vertex<DirectedEdge>("Z");
+		Vertex<DirectedEdge> columbus = new Vertex<DirectedEdge>("Columbus");
+		Vertex<DirectedEdge> chicago = new Vertex<DirectedEdge>("Chicago");
+		Vertex<DirectedEdge> detroit = new Vertex<DirectedEdge>("Detroit");
+		Vertex<DirectedEdge> newYork = new Vertex<DirectedEdge>("New York");
+		Vertex<DirectedEdge> denver = new Vertex<DirectedEdge>("Denver");
+		Vertex<DirectedEdge> tampa = new Vertex<DirectedEdge>("Tampa");
 		
 		
-		DirectedEdge e1 = new DirectedEdge(s, t, 10);
-		DirectedEdge e2 = new DirectedEdge(s, y, 5);
-		DirectedEdge e3 = new DirectedEdge(t, x, 1);
-		DirectedEdge e4 = new DirectedEdge(t, y, 2);
-		DirectedEdge e5 = new DirectedEdge(y, z, 2);
-		DirectedEdge e6 = new DirectedEdge(y, x, 9);
-		DirectedEdge e7 = new DirectedEdge(y, t, 3);
-		DirectedEdge e8 = new DirectedEdge(x, z, 4);
-		DirectedEdge e9 = new DirectedEdge(z, s, 7);
-		DirectedEdge e10 = new DirectedEdge(z, x, 6);
+		
+		DirectedEdge e1 = new DirectedEdge(columbus, detroit, 105);
+		DirectedEdge e2 = new DirectedEdge(columbus, chicago, 59);
+		DirectedEdge e3 = new DirectedEdge(chicago, detroit, 87);
+		DirectedEdge e4 = new DirectedEdge(chicago, newYork, 210);
+		DirectedEdge e5 = new DirectedEdge(detroit, chicago, 71);
+		DirectedEdge e6 = new DirectedEdge(detroit, newYork, 49);
+		DirectedEdge e7 = new DirectedEdge(detroit, denver, 107);
+		DirectedEdge e8 = new DirectedEdge(newYork, chicago, 105);
+		DirectedEdge e9 = new DirectedEdge(newYork, denver, 158);
+		DirectedEdge e10 = new DirectedEdge(newYork, tampa, 89);
+		DirectedEdge e11 = new DirectedEdge(denver, detroit, 150);
+		DirectedEdge e12 = new DirectedEdge(denver, tampa, 150);
+		DirectedEdge e13 = new DirectedEdge(tampa, newYork, 59);
 		
 		g.addEdge(e1);
 		g.addEdge(e2);
@@ -43,12 +48,17 @@ public class Test {
 		g.addEdge(e8);
 		g.addEdge(e9);
 		g.addEdge(e10);
+		g.addEdge(e11);
+		g.addEdge(e12);
+		g.addEdge(e13);
 		
-		g.addVertex(s);
-		g.addVertex(t);
-		g.addVertex(x);
-		g.addVertex(y);
-		g.addVertex(z);
+		g.addVertex(columbus);
+		g.addVertex(chicago);
+		g.addVertex(detroit);
+		g.addVertex(newYork);
+		g.addVertex(denver);
+		g.addVertex(tampa);
+		
 		
 		return g;
 	}

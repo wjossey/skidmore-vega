@@ -73,25 +73,25 @@ public class Dijkstra<C extends Comparable<? super C>>
 		source = g.getVertexArray().get(0);
 		pseudoCode = new PseudoCode("Dijkstra's");
 		dijkstraMove = new Procedure("Dijkstra(V, E):");
-		dijkstraMove.appendLine(dijkstraMove.getTitle()); //0
+		dijkstraMove.appendLine(dijkstraMove.getTitle()); // 0
 		dijkstraMove
-				.appendLine("\tWhile there are still cities left to be finalized"); //1
+				.appendLine("  While there are still cities left to be finalized"); // 1
 		dijkstraMove
-				.appendLine("\t\tFind the unfinalized city with the lowest best cost");//2
-		dijkstraMove.appendLine("\t\tCall that city x");//3
+				.appendLine("    Find the unfinalized city with the lowest best cost");// 2
+		dijkstraMove.appendLine("    Call that city x");// 3
 		dijkstraMove
-				.appendLine("\t\tFor each city y with a direct flight from x");//4
-		dijkstraMove.appendLine("\t\tLet z be the cost to fly from x to y");//5
+				.appendLine("    For each city y with a direct flight from x");// 4
+		dijkstraMove.appendLine("    Let z be the cost to fly from x to y");// 5
 		dijkstraMove
-				.appendLine("\t\tIf best cost to x + z < current best to y");//6
-		dijkstraMove.appendLine("\t\tThen update y's best cost so far");//7
+				.appendLine("    If best cost to x + z < current best to y");// 6
+		dijkstraMove.appendLine("    Then update y's best cost so far");// 7
+		dijkstraMove.appendLine("Cycle Through Found Paths");// 7
 		pseudoCode.addProcedure(dijkstraMove);
 		controller = new Controller<Vertex<DirectedEdge>, DirectedEdge>(graph,
 				pseudoCode, this);
 		run(); // Let's assume we don't assign a starting vertex
 
 		highlightAllShortestPaths();
-		System.out.println(printShortestPaths());
 		running = false;
 	}
 
@@ -102,18 +102,29 @@ public class Dijkstra<C extends Comparable<? super C>>
 	@SuppressWarnings("unchecked")
 	public void run() {
 		initializeNodes(source, graph.getVertexArray());
+
+		for (int i = 0; i < graph.getVertexArray().size(); i++) {
+			Vertex<DirectedEdge> temp = graph.getVertexArray().get(i);
+			temp.setLabel(temp.getName() + " / ?");
+		}
+
 		controller.generateGraphInstance(1, dijkstraMove.getTitle());
-		
+
 		while (heap.size() > 0) {
 			/* Get the minimum node from the FibHeap */
-			
+
 			FibonacciHeapNode<Vertex<DirectedEdge>> minNode = heap.removeMin();
 
 			/* Get the vertex and the edgeList from the minNode */
 			Vertex<DirectedEdge> minVertex = minNode.getData();
-			
-			
+			minVertex.currentVertex(true);
+			minVertex.setLabel(minVertex.getName() + " / " + minNode.getKey());
+			controller.generateGraphInstance(3, dijkstraMove.getTitle());
+
 			ArrayList<DirectedEdge> minVertexEdgeList = minVertex.getEdges();
+			for (int i = 0; i < minVertexEdgeList.size(); i++) {
+				minVertexEdgeList.get(i).active(true);
+			}
 
 			/* Go through the adjacency list of the minVertex */
 			for (int i = 0; i < minVertexEdgeList.size(); i++) {
@@ -124,6 +135,9 @@ public class Dijkstra<C extends Comparable<? super C>>
 				/* Get the destination vertex */
 				Vertex<DirectedEdge> tempVertex = (Vertex<DirectedEdge>) minVertexEdgeList
 						.get(i).getDestination();
+
+				tempVertex.inUse(true);
+				controller.generateGraphInstance(5, dijkstraMove.getTitle());
 
 				/* Get the heapNode of the tempVertex */
 				FibonacciHeapNode<Vertex<DirectedEdge>> tempNode = nodeHash
@@ -141,15 +155,35 @@ public class Dijkstra<C extends Comparable<? super C>>
 
 					/* Decrease the key */
 					heap.decreaseKey(tempNode, newWeight);
+					tempNode.getData().setLabel(
+							tempNode.getData().getName() + " / "
+									+ Double.toString(newWeight));
+					controller
+							.generateGraphInstance(8, dijkstraMove.getTitle());
 
 					/* Assign the vertex's previous vertex in the shortest path */
 					tempVertex.setPreviousVertex(minVertex);
 
 				}
+
+				tempVertex.inUse(false);
 			}
+			for (int i = 0; i < minVertexEdgeList.size(); i++) {
+				minVertexEdgeList.get(i).active(false);
+			}
+
+			minVertex.currentVertex(false);
+			minVertex.active(false);
+			minVertex.finalized(true);
+
 		}
 
 		completed = true;
+
+		for (int i = 0; i < graph.getVertexArray().size(); i++) {
+			Vertex<DirectedEdge> temp = graph.getVertexArray().get(i);
+			temp.getProperties().setColor("grey");
+		}
 	}
 
 	public void highlightAllShortestPaths() {

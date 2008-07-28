@@ -51,6 +51,12 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
 	
 	private Vertex<E> previousVertex;
 
+	private boolean isCurrentVertex = false;
+
+	private boolean isFinalized = false;
+
+	private String label;
+
     /* Variable Declarations End*/
 
 	/**
@@ -115,23 +121,6 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
     }
 
     /**
-     * Primarily for VEGA use.  This sets the vertex to "in-use" which causes VEGA to color the vertex
-     * to the "in-use" color.
-     * @param inUse
-     */
-    public void setInUse(boolean inUse) {
-        this.inUse = inUse;
-    }
-
-    /**
-     * Marks the vertex as visited so we know not to re-visit.
-     * @param visited
-     */
-    public void setVisited(boolean visited) {
-        this.visited = visited;
-    }
-
-    /**
      * Returns all of the edges that are adjacent to the vertex
      * @return
      */
@@ -140,14 +129,6 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
     }
 
     
-
-    /**
-     * Returns the boolean status of whether or not the vertex is in use.
-     * @return
-     */
-    public boolean inUse() {
-        return inUse;
-    }
 
     /**
      * Returns the x-coordinate value for the vertex.
@@ -207,14 +188,6 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
     }
 
     /**
-     * Returns whether or not the vertex has been visited.
-     * @return
-     */
-    public boolean visited() {
-        return visited;
-    }
-
-    /**
      * Returns the UID if no name has been assigned, else it 
      * returns the name assigned to the vertex.
      * @return
@@ -234,26 +207,6 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
         
         EdgeHelper.sortEdgesByDistance(edgeArray);
     }
-  
-    /**
-     * Returns whether or not the vertex is currently active.
-     * @return
-     */
-    public boolean isActive() {
-        return active;
-    }
-
-    /**
-     * Sets the vertex to an active state.
-     * @param active
-     */
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-
-
-
     /**
      * 
      * @return Vertex description in valid DOT format.  
@@ -262,11 +215,11 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
     public String toString() {
         String returnString = "";
 
-        returnString += getName();
+        returnString += getUID();
         
         returnString += " [fillcolor=" + properties.getColor() + ", style=" + 
         		properties.getStyle() + ", shape=" + properties.getShape() + 
-        		", sides=" + Integer.toString(properties.getSides()) + "];";
+        		", sides=" + Integer.toString(properties.getSides()) + ", label=\"" + getLabel() + "\"];";
         
         return returnString;
 
@@ -283,6 +236,66 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
 	
 	public Vertex<E> setPreviousVertex(Vertex<E> previousVertex){
 		return this.previousVertex = previousVertex;
+	}
+
+	public boolean currentVertex(boolean isCurrentVertex) {
+		return this.isCurrentVertex = isCurrentVertex;
+	}
+
+	public boolean currentVertex() {
+		return isCurrentVertex;
+	}
+
+	public boolean finalized(boolean isFinalized) {
+		return this.isFinalized = isFinalized;
+	}
+
+	public boolean finalized() {
+		return isFinalized;
+	}
+
+	public boolean active() {
+		return active;
+	}
+
+	public boolean active(boolean active) {
+		return this.active = active;
+	}
+
+	public boolean inUse(boolean inUse) {
+		return this.inUse = inUse;
+	}
+
+	/**
+	 * Returns the boolean status of whether or not the vertex is in use.
+	 * @return
+	 */
+	public boolean inUse() {
+	    return inUse;
+	}
+
+	public boolean visited(boolean visited) {
+		return this.visited = visited;
+	}
+
+	/**
+	 * Returns whether or not the vertex has been visited.
+	 * @return
+	 */
+	public boolean visited() {
+	    return visited;
+	}
+
+	public String setLabel(String label){
+		return this.label = label;
+	}
+	
+	public String getLabel(){
+		if(label == null){
+			return name;
+		}else{
+			return label;
+		}
 	}
 }
 
