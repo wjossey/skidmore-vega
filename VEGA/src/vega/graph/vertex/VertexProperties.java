@@ -45,7 +45,7 @@ public class VertexProperties implements GraphvizVertexProperties {
 			returnString = "red";
 		}else{
 			if (vertex.active() == true || vertex.finalized() == true){
-				returnString = "blue";
+				returnString = "white";
 			} else {
 				if (vertex.inUse() == true) {
 					returnString = "yellow";

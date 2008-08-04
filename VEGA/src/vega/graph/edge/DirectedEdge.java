@@ -70,7 +70,7 @@ public class DirectedEdge extends AbstractEdge implements interfaces.graph.edge.
 
         returnString += to.getUID() + " ";
         returnString += "[ " + getStyle() + getFormattedWeight() +
-                getColor() + "];";
+                getColor() + ", fontsize=18];";
 
 
         return returnString;
