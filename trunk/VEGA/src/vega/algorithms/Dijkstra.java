@@ -77,21 +77,20 @@ public class Dijkstra<C extends Comparable<? super C>>
 		dijkstraMove
 				.appendLine("  While there are still cities left to be finalized"); // 1
 		dijkstraMove
-				.appendLine("    Find the unfinalized city with the lowest best cost");// 2
-		dijkstraMove.appendLine("    Call that city x");// 3
+				.appendLine("      Find the unfinalized city with the lowest best cost");// 2
+		dijkstraMove.appendLine("      Call that city x");// 3
 		dijkstraMove
-				.appendLine("    For each city y with a direct flight from x");// 4
-		dijkstraMove.appendLine("    Let z be the cost to fly from x to y");// 5
+				.appendLine("      For each unfinalized city y with a direct flight from x");// 4
+		dijkstraMove.appendLine("          Let z be the cost to fly from x to y");// 5
 		dijkstraMove
-				.appendLine("    If best cost to x + z < current best to y");// 6
-		dijkstraMove.appendLine("    Then update y's best cost so far");// 7
-		dijkstraMove.appendLine("Cycle Through Found Paths");// 7
+				.appendLine("          If best cost to x + z < current best to y");// 6
+		dijkstraMove.appendLine("            Then update y's best cost so far");// 7
+		dijkstraMove.appendLine("END");
 		pseudoCode.addProcedure(dijkstraMove);
 		controller = new Controller<Vertex<DirectedEdge>, DirectedEdge>(graph,
 				pseudoCode, this);
 		run(); // Let's assume we don't assign a starting vertex
 
-		highlightAllShortestPaths();
 		running = false;
 	}
 
@@ -101,8 +100,9 @@ public class Dijkstra<C extends Comparable<? super C>>
 	 */
 	@SuppressWarnings("unchecked")
 	public void run() {
+		
 		initializeNodes(source, graph.getVertexArray());
-
+		Vertex<DirectedEdge> last = null;
 		for (int i = 0; i < graph.getVertexArray().size(); i++) {
 			Vertex<DirectedEdge> temp = graph.getVertexArray().get(i);
 			temp.setLabel(temp.getName() + " / ?");
@@ -125,6 +125,8 @@ public class Dijkstra<C extends Comparable<? super C>>
 			for (int i = 0; i < minVertexEdgeList.size(); i++) {
 				minVertexEdgeList.get(i).active(true);
 			}
+			
+			controller.generateGraphInstance(5, dijkstraMove.getTitle());
 
 			/* Go through the adjacency list of the minVertex */
 			for (int i = 0; i < minVertexEdgeList.size(); i++) {
@@ -135,9 +137,12 @@ public class Dijkstra<C extends Comparable<? super C>>
 				/* Get the destination vertex */
 				Vertex<DirectedEdge> tempVertex = (Vertex<DirectedEdge>) minVertexEdgeList
 						.get(i).getDestination();
+				if(tempVertex.finalized()){
+					continue;
+				}
 
 				tempVertex.inUse(true);
-				controller.generateGraphInstance(5, dijkstraMove.getTitle());
+				controller.generateGraphInstance(7, dijkstraMove.getTitle());
 
 				/* Get the heapNode of the tempVertex */
 				FibonacciHeapNode<Vertex<DirectedEdge>> tempNode = nodeHash
@@ -162,7 +167,11 @@ public class Dijkstra<C extends Comparable<? super C>>
 							.generateGraphInstance(8, dijkstraMove.getTitle());
 
 					/* Assign the vertex's previous vertex in the shortest path */
+					if(tempVertex.getPreviousVertex() != null){
+						tempVertex.getPreviousVertex().getEdge(tempVertex).onPath(false);
+					}
 					tempVertex.setPreviousVertex(minVertex);
+					tempVertex.getPreviousVertex().getEdge(tempVertex).onPath(true);
 
 				}
 
@@ -177,13 +186,9 @@ public class Dijkstra<C extends Comparable<? super C>>
 			minVertex.finalized(true);
 
 		}
-
+		
+		controller.generateGraphInstance(1, dijkstraMove.getTitle());
 		completed = true;
-
-		for (int i = 0; i < graph.getVertexArray().size(); i++) {
-			Vertex<DirectedEdge> temp = graph.getVertexArray().get(i);
-			temp.getProperties().setColor("grey");
-		}
 	}
 
 	public void highlightAllShortestPaths() {
@@ -193,6 +198,8 @@ public class Dijkstra<C extends Comparable<? super C>>
 				highlightPath(vertexList.get(i));
 			}
 		}
+		
+		controller.generateGraphInstance(9, dijkstraMove.getTitle());
 	}
 
 	public String printShortestPaths() {
@@ -251,13 +258,13 @@ public class Dijkstra<C extends Comparable<? super C>>
 				curr = curr.getPreviousVertex();
 			}
 
-			controller.generateGraphInstance(1, dijkstraMove.getTitle());
-
-			curr = destination;
-			while (curr != source) {
-				curr.getPreviousVertex().getEdge(curr).onPath(false);
-				curr = curr.getPreviousVertex();
-			}
+//			controller.generateGraphInstance(1, dijkstraMove.getTitle());
+//
+//			curr = destination;
+//			while (curr != source) {
+//				curr.getPreviousVertex().getEdge(curr).onPath(false);
+//				curr = curr.getPreviousVertex();
+//			}
 		}
 	}
 

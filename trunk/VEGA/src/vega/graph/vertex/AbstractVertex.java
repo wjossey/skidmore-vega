@@ -219,7 +219,7 @@ public class AbstractVertex<E extends Edge> implements Vertex<E>, Serializable, 
         
         returnString += " [fillcolor=" + properties.getColor() + ", style=" + 
         		properties.getStyle() + ", shape=" + properties.getShape() + 
-        		", sides=" + Integer.toString(properties.getSides()) + ", label=\"" + getLabel() + "\"];";
+        		", sides=" + Integer.toString(properties.getSides()) + ", label=\"" + getLabel() + "\", fontsize=24];";
         
         return returnString;
 

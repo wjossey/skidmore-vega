@@ -48,7 +48,7 @@ public class Controller<V extends Vertex<? extends E>, E extends Edge> {
         GraphViz graph = new GraphViz();
         graph.add(g.toString());
         stepTracker.add(new AlgorithmStep(line, procedure));
-        File out = new File(a.getInstanceID() + a.getFileName() + counter++ + ".png");
+        File out = new File("/tmp/" + a.getInstanceID() + a.getFileName() + counter++ + ".png");
         byte[] image = graph.getGraph(graph.getDotSource());
         if (graph.writeGraphToFile(image, out) == -1) {
             throw new ImageWriteException("Error message: -1\n  Error caused in" +
@@ -72,7 +72,7 @@ public class Controller<V extends Vertex<? extends E>, E extends Edge> {
     public String[] getNextGraphImage() {
         String[] returnStringTuple = new String[2];
         if (getImageCount() > imageCounter) {
-            returnStringTuple[0] = a.getInstanceID() + a.getFileName() + imageCounter + ".png";
+            returnStringTuple[0] = "/tmp/" + a.getInstanceID() + a.getFileName() + imageCounter + ".png";
             returnStringTuple[1] = getPseudoCodeWithLineMarker(stepTracker.get(imageCounter).getLine(),
                     stepTracker.get(imageCounter++).getProcedure());
             return returnStringTuple;
@@ -89,13 +89,13 @@ public class Controller<V extends Vertex<? extends E>, E extends Edge> {
     public String[] getPreviousGraphImage() {
         String[] returnStringTuple = new String[2];
         if (imageCounter > 1) {
-            returnStringTuple[0] = a.getInstanceID() + a.getFileName() + (imageCounter - 2) + ".png";
+            returnStringTuple[0] = "/tmp/" + a.getInstanceID() + a.getFileName() + (imageCounter - 2) + ".png";
             returnStringTuple[1] = getPseudoCodeWithLineMarker(stepTracker.get(imageCounter - 2).getLine(),
                     stepTracker.get(imageCounter-- - 2).getProcedure());
             return returnStringTuple;
         } else {
             if (imageCounter == 1) {
-                returnStringTuple[0] = a.getInstanceID() + a.getFileName() + (--imageCounter) + ".png";
+                returnStringTuple[0] = "/tmp/" + a.getInstanceID() + a.getFileName() + (--imageCounter) + ".png";
                 returnStringTuple[1] = pseudoCode.getPseudoCodeWithLineMarker(stepTracker.get(imageCounter).getLine(),
                         stepTracker.get(imageCounter).getProcedure());
                 return returnStringTuple;

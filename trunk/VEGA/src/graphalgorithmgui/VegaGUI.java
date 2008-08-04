@@ -169,7 +169,7 @@ public class VegaGUI extends javax.swing.JFrame {
 				});
 
 		algorithmComboBox.setModel(new javax.swing.DefaultComboBoxModel(
-				new String[] { "2-OPT", "Nearest Neighbor", "Dijkstra" }));
+				new String[] { "2-OPT", "Nearest Neighbor", "Dijkstra", "Fibonnaci Heaps", "Binary Heaps", "Binomail Heap", "Heap", "Binary Search Tree", "Red Black Tree", "Kruskal's", "Prim's" }));
 
 		org.jdesktop.layout.GroupLayout inputContainerPanelLayout = new org.jdesktop.layout.GroupLayout(
 				inputContainerPanel);

@@ -293,7 +293,7 @@ public class AbstractGraph<V extends Vertex<? extends E>, E extends Edge>
 		returnString += "label=\"Legend\";\n";
 		returnString += "current [shape=ellipse, width=3, fontsize=20, fillcolor=red, style=filled, label=\"Current\"];";
 		returnString += "unfinal [shape=ellipse, width=3, fontsize=20, fillcolor=green, style=filled, label=\"Unfinalized\"];\n";
-		returnString += "final [shape=ellipse, width=3, fontsize=20, fillcolor=blue, style=filled, label=\"Finalized\"];";
+		returnString += "final [shape=ellipse, width=3, fontsize=20, fillcolor=white, style=filled, label=\"Finalized\"];";
 
 		returnString += "}\n";
 
